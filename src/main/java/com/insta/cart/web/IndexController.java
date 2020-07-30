@@ -51,5 +51,8 @@ public class IndexController {
         return "/ogani/shoping-cart";
     }
 
-
+    @GetMapping("/productSearch") //@RequestMapping(method=RequestMethod.GET)
+    public String productSearch() {
+        return "/ogani/productSearch";
+    }
 }
