@@ -21,6 +21,12 @@ public class IndexController {
         return "/ogani/blog";
     }
 
+    @GetMapping("/blog-details") //@RequestMapping(method=RequestMethod.GET)
+    public String blogDetails() {
+        return "/ogani/blog-details";
+    }
+
+
     @GetMapping("/checkout") //@RequestMapping(method=RequestMethod.GET)
     public String checkout() {
         return "/ogani/checkout";
