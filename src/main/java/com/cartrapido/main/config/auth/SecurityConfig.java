@@ -34,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().disable()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/","/loginPage","/user/signUpPage","/signIntoShopper","/login/**","/user/errorPage/**").permitAll()
+                .antMatchers("/","/loginPage","/user/zipcode","/signIntoShopper","/login/**","/user/errorPage/**").permitAll()
                 .antMatchers("/api/v1/**").hasRole(Role.USER.name())
                 .antMatchers("/user/loginSuccess").hasRole(Role.USER.name())
                 .antMatchers("/adminPage").hasRole(Role.ADMIN.name())

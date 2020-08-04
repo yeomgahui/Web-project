@@ -27,6 +27,7 @@ public class MemberService implements UserDetailsService {
 
     @Transactional
     public Long joinUser(MemberDTO memberDTO){
+        System.out.println("joinUser 진입");
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         memberDTO.setPassword(passwordEncoder.encode(memberDTO.getPassword()));
         return memberRepository.save(memberDTO.toEntity()).getId();
@@ -34,6 +35,7 @@ public class MemberService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String userEmail) throws UsernameNotFoundException{
+        System.out.println("loadUserByUsername 진입");
         Optional<Member> userEntityWrapper = memberRepository.findByEmail(userEmail);
         Member userEntity = userEntityWrapper.get();
 
@@ -44,6 +46,7 @@ public class MemberService implements UserDetailsService {
         }else{
             authorities.add(new SimpleGrantedAuthority(Role.USER.name()));
         }
+        
         return new User(userEntity.getEmail(), userEntity.getPassword(), authorities);
     }
 }

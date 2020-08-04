@@ -6,16 +6,16 @@ function chkEmail(email) {
 
 $("#signUpBtn").click(function (){
     var email = $('#inputEmail').val();
-    alert(email);
 
     if(email == ''){
         alert("아이디 미입력")
-        $("emailDiv").text("이메일을 입력해주세요.").css("color","red").css("font-size","14pt");
+        $("#emailDiv").text("이메일을 입력해주세요.").css("color","red").css("font-size","14pt");
     }else if( ! chkEmail(email)){
-        $("emailDiv").text("잘못된 형식의 이메일 주소입니다.").css("color","red").css("font-size","14pt");
+        $("#emailDiv").text("잘못된 형식의 이메일 주소입니다.").css("color","red").css("font-size","14pt");
     }else if($('inputPassword').val() == ''){
-        $("pwdDiv").text("비밀번호를 입력해주세요.").css("color","red").css("font-size","14pt");
+        $("#pwdDiv").text("비밀번호를 입력해주세요.").css("color","red").css("font-size","14pt");
     }else{
+        alert("버튼클릭")
         document.signUp.submit();
     }
 });

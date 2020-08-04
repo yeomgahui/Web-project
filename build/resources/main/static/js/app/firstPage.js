@@ -25,5 +25,10 @@ function initAutocomplete() {
 }
 $("#continueBtn").click(function (){
 
-    document.zipcodeForm.submit();
+    if($("#autocomplete").val() ==''){
+        $("#zipCodeDiv").text("주소를 입력해주세요.").css("color","red").css("font-size","14pt");
+    }else{
+        window.location.href ="/user/signUpPage?address="+$("#autocomplete").val();
+        //document.zipcodeForm.submit();
+    }
 });

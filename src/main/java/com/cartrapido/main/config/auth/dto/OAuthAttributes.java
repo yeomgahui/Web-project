@@ -38,6 +38,7 @@ public class OAuthAttributes {
                 .nameAttributeKey(userNameAttributeName)
                 .build();
     }
+
     public Member toEntity(){
         return Member.builder()
                 .name(name)

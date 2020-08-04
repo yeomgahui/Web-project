@@ -40,8 +40,13 @@ public class Member {
     }
 
 
-    public Member update(String name){
+    public Member update(String name,String address){
+        System.out.println("주소 "+address);
         this.name = name;
+        if(!address.equals("null")){
+            this.address = address;
+        }
+
         return this;
     }
 
