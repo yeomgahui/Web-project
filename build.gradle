@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 buildscript {
     ext {
         springBootVersion = '2.1.7.RELEASE'
@@ -20,11 +21,30 @@ apply plugin: 'io.spring.dependency-management'
 group 'com.cartrapido'
 version '1.0-SNAPSHOT'
 sourceCompatibility = '1.8'
+=======
+plugins {
+    id 'org.springframework.boot' version '2.3.2.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'java'
+}
+
+group = 'com.insta'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+>>>>>>> c50b80867d793f3216419d2dd6b1380a3f54e55c
 repositories {
     mavenCentral()
 }
 
 dependencies {
+<<<<<<< HEAD
     compile('org.springframework.boot:spring-boot-starter-web')
     testCompile('org.springframework.boot:spring-boot-starter-test')
     annotationProcessor 'org.projectlombok:lombok'
@@ -40,3 +60,21 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.session:spring-session-core'
 }
+=======
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-mustache'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'com.h2database:h2'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
+>>>>>>> c50b80867d793f3216419d2dd6b1380a3f54e55c
