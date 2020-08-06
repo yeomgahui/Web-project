@@ -11,9 +11,14 @@
 </head>
 
 <body>
-로그인 성공
-{{address}}
-<input type="button" id="logoutBtn" value="logout">
+
+{{#userName}}
+    {{userName}}
+    {{userEmail}}
+    {{userAddress}}
+{{/userName}}
+
+<a href="/logout" class="btn btn-info active" role="button" >로그아웃</a>
 <nav class="navbar navbar-defualt">
     <div class="container-fluid"><!--컨테이너 값이 전체화면을 쓴다.-->
         <div class="container-header">

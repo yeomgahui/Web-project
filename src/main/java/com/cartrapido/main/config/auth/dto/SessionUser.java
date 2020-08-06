@@ -1,6 +1,6 @@
 package com.cartrapido.main.config.auth.dto;
 
-import com.cartrapido.main.domain.user.Member;
+import com.cartrapido.main.domain.Member;
 import lombok.Getter;
 
 import java.io.Serializable;
@@ -9,9 +9,11 @@ import java.io.Serializable;
 public class SessionUser implements Serializable {
     private String name;
     private String email;
+    private String address;
 
-    public SessionUser(Member member){
+    public SessionUser(Member member) {
         this.name = member.getName();
         this.email = member.getEmail();
+        this.address = member.getAddress();
     }
 }

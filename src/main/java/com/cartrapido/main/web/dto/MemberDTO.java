@@ -1,15 +1,14 @@
-package com.cartrapido.main.dto;
+package com.cartrapido.main.web.dto;
 
-import com.cartrapido.main.domain.user.Member;
-import com.cartrapido.main.domain.user.Role;
+import com.cartrapido.main.domain.Member;
+import com.cartrapido.main.domain.Role;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 
 @Data
 @NoArgsConstructor
 public class MemberDTO {
-
     private Long id;
     private String email;
     private String password;
@@ -17,15 +16,15 @@ public class MemberDTO {
 
     public Member toEntity(){
         return Member.builder()
-                .id(id)
-                .address(address)
                 .email(email)
                 .password(password)
+                .address(address)
                 .role(Role.USER)
                 .build();
     }
 
-    public MemberDTO(Long id, String email,String address, String password){
+    @Builder
+    public MemberDTO(Long id, String email, String password,String address) {
         this.id = id;
         this.email = email;
         this.address = address;

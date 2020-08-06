@@ -92,7 +92,7 @@
                 <h2>Create an account to start shopping</h2>
             </div>
             <br>
-            <form id="signUp" th:action="@{/user/signUpPage}" name="signUp" method="POST">
+            <form id="signUp" action="#" th:action="@{/user/signUpPage}" name="signUp" method="POST">
                 <div class="form-group">
                     <input type="email" class="form-control" name="email" id="inputEmail" placeholder="Email Address">
                     <div id="emailDiv"></div>
@@ -102,7 +102,7 @@
                     <div id="pwdDiv"></div>
                 </div>
                 <input type="hidden" name ="address" value="{{address}}">
-                <button id="signUpBtn" type="submit" class="btn btn-signup">이메일로 회원가입</button>
+                <input type="button" id="signUpBtn" class="btn btn-signup" value="이메일로 회원가입">
             </form>
             <hr id="leftLine">
             <span style="color: gray">or</span>
