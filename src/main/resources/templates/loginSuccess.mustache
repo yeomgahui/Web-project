@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CartRapido</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <style>
+
+
+    </style>
+</head>
+
+<body>
+
+{{#userName}}
+    {{userName}}
+    {{userEmail}}
+    {{userAddress}}
+{{/userName}}
+
+<a href="/logout" class="btn btn-info active" role="button" >로그아웃</a>
+<nav class="navbar navbar-defualt">
+    <div class="container-fluid"><!--컨테이너 값이 전체화면을 쓴다.-->
+        <div class="container-header">
+        <a class="navbar-brand" href="#">Instacart</a>
+    </div>
+    </div>
+    <div>
+        <ul class="nav navbar-nav">
+            <li class="active"></li>
+        </ul>
+    </div>
+</nav>
+</body>
+
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src ="/js/app/firstPage.js"></script>
+<script>
+    $(document).ready(function (){
+        $("#logoutBtn").click(function (){
+            window.location.href="/user/logout/result";
+        });
+    });
+
+</script>
+</body>
+</html>
