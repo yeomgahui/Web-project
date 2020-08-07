@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+<header th:replace="shopperWeb/header :: headerFragment"></header>
+
+<body>
+<div class="container-lg mt-5">
+    <div class="row">
+        <th:block th:include="shopperWeb/sidebar.html" ></th:block>
+
+        <div class="col-lg-9" id="col-lg-9" >
+
+            <!--            여기서부터 바디부분-->
+            <h1 class="display-4">My page. </h1>
+            <p class="lead">000 님의 개인 페이지입니다.
+            <form id="shopperInfo" method="post">
+                <div class="form-group">
+                    <input type="email" class="form-control" name="email" id="email"   placeholder="Email" required="required">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="memberName"  id="memberName" placeholder="이름" required="required">
+                </div>
+                <div class="form-group">
+                    <input type="zipcode" class="form-control" name="zipcode"  id="zipcode" placeholder="우편번호" required="required">
+                </div>
+                <div class="form-group">
+                    <a class="btn btn-primary btn-withdrawal" href="#" target="_blank">개인정보 수정</a>
+                </div>
+            </form>
+
+            <!--여기까지 바디-->
+        </div>
+
+
+
+
+
+    </div>
+</div>
+</body>
+</html>

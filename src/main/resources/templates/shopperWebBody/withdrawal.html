@@ -1,0 +1,44 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+<header th:replace="shopperWeb/header :: headerFragment"></header>
+
+<body>
+<div class="container-lg mt-5">
+    <div class="row">
+        <th:block th:include="shopperWeb/sidebar.html" ></th:block>
+
+        <div class="col-lg-9" id="col-lg-9"  >
+
+            <!--            여기서부터 바디부분-->
+            <div>
+                <h1 class="display-4"></h1>
+                <p class="lead"> 회원 탈퇴 진행을 위한 본인인증을 먼저 수행해주십시오.
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="email" id="email" placeholder="이메일" required="required">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" name="pwd" id="pwd" placeholder="비밀번호" required="required">
+                    </div>
+                    <a class="btn btn-primary btn-withdrawal" href="#" target="_blank">탈퇴하기</a>
+                </form>
+                <hr class="my-4">
+
+            </div>
+            <!--여기까지 바디-->
+        </div>
+
+
+
+
+
+    </div>
+</div>
+</body>
+</html>
