@@ -15,7 +15,8 @@ import javax.persistence.*;
 public class Product {
 
     @Id
-    private String productId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long productId;
 
     @Column(length = 100, nullable = false)
     private String store;
@@ -39,7 +40,7 @@ public class Product {
     private String image;
 
     @Builder
-    public Product(String productId, String productName, String productContent,
+    public Product(Long productId, String productName, String productContent,
                    int productPrice, int productQty, String store,
                    String category, String image) {
         this.productId = productId;

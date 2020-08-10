@@ -9,7 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 public class ProductDTO {
 
-    private String productId;
+    private Long productId;
     private String productName;
     private int productPrice;
     private int productQty;
@@ -33,7 +33,7 @@ public class ProductDTO {
     }
 
     @Builder
-    public ProductDTO(String productId, String productName, String productContent,
+    public ProductDTO(Long productId, String productName, String productContent,
                       int productPrice, int productQty, String store,
                       String category, String image){
         this.productId = productId;

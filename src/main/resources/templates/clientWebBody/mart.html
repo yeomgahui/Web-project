@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <title>clientWebLayout</title>
 
-    <header th:replace="clientWeb/header :: headerFragment"></header>
+    <header th:replace="clientWeb/header :: headerFragment"/>
 
 </head>
 <body>
@@ -94,7 +94,8 @@
                                 <ul class="product__item__pic__hover">
                                     <li><a href="#"><i class="fa fa-heart"></i></a></li>
                                     <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                    <li><a href="#"  class="putInCart" ><i class="fa fa-shopping-cart"></i></a></li>
+<!--                                    th:onclick="|javascript:putInCart('${product.productId}')|"-->
+                                    <li th:onclick="|javascript:putInCart('${product.productId}')|"><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
                                 </ul>
                             </div>
                             <div class="product__item__text">
@@ -119,13 +120,16 @@
 <!-- Product Section End -->
 
 
-<footer th:replace="clientWeb/footer :: footerFragment"></footer>
+<footer th:replace="clientWeb/footer :: footerFragment"/>
 
-<script type="text/javascript" src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script type="text/javascript">
-    $('.putInCart').onclick(function () {
-        alert('장바구니에 들어갔습니다.');
-    })
+
+function putInCart(productId) {
+    alert(productId);
+
+
+
+}
 
 </script>
 
