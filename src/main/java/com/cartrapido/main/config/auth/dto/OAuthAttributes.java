@@ -1,7 +1,7 @@
 package com.cartrapido.main.config.auth.dto;
 
 
-import com.cartrapido.main.domain.Member;
+import com.cartrapido.main.domain.entity.Member;
 import com.cartrapido.main.domain.Role;
 import lombok.Builder;
 import lombok.Getter;

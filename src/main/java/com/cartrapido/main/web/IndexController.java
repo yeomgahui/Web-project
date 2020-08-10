@@ -1,7 +1,7 @@
 package com.cartrapido.main.web;
 
 import com.cartrapido.main.config.auth.dto.SessionUser;
-import com.cartrapido.main.domain.Member;
+import com.cartrapido.main.domain.entity.Member;
 import com.cartrapido.main.service.MemberService;
 import com.cartrapido.main.web.dto.MemberDTO;
 import lombok.RequiredArgsConstructor;

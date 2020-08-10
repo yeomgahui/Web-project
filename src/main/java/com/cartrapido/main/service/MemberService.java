@@ -2,12 +2,10 @@ package com.cartrapido.main.service;
 
 
 import com.cartrapido.main.config.auth.dto.SessionUser;
-import com.cartrapido.main.domain.Member;
-import com.cartrapido.main.domain.MemberRepository;
+import com.cartrapido.main.domain.entity.Member;
+import com.cartrapido.main.domain.repository.MemberRepository;
 import com.cartrapido.main.domain.Role;
 import com.cartrapido.main.web.dto.MemberDTO;
-import com.cartrapido.main.web.dto.MemberListResponseDto;
-import com.cartrapido.main.web.dto.MemberResponseDto;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -23,7 +21,6 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor

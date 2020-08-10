@@ -1,5 +1,6 @@
-package com.cartrapido.main.domain;
+package com.cartrapido.main.domain.entity;
 
+import com.cartrapido.main.domain.Role;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -56,4 +57,5 @@ public class Member {
         public String getRoleKey(){
             return this.role.getKey();
         }
+
 }
