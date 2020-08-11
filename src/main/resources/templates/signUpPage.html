@@ -5,6 +5,9 @@
     <title>CartRapido</title>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <style>
+        html{
+            height: 100%;
+        }
         body#SignUpForm{ background-image:url("https://hdwallsource.com/img/2014/9/blur-26347-27038-hd-wallpapers.jpg");
             background-repeat:no-repeat;
             background-position:center;
@@ -80,7 +83,6 @@
             display: inline-block;
 
         }
-
     </style>
 </head>
 
@@ -92,17 +94,27 @@
                 <h2>Create an account to start shopping</h2>
             </div>
             <br>
-            <form id="signUp" action="#" th:action="@{/user/signUpPage}" name="signUp" method="POST">
+            <form id="signUp" name="signUp" th:action="@{/user/signUp}">
+                <div class="custom-control custom-checkbox" style="float: left">
+                    <input type="checkbox" id="jb-checkbox" class="custom-control-input">
+                    <label class="custom-control-label" for="jb-checkbox">Shopper로 회원가입</label>
+                </div>
+                <input type="hidden" name = "role" id="role" th:value="USER">
+                <br><br>
+
                 <div class="form-group">
-                    <input type="email" class="form-control" name="email" id="inputEmail" placeholder="Email Address">
-                    <div id="emailDiv"></div>
+                    <input type="text" class="form-control" name="name" id="name" placeholder="이름 입력" required="required">
                 </div>
                 <div class="form-group">
-                    <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Password(min 6 characters)">
-                    <div id="pwdDiv"></div>
+                    <input type="email" class="form-control" name="email" id="email" placeholder="Email Address">
                 </div>
-                <input type="hidden" name ="address" value="{{address}}">
+                <div class="form-group">
+                    <input type="password" name="password" class="form-control" id="password" placeholder="Password(min 6 characters)">
+                </div>
+                <input type="hidden" name ="address" id="address" th:value="${address}">
+
                 <input type="button" id="signUpBtn" class="btn btn-signup" value="이메일로 회원가입">
+
             </form>
             <hr id="leftLine">
             <span style="color: gray">or</span>

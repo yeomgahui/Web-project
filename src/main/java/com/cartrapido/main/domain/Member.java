@@ -20,8 +20,6 @@ public class Member {
         private String name;
 
         @Column(nullable = false)
-        @NotBlank
-        @Email
         private String email;
 
         private String address;
@@ -50,6 +48,10 @@ public class Member {
 
         public Member update(String name){
             this.name = name;
+            return this;
+        }
+        public Member updatePwd(String pwd){
+            this.password = pwd;
             return this;
         }
 
