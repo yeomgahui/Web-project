@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 .gradle
 .idea
 application-oauth.properties
 
+=======
+# Created by .ignore support plugin (hsz.mobi)
+.gradle
+.idea
+application-oauth.properties
+>>>>>>> 5963872dc99b808d636acd298534b25b18e6f280

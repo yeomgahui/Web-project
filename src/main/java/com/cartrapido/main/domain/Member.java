@@ -20,6 +20,11 @@ public class Member {
         private String name;
 
         @Column(nullable = false)
+<<<<<<< HEAD
+=======
+        @NotBlank
+        @Email
+>>>>>>> 5963872dc99b808d636acd298534b25b18e6f280
         private String email;
 
         private String address;
@@ -50,10 +55,13 @@ public class Member {
             this.name = name;
             return this;
         }
+<<<<<<< HEAD
         public Member updatePwd(String pwd){
             this.password = pwd;
             return this;
         }
+=======
+>>>>>>> 5963872dc99b808d636acd298534b25b18e6f280
 
         public String getRoleKey(){
             return this.role.getKey();

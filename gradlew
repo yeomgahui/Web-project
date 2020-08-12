@@ -27,6 +27,9 @@
 PRG="$0"
 # Need this for relative symlinks.
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 5963872dc99b808d636acd298534b25b18e6f280
 while [ -h "$PRG" ] ; do
     ls=`ls -ld "$PRG"`
     link=`expr "$ls" : '.*-> \(.*\)$'`
@@ -43,6 +46,7 @@ cd "$SAVED" >/dev/null
 
 APP_NAME="Gradle"
 APP_BASE_NAME=`basename "$0"`
+<<<<<<< HEAD
 =======
 while [ -h "$PRG" ]; do
   ls=$(ls -ld "$PRG")
@@ -61,6 +65,8 @@ cd "$SAVED" >/dev/null
 APP_NAME="Gradle"
 APP_BASE_NAME=$(basename "$0")
 >>>>>>> c50b80867d793f3216419d2dd6b1380a3f54e55c
+=======
+>>>>>>> 5963872dc99b808d636acd298534b25b18e6f280
 
 # Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
 DEFAULT_JVM_OPTS='"-Xmx64m" "-Xms64m"'
@@ -69,6 +75,9 @@ DEFAULT_JVM_OPTS='"-Xmx64m" "-Xms64m"'
 MAX_FD="maximum"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 5963872dc99b808d636acd298534b25b18e6f280
 warn () {
     echo "$*"
 }
@@ -78,6 +87,7 @@ die () {
     echo "$*"
     echo
     exit 1
+<<<<<<< HEAD
 =======
 warn() {
   echo "$*"
@@ -89,6 +99,8 @@ die() {
   echo
   exit 1
 >>>>>>> c50b80867d793f3216419d2dd6b1380a3f54e55c
+=======
+>>>>>>> 5963872dc99b808d636acd298534b25b18e6f280
 }
 
 # OS specific support (must be 'true' or 'false').
@@ -97,6 +109,9 @@ msys=false
 darwin=false
 nonstop=false
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 5963872dc99b808d636acd298534b25b18e6f280
 case "`uname`" in
   CYGWIN* )
     cygwin=true
@@ -110,6 +125,7 @@ case "`uname`" in
   NONSTOP* )
     nonstop=true
     ;;
+<<<<<<< HEAD
 =======
 case "$(uname)" in
 CYGWIN*)
@@ -125,11 +141,16 @@ NONSTOP*)
   nonstop=true
   ;;
 >>>>>>> c50b80867d793f3216419d2dd6b1380a3f54e55c
+=======
+>>>>>>> 5963872dc99b808d636acd298534b25b18e6f280
 esac
 
 CLASSPATH=$APP_HOME/gradle/wrapper/gradle-wrapper.jar
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 5963872dc99b808d636acd298534b25b18e6f280
 
 # Determine the Java command to use to start the JVM.
 if [ -n "$JAVA_HOME" ] ; then
@@ -148,6 +169,7 @@ location of your Java installation."
 else
     JAVACMD="java"
     which java >/dev/null 2>&1 || die "ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH.
+<<<<<<< HEAD
 =======
 # Determine the Java command to use to start the JVM.
 if [ -n "$JAVA_HOME" ]; then
@@ -167,6 +189,8 @@ else
   JAVACMD="java"
   which java >/dev/null 2>&1 || die "ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH.
 >>>>>>> c50b80867d793f3216419d2dd6b1380a3f54e55c
+=======
+>>>>>>> 5963872dc99b808d636acd298534b25b18e6f280
 
 Please set the JAVA_HOME variable in your environment to match the
 location of your Java installation."
@@ -174,6 +198,9 @@ fi
 
 # Increase the maximum file descriptors if we can.
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 5963872dc99b808d636acd298534b25b18e6f280
 if [ "$cygwin" = "false" -a "$darwin" = "false" -a "$nonstop" = "false" ] ; then
     MAX_FD_LIMIT=`ulimit -H -n`
     if [ $? -eq 0 ] ; then
@@ -187,6 +214,7 @@ if [ "$cygwin" = "false" -a "$darwin" = "false" -a "$nonstop" = "false" ] ; then
     else
         warn "Could not query maximum file descriptor limit: $MAX_FD_LIMIT"
     fi
+<<<<<<< HEAD
 =======
 if [ "$cygwin" = "false" -a "$darwin" = "false" -a "$nonstop" = "false" ]; then
   MAX_FD_LIMIT=$(ulimit -H -n)
@@ -202,11 +230,16 @@ if [ "$cygwin" = "false" -a "$darwin" = "false" -a "$nonstop" = "false" ]; then
     warn "Could not query maximum file descriptor limit: $MAX_FD_LIMIT"
   fi
 >>>>>>> c50b80867d793f3216419d2dd6b1380a3f54e55c
+=======
+>>>>>>> 5963872dc99b808d636acd298534b25b18e6f280
 fi
 
 # For Darwin, add options to specify how the application appears in the dock
 if $darwin; then
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 5963872dc99b808d636acd298534b25b18e6f280
     GRADLE_OPTS="$GRADLE_OPTS \"-Xdock:name=$APP_NAME\" \"-Xdock:icon=$APP_HOME/media/gradle.icns\""
 fi
 
@@ -262,6 +295,7 @@ save () {
     echo " "
 }
 APP_ARGS=`save "$@"`
+<<<<<<< HEAD
 =======
   GRADLE_OPTS="$GRADLE_OPTS \"-Xdock:name=$APP_NAME\" \"-Xdock:icon=$APP_HOME/media/gradle.icns\""
 fi
@@ -319,6 +353,8 @@ save() {
 }
 APP_ARGS=$(save "$@")
 >>>>>>> c50b80867d793f3216419d2dd6b1380a3f54e55c
+=======
+>>>>>>> 5963872dc99b808d636acd298534b25b18e6f280
 
 # Collect all arguments for the java command, following the shell quoting and substitution rules
 eval set -- $DEFAULT_JVM_OPTS $JAVA_OPTS $GRADLE_OPTS "\"-Dorg.gradle.appname=$APP_BASE_NAME\"" -classpath "\"$CLASSPATH\"" org.gradle.wrapper.GradleWrapperMain "$APP_ARGS"

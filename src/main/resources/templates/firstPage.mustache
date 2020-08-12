@@ -5,9 +5,13 @@
     <title>CartRapido</title>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <style>
+<<<<<<< HEAD
         html{
             height: 100%;
         }
+=======
+
+>>>>>>> 5963872dc99b808d636acd298534b25b18e6f280
         body#ZipcodeForm{
             background-image:url("https://hdwallsource.com/img/2014/9/blur-26347-27038-hd-wallpapers.jpg");
             background-repeat:no-repeat; background-position:center; background-size:cover; padding:10px;}
@@ -95,6 +99,7 @@
         }
         .back { text-align: left; margin-top:10px;}
         .back a {color: #444444; font-size: 13px;text-decoration: none;}
+<<<<<<< HEAD
         .goBtn{
             cursor: pointer;
             border: 1px solid transparent;
@@ -112,6 +117,8 @@
             min-height: 48px;
             margin: 12px 0px 0px;
         }
+=======
+>>>>>>> 5963872dc99b808d636acd298534b25b18e6f280
 
     </style>
 </head>
@@ -132,7 +139,11 @@
                     <h2 style="font-size: 18px; font-weight: 600; color: rgb(117,117,117); line-height: 1.3em; margin: 8px 0px 16px;
                                 text-align: center;">
                     </h2>
+<<<<<<< HEAD
                     <form name="zipcodeForm" method="post" action="/user/signUpPage" >
+=======
+                    <form name="zipcodeForm">
+>>>>>>> 5963872dc99b808d636acd298534b25b18e6f280
                         <div style="position: relative; ">
                             <div>
                                 <div aria-owns="location-chooser-listbox" aria-expanded="false" >
@@ -143,7 +154,11 @@
                                     </button>
                                     <div style="cursor: auto; display: inline-block; position: relative; width: 100%;">
                                         <div  style="border-radius: 4px; position: relative;">
+<<<<<<< HEAD
                                             <input id="autocomplete" onFocus="geolocate()" id="address" name="address" placeholder ="Address or zip code" type="text" required style="background-color: rgb(255, 255, 255); border: 1px solid rgb(189, 189, 189); border-radius: 4px; box-sizing: border-box; color: rgb(66, 66, 66); font-size: 16px; height: 56px; margin: 0px; padding: 25px 8px 8px 60px; position: relative; width: 100%; opacity: 1; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+=======
+                                            <input id="autocomplete" onFocus="geolocate()" id="address" name="address_line_1" placeholder ="Address or zip code" type="text"  style="background-color: rgb(255, 255, 255); border: 1px solid rgb(189, 189, 189); border-radius: 4px; box-sizing: border-box; color: rgb(66, 66, 66); font-size: 16px; height: 56px; margin: 0px; padding: 25px 8px 8px 60px; position: relative; width: 100%; opacity: 1; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+>>>>>>> 5963872dc99b808d636acd298534b25b18e6f280
                                         </div>
                                         <div id="zipCodeDiv"></div>
                                     </div>
@@ -155,8 +170,16 @@
                         </div>
                     </form>
                     <div style="display: flex; justify-content: flex-end; width: 100%">
+<<<<<<< HEAD
                         <div style="float: right">
                             <input type="button" id="loginBtn" class="goBtn" value="로그인하러 가기" onclick="window.location='/user/loginPage'">
+=======
+                        <div style="float: left">
+                            <a href="/signInToShopper" role ="button" id="signInShopperBtn" >Become a Shopper</a>
+                        </div>
+                        <div style="float: right">
+                            <a href="/user/loginPage" role ="button" id="signInBtn" >Log in</a>
+>>>>>>> 5963872dc99b808d636acd298534b25b18e6f280
                         </div>
                     </div>
                 </div>

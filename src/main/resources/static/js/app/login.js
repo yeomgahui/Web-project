@@ -16,6 +16,10 @@ $("#loginBtn").click(function (){
     }else if($('#inputPassword').val() == ''){
         $("#pwdDiv").text("비밀번호를 입력해주세요.").css("color","gray").css("font-size","10pt");
     }else{
+<<<<<<< HEAD
+=======
+        alert("dd");
+>>>>>>> 5963872dc99b808d636acd298534b25b18e6f280
         document.LoginForm.submit();
     }
 });

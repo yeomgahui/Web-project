@@ -1,4 +1,5 @@
 package com.cartrapido.main;
+<<<<<<< HEAD
 
 
 
@@ -51,11 +52,23 @@ public class Application{
     }
 
 
+=======
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+
+@EnableJpaAuditing
+@SpringBootApplication
+public class Application {
+>>>>>>> 5963872dc99b808d636acd298534b25b18e6f280
     public static void main(String[] args) {
         //Test
         SpringApplication.run(Application.class, args);
     }
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> 5963872dc99b808d636acd298534b25b18e6f280
 }

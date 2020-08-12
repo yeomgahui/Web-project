@@ -92,10 +92,15 @@
                 <h2>Welcome back</h2>
                 <p>Log in with your email and password</p>
             </div>
+<<<<<<< HEAD
             <form name="LoginForm" th:action="@{/user/loginPage}" method="post">
 <!--
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 -->
+=======
+            <form id="LoginForm" name="LoginForm" th:action="@{/login}" method="post">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+>>>>>>> 5963872dc99b808d636acd298534b25b18e6f280
                 <div class="form-group">
                     <input type="email" class="form-control" name="username" id="inputEmail"  placeholder="Email Address">
                     <div id="emailDiv"></div>
@@ -104,9 +109,12 @@
                     <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Password(min 6 characters)">
                     <div id="pwdDiv"></div>
                 </div>
+<<<<<<< HEAD
                 <div th:if="${param.error}">
                     <p class="error-message" th:text="${errorMessage}">User Name or Password invalid, please verify</p>
                 </div>
+=======
+>>>>>>> 5963872dc99b808d636acd298534b25b18e6f280
                 <input type="button" id="loginBtn" class="btn btn-primary" value="Log in">
             </form>
             <hr id="leftLine">
@@ -119,11 +127,19 @@
             <a href="/" style="color: green">Sign up</a>
             </span><br><br>
             <span>비밀번호를 잊으셨나요?
+<<<<<<< HEAD
             <a href="/mail" style="color: green; font-weight: bold">Reset it</a>
+=======
+            <a href="" style="color: green; font-weight: bold">Reset it</a>
+>>>>>>> 5963872dc99b808d636acd298534b25b18e6f280
             </span>
         </div>
     </div></div></div>
 
+<<<<<<< HEAD
+=======
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+>>>>>>> 5963872dc99b808d636acd298534b25b18e6f280
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src ="/js/app/login.js"></script>
