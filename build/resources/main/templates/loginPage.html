@@ -92,8 +92,10 @@
                 <h2>Welcome back</h2>
                 <p>Log in with your email and password</p>
             </div>
-            <form id="LoginForm" name="LoginForm" th:action="@{/login}" method="post">
+            <form name="LoginForm" th:action="@{/user/loginPage}" method="post">
+<!--
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+-->
                 <div class="form-group">
                     <input type="email" class="form-control" name="username" id="inputEmail"  placeholder="Email Address">
                     <div id="emailDiv"></div>
@@ -101,6 +103,9 @@
                 <div class="form-group">
                     <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Password(min 6 characters)">
                     <div id="pwdDiv"></div>
+                </div>
+                <div th:if="${param.error}">
+                    <p class="error-message" th:text="${errorMessage}">User Name or Password invalid, please verify</p>
                 </div>
                 <input type="button" id="loginBtn" class="btn btn-primary" value="Log in">
             </form>
@@ -114,12 +119,11 @@
             <a href="/" style="color: green">Sign up</a>
             </span><br><br>
             <span>비밀번호를 잊으셨나요?
-            <a href="" style="color: green; font-weight: bold">Reset it</a>
+            <a href="/mail" style="color: green; font-weight: bold">Reset it</a>
             </span>
         </div>
     </div></div></div>
 
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src ="/js/app/login.js"></script>

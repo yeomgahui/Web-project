@@ -71,7 +71,6 @@ public class OAuthAttributes {
         return Member.builder()
                 .name(name)
                 .email(email)
-                .address("address")
                 .role(Role.USER)
                 .build();
     }
