@@ -21,7 +21,6 @@ public class OAuthAttributes {
     @Builder
     public OAuthAttributes(Map<String, Object> attributes, String nameAttributeKey, String name, String email, String address) {
         System.out.println("OAuthAttributes 들어옴");
-
         this.attributes = attributes;
         this.nameAttributeKey = nameAttributeKey;
         this.name = name;

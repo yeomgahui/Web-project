@@ -82,7 +82,6 @@ public class IndexController {
         session.setAttribute("userName",user.getName());
         session.setAttribute("userEmail",user.getEmail());
         session.setAttribute("userAddress",user.getAddress());
-
         return "/clientWebBody/clientMain";
     }
 
