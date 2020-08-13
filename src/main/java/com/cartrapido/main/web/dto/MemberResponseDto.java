@@ -1,6 +1,6 @@
 package com.cartrapido.main.web.dto;
 
-import com.cartrapido.main.domain.Member;
+import com.cartrapido.main.domain.entity.Member;
 import lombok.Getter;
 
 @Getter
