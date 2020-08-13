@@ -67,7 +67,7 @@ public class IndexController {
         session.setAttribute("userEmail",user.getEmail());
         session.setAttribute("userAddress",user.getAddress());
 
-        return "/shopperTest.html";
+        return "/shopperWebBody/firstPage.html";
     }
 
 
