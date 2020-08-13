@@ -39,4 +39,9 @@ dependencies {
     compile('org.springframework.session:spring-session-jdbc')
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.session:spring-session-core'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+    compile "com.sun.mail:javax.mail"
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+
 }

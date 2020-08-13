@@ -10,9 +10,8 @@ public class ShopperController {
 
     @GetMapping("/shopperWeb")
     public String shopperWeb() {
-        return "/shopperWebBody/firstPage.html";
+        return "/shopperWebBody/firstPage.mustache";
     }
-
 
     @GetMapping("/chatting")
     public String shopperMain() {

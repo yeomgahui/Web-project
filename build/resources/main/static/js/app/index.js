@@ -3,10 +3,6 @@ var  main = {
     init : function(){
         var _this = this;
 
-/*        $('btn-success').on('click', function () {
-            alert('register 클릭시')
-            _this.save();
-        });*/
 
         $('#btn-success').on('click', function () {
             alert('register 클릭시')
