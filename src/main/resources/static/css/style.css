@@ -1624,7 +1624,7 @@ ol {
 	padding-top: 10px;
 }
 
-.product__pagination a,
+.product__pagination div a,
 .blog__pagination a {
 	display: inline-block;
 	width: 30px;
@@ -1650,9 +1650,14 @@ ol {
 	color: #ffffff;
 }
 
+.product__pagination div a:active,
+.blog__pagination a:active {
+	color: darkred;
+}
+
 .product__pagination a:last-child,
 .blog__pagination a:last-child {
-	margin-right: 0;
+	margin-right: 16px;
 }
 
 /*---------------------

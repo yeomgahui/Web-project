@@ -135,8 +135,74 @@ public class ProductService {
     }
 
     @Transactional
-    public Page<Product> productListPage(Pageable pageable) {
+    public Page<Product> pagingProduct(Pageable pageable) {
         Page<Product> pagingProduct = productRepository.findAll(pageable);
         return pagingProduct;
+    }
+
+    //페이지 적용
+    @Transactional
+    public List<ProductDTO> getStoreProductList(String store, Pageable pageable){
+
+        Page<Product> pagingStoreProduct = productRepository.findAllByStore(store, pageable);
+        List<Product> storeProducts = pagingStoreProduct.getContent();
+
+        List<ProductDTO> productDTOList = new ArrayList<>();
+
+        for(Product product : storeProducts){
+            ProductDTO productDTO = ProductDTO.builder()
+                    .productId(product.getProductId())
+                    .productName(product.getProductName())
+                    .productPrice(product.getProductPrice())
+                    .productQty(product.getProductQty())
+                    .productContent(product.getProductContent())
+                    .store(product.getStore())
+                    .category(product.getCategory())
+                    .image(product.getImage())
+                    .build();
+
+            productDTOList.add(productDTO);
+
+        }
+        return productDTOList;
+    }
+
+    @Transactional
+    public Page<Product> pagingStoreProduct(String store, Pageable pageable) {
+        Page<Product> pagingStoreProduct = productRepository.findAllByStore(store, pageable);
+        return pagingStoreProduct;
+    }
+
+    //페이지 적용
+    @Transactional
+    public List<ProductDTO> getCategoryProductList(String store, String category, Pageable pageable){
+
+        Page<Product> pagingCategoryProduct = productRepository.findAllByStoreAndCategory(store, category, pageable);
+        List<Product> categoryProducts = pagingCategoryProduct.getContent();
+
+        List<ProductDTO> productDTOList = new ArrayList<>();
+
+        for(Product product : categoryProducts){
+            ProductDTO productDTO = ProductDTO.builder()
+                    .productId(product.getProductId())
+                    .productName(product.getProductName())
+                    .productPrice(product.getProductPrice())
+                    .productQty(product.getProductQty())
+                    .productContent(product.getProductContent())
+                    .store(product.getStore())
+                    .category(product.getCategory())
+                    .image(product.getImage())
+                    .build();
+
+            productDTOList.add(productDTO);
+
+        }
+        return productDTOList;
+    }
+
+    @Transactional
+    public Page<Product> pagingCategoryProduct(String store, String category, Pageable pageable) {
+        Page<Product> pagingCategoryProduct = productRepository.findAllByStoreAndCategory(store, category, pageable);
+        return pagingCategoryProduct;
     }
 }

@@ -165,11 +165,9 @@
                                                             <span class="product-price">원</span>
                                                         </div>
                                                         <p><span class="product-content"></span></p>
-                                                        <div class="product__details__quantity">
-                                                            <div class="quantity">
-                                                                <div class="pro-qty">
-                                                                    <input type="text" value="1">
-                                                                </div>
+                                                        <div class="product__details__quantity " style="width : 120px; display: inline-block;">
+                                                            <div class="pro-qty" >
+                                                                <input type="text" value="1">
                                                             </div>
                                                         </div>
                                                         <a href="#" class="primary-btn">ADD TO CARD</a>
@@ -332,10 +330,17 @@
                     <!-- 제품 데이터 끝-->
                 </div>
                 <!--페이징-->
-                <div class="product__pagination pagination justify-content-center" >
-                    <a href="#"><i class="fa fa-long-arrow-left"></i></a>
-                    <a th:each="i : ${#numbers.sequence(startPage, endPage)}" th:text="${i}"></a>
-                    <a href="#"><i class="fa fa-long-arrow-right" ></i></a>
+                <div th:style="!${productList.isEmpty() ? 'display:block' : 'display:none'}"
+                     class="product__pagination pagination justify-content-center">
+                    <div>
+                        <a th:href="@{'/clientMart/'+${mart}+'?page=0'}"><i class="fa fa-long-arrow-left"></i></a>
+                    </div>
+                    <div th:each="i : ${#numbers.sequence(startPage, endPage)}">
+                        <a th:href="@{'/clientMart/'+${mart}+'?page='+${i}}"><i th:text="${i}+1" ></i></a>
+                    </div>
+                    <div>
+                        <a th:href="@{'/clientMart/'+${mart}+'?page='+${endEndPage}}"><i class="fa fa-long-arrow-right" ></i></a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -369,7 +374,6 @@
 
     $(document).ready(function () {
         $('.modaldata').click(function () {
-            alert($(this).data('name'));
             //$.ajax()
             $('h3.product-name').text($(this).data('name'));
             $('span.product-price').text($(this).data('price'));
