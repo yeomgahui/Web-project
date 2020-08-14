@@ -26,7 +26,6 @@
 # Resolve links: $0 may be a link
 PRG="$0"
 # Need this for relative symlinks.
-<<<<<<< HEAD
 while [ -h "$PRG" ] ; do
     ls=`ls -ld "$PRG"`
     link=`expr "$ls" : '.*-> \(.*\)$'`
@@ -43,7 +42,7 @@ cd "$SAVED" >/dev/null
 
 APP_NAME="Gradle"
 APP_BASE_NAME=`basename "$0"`
-=======
+
 while [ -h "$PRG" ]; do
   ls=$(ls -ld "$PRG")
   link=$(expr "$ls" : '.*-> \(.*\)$')
@@ -60,7 +59,7 @@ cd "$SAVED" >/dev/null
 
 APP_NAME="Gradle"
 APP_BASE_NAME=$(basename "$0")
->>>>>>> c50b80867d793f3216419d2dd6b1380a3f54e55c
+
 
 # Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
 DEFAULT_JVM_OPTS='"-Xmx64m" "-Xms64m"'
@@ -68,7 +67,7 @@ DEFAULT_JVM_OPTS='"-Xmx64m" "-Xms64m"'
 # Use the maximum available, or set MAX_FD != -1 to use that value.
 MAX_FD="maximum"
 
-<<<<<<< HEAD
+
 warn () {
     echo "$*"
 }
@@ -78,7 +77,7 @@ die () {
     echo "$*"
     echo
     exit 1
-=======
+
 warn() {
   echo "$*"
 }
@@ -88,7 +87,7 @@ die() {
   echo "$*"
   echo
   exit 1
->>>>>>> c50b80867d793f3216419d2dd6b1380a3f54e55c
+
 }
 
 # OS specific support (must be 'true' or 'false').
@@ -96,7 +95,7 @@ cygwin=false
 msys=false
 darwin=false
 nonstop=false
-<<<<<<< HEAD
+
 case "`uname`" in
   CYGWIN* )
     cygwin=true
@@ -110,7 +109,7 @@ case "`uname`" in
   NONSTOP* )
     nonstop=true
     ;;
-=======
+
 case "$(uname)" in
 CYGWIN*)
   cygwin=true
@@ -124,12 +123,12 @@ MINGW*)
 NONSTOP*)
   nonstop=true
   ;;
->>>>>>> c50b80867d793f3216419d2dd6b1380a3f54e55c
+
 esac
 
 CLASSPATH=$APP_HOME/gradle/wrapper/gradle-wrapper.jar
 
-<<<<<<< HEAD
+
 
 # Determine the Java command to use to start the JVM.
 if [ -n "$JAVA_HOME" ] ; then
@@ -148,7 +147,7 @@ location of your Java installation."
 else
     JAVACMD="java"
     which java >/dev/null 2>&1 || die "ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH.
-=======
+
 # Determine the Java command to use to start the JVM.
 if [ -n "$JAVA_HOME" ]; then
   if [ -x "$JAVA_HOME/jre/sh/java" ]; then
@@ -166,14 +165,14 @@ location of your Java installation."
 else
   JAVACMD="java"
   which java >/dev/null 2>&1 || die "ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH.
->>>>>>> c50b80867d793f3216419d2dd6b1380a3f54e55c
+
 
 Please set the JAVA_HOME variable in your environment to match the
 location of your Java installation."
 fi
 
 # Increase the maximum file descriptors if we can.
-<<<<<<< HEAD
+
 if [ "$cygwin" = "false" -a "$darwin" = "false" -a "$nonstop" = "false" ] ; then
     MAX_FD_LIMIT=`ulimit -H -n`
     if [ $? -eq 0 ] ; then
@@ -187,7 +186,7 @@ if [ "$cygwin" = "false" -a "$darwin" = "false" -a "$nonstop" = "false" ] ; then
     else
         warn "Could not query maximum file descriptor limit: $MAX_FD_LIMIT"
     fi
-=======
+
 if [ "$cygwin" = "false" -a "$darwin" = "false" -a "$nonstop" = "false" ]; then
   MAX_FD_LIMIT=$(ulimit -H -n)
   if [ $? -eq 0 ]; then
@@ -201,12 +200,12 @@ if [ "$cygwin" = "false" -a "$darwin" = "false" -a "$nonstop" = "false" ]; then
   else
     warn "Could not query maximum file descriptor limit: $MAX_FD_LIMIT"
   fi
->>>>>>> c50b80867d793f3216419d2dd6b1380a3f54e55c
+
 fi
 
 # For Darwin, add options to specify how the application appears in the dock
 if $darwin; then
-<<<<<<< HEAD
+
     GRADLE_OPTS="$GRADLE_OPTS \"-Xdock:name=$APP_NAME\" \"-Xdock:icon=$APP_HOME/media/gradle.icns\""
 fi
 
@@ -262,7 +261,7 @@ save () {
     echo " "
 }
 APP_ARGS=`save "$@"`
-=======
+
   GRADLE_OPTS="$GRADLE_OPTS \"-Xdock:name=$APP_NAME\" \"-Xdock:icon=$APP_HOME/media/gradle.icns\""
 fi
 
@@ -318,7 +317,7 @@ save() {
   echo " "
 }
 APP_ARGS=$(save "$@")
->>>>>>> c50b80867d793f3216419d2dd6b1380a3f54e55c
+
 
 # Collect all arguments for the java command, following the shell quoting and substitution rules
 eval set -- $DEFAULT_JVM_OPTS $JAVA_OPTS $GRADLE_OPTS "\"-Dorg.gradle.appname=$APP_BASE_NAME\"" -classpath "\"$CLASSPATH\"" org.gradle.wrapper.GradleWrapperMain "$APP_ARGS"
