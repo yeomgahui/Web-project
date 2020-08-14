@@ -8,8 +8,11 @@ branches:
 
 
 
-before_script:
+before_install:
   - chmod +x gradlew
+
+
+
 # travis CI 서버의 Home
 cache:
   directories:
