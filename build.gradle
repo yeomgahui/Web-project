@@ -43,5 +43,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     compile "com.sun.mail:javax.mail"
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.4.1'
 
 }
