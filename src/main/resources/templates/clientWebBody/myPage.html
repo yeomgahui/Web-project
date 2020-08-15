@@ -41,19 +41,19 @@
                                     <div class="form-group row">
                                         <label class="col-form-label col-4">Username</label>
                                         <div class="col-8">
-                                            <input type="text" class="form-control" name="username" th:value="${session.userName}" required="required">
+                                            <input type="text" class="form-control" name="username" th:value="${session.user.name}" required="required">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-form-label col-4">이메일</label>
                                         <div class="col-8">
-                                            <input type="email" class="form-control" name="email" th:value="${session.userEmail}" required="required">
+                                            <input type="email" class="form-control" name="email" th:value="${session.user.email}" required="required">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-form-label col-4">주소</label>
                                         <div class="col-8">
-                                            <input type="text" class="form-control" name="address" th:value="${session.userAddress}" required="required">
+                                            <input type="text" class="form-control" name="address" th:value="${session.user.address}" required="required">
                                         </div>
                                     </div>
                                     <div class="form-group row">
