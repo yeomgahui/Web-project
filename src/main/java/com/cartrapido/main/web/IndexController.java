@@ -21,27 +21,23 @@ public class IndexController {
     //메인 페이지, zipcode입력 페이지
     @GetMapping("/")
     public String index(Model model){
-        System.out.println("첫페이지");
         return "/firstPage";
     }
 
     //로그인 페이지
     @GetMapping("/user/loginPage")
     public String loginPage(){
-        System.out.println("loginPage 진입");
         return "loginPage.html";
     }
 
     @PostMapping("/user/loginPage")
     public String loginPage2(){
-        System.out.println("loginPage 진입");
         return "loginPage.html";
     }
 
     //회원가입 페이지
     @PostMapping("/user/signUpPage")
     public String signUpPage(@RequestParam String address, Model model,HttpSession session){
-        System.out.println("signUpPage 진입");
         model.addAttribute("address",address);
         session.setAttribute("address",address);
         return "signUpPage.html";
@@ -50,24 +46,12 @@ public class IndexController {
 
     @GetMapping("/clientMain")
     public String clientWeb(Model model,HttpSession session) {
-        System.out.println("clientMain 진입");
-        /* username session duplicate error
-        SessionUser user = (SessionUser) httpSession.getAttribute("user");
-        session.setAttribute("userName",user.getName());
-        session.setAttribute("userEmail",user.getEmail());
-        session.setAttribute("userAddress",user.getAddress());*/
 
         return "/clientWebBody/clientMain.html";
     }
 
     @GetMapping("/shopperMain")
     public String shopperWeb(Model model,HttpSession session) {
-        System.out.println("shopperMain 진입");
-        /* username session duplicate error
-        SessionUser user = (SessionUser) httpSession.getAttribute("user");
-        session.setAttribute("userName",user.getName());
-        session.setAttribute("userEmail",user.getEmail());
-        session.setAttribute("userAddress",user.getAddress());*/
 
         return "/shopperWebBody/firstPage.html";
     }

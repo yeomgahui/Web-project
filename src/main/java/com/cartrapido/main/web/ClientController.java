@@ -1,5 +1,6 @@
 package com.cartrapido.main.web;
 
+import com.cartrapido.main.config.auth.dto.SessionUser;
 import com.cartrapido.main.domain.entity.Cart;
 import com.cartrapido.main.domain.entity.Product;
 import com.cartrapido.main.service.CartService;
@@ -110,7 +111,9 @@ public class ClientController {
                           @RequestParam(required=true,defaultValue="1") Integer amount) {
 
         ProductDTO productDTO = productService.getProductInfo(productId);
-        String userEmail = (String) session.getAttribute("userEmail");
+        SessionUser sessionUser = (SessionUser) session.getAttribute("user");
+        String userEmail = sessionUser.getEmail();
+
         System.out.println(productDTO.getStore()+" 상품을 카트에 넣는다");
         CartDTO cartDTO = new CartDTO(userEmail,productId,amount,
                 productDTO.getProductName(), productDTO.getProductPrice(),
@@ -145,8 +148,11 @@ public class ClientController {
 
     @GetMapping("/shoppingCart")
     public String shoppingCart(HttpSession session, Model model) {
-        String userEmail = (String) session.getAttribute("userEmail");
+        System.out.println("shoppingCart 진입");
+        SessionUser user = (SessionUser)session.getAttribute("user");
+        String userEmail = user.getEmail();
 
+        System.out.println("유저 이메일="+ userEmail);
         List<CartDTO> cartList = cartService.getCartList(userEmail);
 
         for(CartDTO cartDTO :cartList) {
@@ -157,21 +163,9 @@ public class ClientController {
         }
 
         model.addAttribute("cartList", cartList);
-        ;
+
         return "/clientWebBody/shoppingCart";
     }
-
-    @GetMapping("/clientChatting")
-    public String clientChatting() {
-
-        return "/clientWebBody/clientChatting.html";
-    }
-
-
-
-
-
-
 
 
 

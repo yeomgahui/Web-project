@@ -13,10 +13,7 @@ public class ShopperController {
         return "/shopperWebBody/firstPage.mustache";
     }
 
-    @GetMapping("/chatting")
-    public String shopperMain() {
-        return "/shopperWebBody/chatting";
-    }
+
     @GetMapping("/changePwd")
     public String changePwd() {
         return "/shopperWebBody/changePwd";
