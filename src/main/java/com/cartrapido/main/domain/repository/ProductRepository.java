@@ -2,6 +2,7 @@ package com.cartrapido.main.domain.repository;
 
 import com.cartrapido.main.domain.entity.Member;
 import com.cartrapido.main.domain.entity.Product;
+import com.cartrapido.main.service.CategoryMapping;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,6 +21,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     Page<Product> findAllByStore(String store, Pageable pageable);
     Page<Product> findAllByStoreAndCategory(String store, String category, Pageable pageable);
+
+    @Query("SELECT distinct p.category FROM Product p where p.store =:store")
+    List<String> findDistinctByStore(String store);
 
     /*Optional<Member> findByEmail(String email);*/
     /*@Query("SELECT p FROM member p ORDER BY p.id DESC")
