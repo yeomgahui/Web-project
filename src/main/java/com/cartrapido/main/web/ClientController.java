@@ -1,10 +1,16 @@
 package com.cartrapido.main.web;
 
 import com.cartrapido.main.domain.entity.Cart;
+import com.cartrapido.main.domain.entity.OrderNum;
+import com.cartrapido.main.domain.entity.OrderSheet;
 import com.cartrapido.main.domain.entity.Product;
 import com.cartrapido.main.service.CartService;
+import com.cartrapido.main.service.OrderNumService;
+import com.cartrapido.main.service.OrderSheetService;
 import com.cartrapido.main.service.ProductService;
 import com.cartrapido.main.web.dto.CartDTO;
+import com.cartrapido.main.web.dto.OrderNumDTO;
+import com.cartrapido.main.web.dto.OrderSheetDTO;
 import com.cartrapido.main.web.dto.ProductDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +36,12 @@ public class ClientController {
     @Autowired
     private CartService cartService;
 
+    @Autowired
+    private OrderSheetService orderSheetService;
+
+    @Autowired
+    private OrderNumService orderNumService;
+
 /*    @GetMapping("/clientMain")
     public String clientWeb() {
 
@@ -45,6 +57,7 @@ public class ClientController {
 //
 //        return "/clientWebBody/mart";
 //    }
+
 
 
 //    //마트별로(where store) 상품 보여줌 //
@@ -121,15 +134,26 @@ public class ClientController {
 
     @PostMapping("/clientWeb/pushOrder")
     @ResponseBody /*@ModelAttribute List<CartDTO> cartList*/
-    public void pushOrder(@RequestParam String test) {
-        System.out.println("주문서를 DB에 저장");
-/*        for(CartDTO dto : cartList){
-            System.out.println(dto.getProductName()+"을 " +dto.getAmount()+" 개 주문");
-        }*/
-
+    public void pushOrder(@RequestParam (value = "chbox[]") List<String> checkArr ) {
+        CartDTO cartDTO = cartService.getCartIdInfo(Long.parseLong(checkArr.get(0)));
+        String userEmail =cartDTO.getUserEmail();
+        OrderNumDTO orderNumDTO = new OrderNumDTO(
+                userEmail,null,0,0
+        );
+        //OrderNum 저장
+        OrderNum orderNum = orderNumService.saveOrderNum(orderNumDTO);
+        Long orderNum1 = orderNum.getOrderNum();
+        //OrderSheet 저장
+        for(String cartId : checkArr) {
+            cartDTO = cartService.getCartIdInfo(Long.parseLong(cartId));
+            OrderSheetDTO orderSheetDTO = new OrderSheetDTO(
+                    orderNum1, orderNumDTO.getUserEmail(),
+                    cartDTO.getProductId(), cartDTO.getAmount()
+            );
+            orderSheetService.saveOrderSheet(orderSheetDTO);
+            cartService.deleteCart(Long.parseLong(cartId));
+        }
     }
-
-
 
     @GetMapping("/clientLayout")
     public String clientLayout() {
@@ -146,18 +170,26 @@ public class ClientController {
     @GetMapping("/shoppingCart")
     public String shoppingCart(HttpSession session, Model model) {
         String userEmail = (String) session.getAttribute("userEmail");
-
         List<CartDTO> cartList = cartService.getCartList(userEmail);
 
-        for(CartDTO cartDTO :cartList) {
-            System.out.println("카트 아이디 " + cartDTO.getCartId());
-            System.out.println("카트 주인 " + cartDTO.getUserEmail());
-            System.out.println("들어갈 상품 번호 " + cartDTO.getProductId());
-            System.out.println("들어갈 상품 번호 " + cartDTO.getImage());
+        if(cartList.size()!=0) {
+            for (CartDTO cartDTO : cartList) {
+                System.out.println("카트 아이디 " + cartDTO.getCartId());
+                System.out.println("카트 주인 " + cartDTO.getUserEmail());
+                System.out.println("들어갈 상품 번호 " + cartDTO.getProductId());
+                System.out.println("들어갈 상품 번호 " + cartDTO.getImage());
+            }
+            Long firstCartId = cartList.get(0).getCartId();
+            Long lastCartId = cartList.get(cartList.size() - 1).getCartId();
+            model.addAttribute("firstCartId", firstCartId);
+            model.addAttribute("lastCartId", lastCartId);
+            model.addAttribute("cartList", cartList);
+        }else{
+            model.addAttribute("firstCartId", 0);
+            model.addAttribute("lastCartId", 0);
+            model.addAttribute("cartList", cartList);
         }
 
-        model.addAttribute("cartList", cartList);
-        ;
         return "/clientWebBody/shoppingCart";
     }
 

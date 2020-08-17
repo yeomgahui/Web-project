@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+<header th:replace="shopperWeb/header :: headerFragment"></header>
+
+<body>
+<div class="container-lg mt-5">
+    <div class="row">
+        <th:block th:include="shopperWeb/sidebar.html" ></th:block>
+
+        <div class="col-lg-9" id="col-lg-9" >
+            <!--            여기서부터 바디부분-->
+
+
+            <div class="card-hover-shadow-2x mb-3 card">
+                <div class="card-header-tab card-header">
+                    <div class="card-header-title font-size-lg text-capitalize font-weight-normal"><i class="fa fa-tasks">
+
+                    </i>&nbsp;주문서 상세정보</div>
+                </div>
+                <div class="scroll-area-sm">
+                    <perfect-scrollbar class="ps-show-limits">
+                        <div style="position: static;" class="ps ps--active-y">
+                            <div class="ps-content">
+                                <ul class=" list-group list-group-flush">
+
+
+
+                                    <!--for each-->
+                                    <div class="card wish-list mb-3">
+                                        <br>
+                                        <h5 align="center" class="mb-4"> (<span>Ajax하기</span> n개 items)</h5>
+
+
+                                        <!--여기서부터 for each로 돌려서 장바구니 추가되게 해야함-->
+                                        <div class="card-body" th:each="orderSheet : ${orderSheetList}">
+
+                                            <div class="row mb-4">
+                                                <div class="col-md-5 col-lg-3 col-xl-3">
+                                                    <div class="view zoom overlay z-depth-1 rounded mb-3 mb-md-0">
+
+                                                        <img th:src="@{'/img/product/'+${orderSheet.image}}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-7 col-lg-9 col-xl-9">
+                                                    <div>
+                                                        <div class="d-flex justify-content-between">
+                                                            <div>
+                                                                <span th:text="${orderSheet.store}"/><br>
+                                                                <h5><span th:text="${orderSheet.productName}"/></h5>
+                                                                <!--                                                        <p class="mb-3 text-muted text-uppercase small">Shirt - blue</p>
+                                                                                                                        <p class="mb-2 text-muted text-uppercase small">Color: blue</p>
+                                                                                                                        <p class="mb-3 text-muted text-uppercase small">Size: M</p>-->
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-flex justify-content-between align-items-center">
+
+                                                            <p class="mb-0"><span><strong>
+                                                        <span th:align="center" th:text="${orderSheet.productPrice}"/>
+                                                    </strong></span></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <!--for each 여기까지 -->
+                                    </div>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </perfect-scrollbar>
+                </div>
+                <div class="d-block text-right card-footer"><button class="mr-2 btn btn-link btn-sm">Cancel</button><button class="btn btn-primary">Add Task</button></div>
+            </div>
+
+            <!--여기까지 바디-->
+        </div>
+
+
+
+
+    </div>
+</div>
+
+
+
+</body>
+</html>

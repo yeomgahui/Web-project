@@ -66,4 +66,26 @@ public class CartService {
 
         return cartDTOList;
     }
+
+    public CartDTO getCartIdInfo(Long cartId) {
+        Cart cart = cartRepository.findAllByCartId(cartId);
+        CartDTO cartDTO = CartDTO.builder()
+                .userEmail(cart.getUserEmail())
+                .productId(cart.getProductId())
+                .amount(cart.getAmount())
+                .productName(cart.getProductName())
+                .productPrice(cart.getProductPrice())
+                .image(cart.getImage())
+                .store(cart.getStore())
+                .build();
+        return cartDTO;
+
+    }
+
+    public void deleteCart(Long cartId) {
+        cartRepository.deleteById(cartId);
+        System.out.println(cartId+" 카트 튜플을 삭제");
+
+//        cartRepository.deleteAllByCartId(cartId);
+    }
 }
