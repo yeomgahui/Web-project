@@ -1,0 +1,12 @@
+<div class="col-lg-3 col-md-5" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="sidebar">
+        <div class="sidebar__item">
+            <h4>Department</h4>
+            <ul>
+                <li th:each=" category : ${categoryList}">
+                    <a th:href="@{'/clientMart/'+${mart}+'/'+${category}}" th:text="${category}"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

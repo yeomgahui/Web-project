@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -204,5 +205,19 @@ public class ProductService {
     public Page<Product> pagingCategoryProduct(String store, String category, Pageable pageable) {
         Page<Product> pagingCategoryProduct = productRepository.findAllByStoreAndCategory(store, category, pageable);
         return pagingCategoryProduct;
+    }
+
+    @Transactional
+    public List<String> getCategoryList(String mart){
+        List<String> getCategoryList = productRepository.findDistinctByStore(mart);
+
+//        String category="";
+//        List<String> categoryList = new ArrayList<String>();
+//
+//        for(CategoryMapping str: getCategoryList){
+//            category= str.toString();
+//            categoryList.add(category);
+//        }
+        return getCategoryList;
     }
 }

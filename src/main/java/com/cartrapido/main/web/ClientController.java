@@ -5,10 +5,8 @@ import com.cartrapido.main.domain.entity.Cart;
 import com.cartrapido.main.domain.entity.OrderNum;
 import com.cartrapido.main.domain.entity.OrderSheet;
 import com.cartrapido.main.domain.entity.Product;
-import com.cartrapido.main.service.CartService;
-import com.cartrapido.main.service.OrderNumService;
-import com.cartrapido.main.service.OrderSheetService;
-import com.cartrapido.main.service.ProductService;
+import com.cartrapido.main.domain.repository.ProductRepository;
+import com.cartrapido.main.service.*;
 import com.cartrapido.main.web.dto.CartDTO;
 import com.cartrapido.main.web.dto.OrderNumDTO;
 import com.cartrapido.main.web.dto.OrderSheetDTO;
@@ -77,14 +75,17 @@ public class ClientController {
     //마트별로(where store) 상품 보여줌 //
     @GetMapping("/clientMart/{mart}")
     public String mart(@PathVariable("mart") String mart, Model model,
-                       @PageableDefault(size=3, sort = "productId", direction = Sort.Direction.DESC)Pageable pageable) {
+                       @PageableDefault(size=30, sort = "productId", direction = Sort.Direction.ASC)Pageable pageable) {
         List<ProductDTO> productList = productService.getStoreProductList(mart, pageable);
         Page<Product> products = productService.pagingStoreProduct(mart, pageable);
+        List<String> categoryList = productService.getCategoryList(mart);
+
         int startPage = Math.max(0, products.getPageable().getPageNumber()-2);
         int endPage = Math.min(products.getPageable().getPageNumber()+2, products.getTotalPages()-1);
         int endEndPage = products.getTotalPages()-1;
 
         model.addAttribute("productList",productList);
+        model.addAttribute("categoryList",categoryList);
         model.addAttribute("startPage",startPage);
         model.addAttribute("endPage",endPage);
         model.addAttribute("endEndPage",endEndPage);
@@ -98,7 +99,7 @@ public class ClientController {
     //마트별로(where store), 카테고리별로(where category) 상품보여줌 //
     @GetMapping("/clientMart/{mart}/{category}")
     public String category( @PathVariable("mart") String mart, @PathVariable("category") String category, Model model,
-                            @PageableDefault(size=3, sort = "productId", direction = Sort.Direction.DESC)Pageable pageable) {
+                            @PageableDefault(size=30, direction = Sort.Direction.ASC)Pageable pageable) {
 
         List<ProductDTO> productList = productService.getCategoryProductList(mart, category, pageable);
         Page<Product> products = productService.pagingCategoryProduct(mart, category, pageable);
@@ -107,12 +108,15 @@ public class ClientController {
         int endPage = Math.min(products.getPageable().getPageNumber()+2, products.getTotalPages()-1);
         int endEndPage = products.getTotalPages()-1;
 
+        List<String> categoryList = productService.getCategoryList(mart);
+
         model.addAttribute("productList",productList);
+        model.addAttribute("categoryList",categoryList);
+        model.addAttribute("category",category);
         model.addAttribute("startPage",startPage);
         model.addAttribute("endPage",endPage);
         model.addAttribute("endEndPage",endEndPage);
         model.addAttribute("mart",mart);
-        model.addAttribute("category",category);
         model.addAttribute("products",products);
 
         return "/clientWebBody/category";
