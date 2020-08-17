@@ -16,7 +16,7 @@
 <section class="breadcrumb-section set-bg" style="background: #1e7e34">
     <div class="container">
         <div class="row">
-            <div class="col-lg-12 text-center">
+            <div class="col-lg-12 stext-center">
                 <div class="breadcrumb__text">
                     <h2><span th:text="${mart}"/></h2>
                     <!--..---------------------------.............-->
@@ -355,7 +355,9 @@
 <script type="text/javascript">
 
     function putInCart(productId) {
-        alert('상품을 장바구니에 추가하였습니다.');
+        //swal('','','success');
+        swal('상품을 장바구니에 넣었습니다.','','success');
+        //alert('상품을 장바구니에 추가하였습니다.');
 
         $.ajax({
             url: "/clientMart/putInCart",

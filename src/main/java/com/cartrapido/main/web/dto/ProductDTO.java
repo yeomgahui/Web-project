@@ -17,7 +17,7 @@ public class ProductDTO {
     private String productContent;
     private String store;
     private String category;
-    private String image;
+        private String image;
 
     public Product toEntity(){
         Product product = Product.builder()
