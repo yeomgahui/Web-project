@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+<header th:replace="shopperWeb/header :: headerFragment"></header>
+
+<body>
+<div class="container-lg mt-5">
+    <div class="row">
+        <th:block th:include="shopperWeb/sidebar.html" ></th:block>
+
+        <div class="col-lg-9" id="col-lg-9" >
+            <!--            여기서부터 바디부분-->
+
+
+                    <div class="card-hover-shadow-2x mb-3 card">
+                        <div class="card-header-tab card-header">
+                            <div class="card-header-title font-size-lg text-capitalize font-weight-normal"><i class="fa fa-tasks"></i>&nbsp;Order Sheets</div>
+                        </div>
+                        <div class="scroll-area-sm">
+                            <perfect-scrollbar class="ps-show-limits">
+                                <div style="position: static;" class="ps ps--active-y">
+                                    <div class="ps-content">
+                                        <ul class=" list-group list-group-flush">
+
+
+
+                                            <!--for each-->
+                                            <li class="list-group-item" th:each="orderNumList : ${orderNumList}">
+                                                <div class="todo-indicator bg-focus"></div>
+                                                <div class="widget-content p-0">
+                                                    <div class="widget-content-wrapper">
+                                                        <div class="widget-content-left">
+                                                            <div class="widget-heading orderTitle">
+                                                                <span id="orderNum"
+                                                                      th:value="${orderNumList.orderNum}"
+                                                                      th:text="${orderNumList.orderNum}"/>번 주문서</div>
+                                                            <div class="widget-subheading">
+                                                                <div>By <span th:text="${orderNumList.userEmail}"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="widget-content-right"> <button class="border-0 btn-transition btn btn-outline-success"> <i class="fa fa-check"></i></button> <button class="border-0 btn-transition btn btn-outline-danger"> <i class="fa fa-trash"></i> </button> </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <!--for each 여기까지 -->
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </perfect-scrollbar>
+                        </div>
+                        <div class="d-block text-right card-footer"><button class="mr-2 btn btn-link btn-sm">Cancel</button><button class="btn btn-primary">Add Task</button></div>
+                    </div>
+
+            <!--여기까지 바디-->
+        </div>
+
+
+
+
+
+    </div>
+</div>
+<script type="text/javascript" th:inline="javascript">
+    $('#orderNum').click(function () {
+        alert($('#orderNum').val());
+        $.ajax({
+            url: "/viewOrderSheet",
+            data: {orderNum: $('#orderNum').val()},
+            type: "POST",
+            dataType: "json"
+        }).done(function (json) {
+
+        });
+
+
+    });
+
+</script>
+
+</body>
+</html>
