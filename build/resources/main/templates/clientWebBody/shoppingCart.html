@@ -254,8 +254,6 @@
 
             //2.DB에 주문서 저장
 
-
-
             $.ajax({
                 url: "/clientWeb/pushOrder",
                 data: {chbox: checkArr},
@@ -265,7 +263,6 @@
                 success: function () {
                    //swal('주문서 제출 성공!', '', 'success');
                     location.href='/shoppingCart';
-                    //이거 수정해야함. 페이지를 다시 안불러옴
                 }
             });
 
