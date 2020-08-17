@@ -51,10 +51,11 @@ public class IndexController {
     @GetMapping("/clientMain")
     public String clientWeb(Model model,HttpSession session) {
         System.out.println("clientMain 진입");
+        /* username session duplicate error
         SessionUser user = (SessionUser) httpSession.getAttribute("user");
         session.setAttribute("userName",user.getName());
         session.setAttribute("userEmail",user.getEmail());
-        session.setAttribute("userAddress",user.getAddress());
+        session.setAttribute("userAddress",user.getAddress());*/
 
         return "/clientWebBody/clientMain.html";
     }
@@ -62,10 +63,11 @@ public class IndexController {
     @GetMapping("/shopperMain")
     public String shopperWeb(Model model,HttpSession session) {
         System.out.println("shopperMain 진입");
+        /* username session duplicate error
         SessionUser user = (SessionUser) httpSession.getAttribute("user");
         session.setAttribute("userName",user.getName());
         session.setAttribute("userEmail",user.getEmail());
-        session.setAttribute("userAddress",user.getAddress());
+        session.setAttribute("userAddress",user.getAddress());*/
 
         return "/shopperWebBody/firstPage.html";
     }

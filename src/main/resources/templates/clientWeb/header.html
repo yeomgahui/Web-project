@@ -180,7 +180,7 @@
                         <div class="header__top__left">
                             <ul>
                                 <li><i class="fa fa-enelope"></i> What's in My cart?</li>
-                                <li><span th:text="${session.userName}" ></span>님 환영합니다.</li>
+                                <li><span th:text="${session.user.name}" ></span>님 환영합니다.</li>
                             </ul>
                         </div>
                     </div>
@@ -195,6 +195,7 @@
 
                             <div class="header__top__right__auth">
                                 <a href="/clientMypage"><i class="fa fa-user"></i> My page</a>
+                                <a href="/logout" role="button">Log out</a>
 
                             </div>
                         </div>
