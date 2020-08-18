@@ -1,6 +1,13 @@
 var stompClient = null;
 var roomInfo = null;
+var address = null;
+var messageArea = null;
+var messageElement = null;
+
 function enterRoom(roomId) {
+    $("#messageArea").empty();
+    //채팅방 내역 뿌려준다.
+
     //채팅방 정보 db에서 가져온다...
     $.ajax({
         type: 'GET',
@@ -15,7 +22,55 @@ function enterRoom(roomId) {
             sender : data.sender,
             reciever : data.reciever
         };
+        $.ajax({
+            type: 'GET',
+            url: '/chat/findHistory',
+            data: "roomId="+ roomId,
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8'
+        }).done(function (data) {
+            //alert(JSON.stringify(data.list));
+            $.each(data.list, function(index,items){
+                messageArea = document.querySelector('#messageArea');
+
+                messageElement = document.createElement('li');
+
+                if(items.sender == roomInfo.sender){
+                    messageElement.classList.add('chat-left');
+                }else{
+                    messageElement.classList.add('chat-right');
+                }
+
+                /*보낸 사람 이름*/
+                var chatAvatar = document.createElement('div');
+                chatAvatar.classList.add('chat-avatar');
+                var avatarNameDiv = document.createElement('div');
+                avatarNameDiv.classList.add('chat-name');
+                var tempId = items.sender;
+                var idSplit = tempId.split('@');
+                var avatarName = document.createTextNode(idSplit[0]);
+                avatarNameDiv.appendChild(avatarName);
+                chatAvatar.appendChild(avatarNameDiv);
+                messageElement.appendChild(chatAvatar);
+
+                /*메시지 추가*/
+                var chatMessageDiv = document.createElement('div');
+                chatMessageDiv.classList.add('chat-text');
+                var chatMessage = document.createTextNode(items.message);
+                chatMessageDiv.appendChild(chatMessage);
+                messageElement.appendChild(chatMessageDiv);
+
+                messageArea.appendChild(messageElement);
+                var chatContent = document.querySelector('.chat-content');
+                chatContent.scrollTop = chatContent.scrollHeight;
+
+            });
+
+        });
+
+        address = "#room"+roomId;
         connect();
+
     }).fail(function (error) {
         alert(JSON.stringify(error));
     });
@@ -31,8 +86,8 @@ function enterRoom(roomId) {
 }
 function connect(){
     var socket = new SockJS('/ws');
-    stompClient = Stomp.over(socket);
 
+    stompClient = Stomp.over(socket);
     stompClient.connect({},onConnected, onError);
 
    /* stompClient.connect({},function () {
@@ -41,12 +96,18 @@ function connect(){
 }
 
 function onConnected() {
+    //alert(roomInfo.reciever);
     $(".selected-user .name").text(roomInfo.reciever);
 
-    stompClient.subscribe("/sub/chat/room/"+roomInfo.roomId, onMessageReceived);
+    if(document.querySelector(address).value == '0'){
+        document.querySelector(address).value = '1';
+        stompClient.subscribe("/sub/chat/room/"+roomInfo.roomId, onMessageReceived);
+    }else{
+    }
+
 }
 function onError(error) {
-    alert("error");
+
 }
 
 function onMessageReceived(message){
@@ -55,27 +116,49 @@ function onMessageReceived(message){
 
     var messageElement = document.createElement('li');
 
-
-
     if(recv.sender == roomInfo.sender){
-        alert('내가보낸거');
         messageElement.classList.add('chat-left');
-
     }else{
         messageElement.classList.add('chat-right');
     }
+    /*이름 프로필*/
+    /*var avatarElement = document.createElement('i');
+    var avatarText = document.createTextNode(message.sender[0]);
+    avatarElement.appendChild(avatarText);
+    avatarElement.style['background-color'] = getAvatarColor(message.sender);*/
+
+    /*보낸 사람 이름*/
+    var chatAvatar = document.createElement('div');
+    chatAvatar.classList.add('chat-avatar');
+    var avatarNameDiv = document.createElement('div');
+    avatarNameDiv.classList.add('chat-name');
+    var tempId = recv.sender;
+    var idSplit = tempId.split('@');
+    var avatarName = document.createTextNode(idSplit[0]);
+    avatarNameDiv.appendChild(avatarName);
+    chatAvatar.appendChild(avatarNameDiv);
+    messageElement.appendChild(chatAvatar);
+
+    /*메시지 추가*/
+    var chatMessageDiv = document.createElement('div');
+    chatMessageDiv.classList.add('chat-text');
+    var chatMessage = document.createTextNode(recv.message);
+    chatMessageDiv.appendChild(chatMessage);
+    messageElement.appendChild(chatMessageDiv);
 
     messageArea.appendChild(messageElement);
-    messageArea.scrollTop = messageArea.scrollHeight;
+    var chatContent = document.querySelector('.chat-content');
+    chatContent.scrollTop = chatContent.scrollHeight;
 }
 
 function sendMessage() {
+
     var messageContent = document.querySelector('#message').value.trim();
 
     if(messageContent && stompClient){
         var chatMessage ={
             roomId : roomInfo.roomId,
-            sender : roomInfo.reciever,
+            sender : roomInfo.sender,
             message: messageContent,
             type:'CHAT'
         };

@@ -47,6 +47,4 @@ public class ChatRoomService {
                 .collect(Collectors.toList());
     }
 
-
-
 }
