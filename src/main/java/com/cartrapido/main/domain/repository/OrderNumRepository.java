@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface OrderNumRepository extends JpaRepository<OrderNum,Long> {
     List<OrderNum> findAllByUserEmail(String userEmail);
+    List<OrderNum> findAllByShopper(String shopper);
 
+    OrderNum findByOrderNum(Long orderNum);
 
 }

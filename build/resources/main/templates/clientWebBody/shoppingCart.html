@@ -74,7 +74,7 @@
                                                        th:id="cartNum+${cart.cartId}"
                                                        th:data-id="${cart.cartId}"
                                                 >
-                                                <img th:src="@{'/img/product/'+${cart.image}}">
+                                                <img th:src="@{${cart.image}}">
                                             </div>
                                         </div>
                                         <div class="col-md-7 col-lg-9 col-xl-9">
@@ -85,19 +85,7 @@
                                                         <h5><span th:text="${cart.productName}"/></h5>
                                                     </div>
                                                     <div>
-                                                        <div>
-                                                            <input type="button"
-                                                                   class="btn btn-success btn-minus"
-                                                                   onclick="minusAmount($('#productQty').val())"
-                                                                   value="-"/>
-                                                            <input type="number" id="productQty"
-                                                                   style="width: 50px;"
-                                                                   value="1">
-                                                            <input type="button"
-                                                                   class="btn btn-success btn-sm btn-plus"
-                                                                   onclick="plusAmount($('#productQty').val())"
-                                                                   value="+"/>
-                                                        </div>
+
 
                                                     </div>
                                                 </div>
@@ -113,6 +101,19 @@
                                                                th:value="${cart.productPrice}">
                                                         <span th:align="center" th:text="${cart.productPrice}"/>
                                                     </strong></span></p>
+                                                </div>
+                                                <div align="right" >
+                                                    <input type="button"
+                                                           class="btn btn-success btn-sm btn-minus"
+                                                           onclick="minusAmount($('#productQty').val())"
+                                                           value="-"/>
+                                                    <input type="number" id="productQty"
+                                                           style="width: 50px;"
+                                                           value="1">
+                                                    <input type="button"
+                                                           class="btn btn-success btn-sm btn-plus"
+                                                           onclick="plusAmount($('#productQty').val())"
+                                                           value="+"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -211,16 +212,6 @@
         $('#payTot').text(payTot);
 
 
-        $('.dec').click(function () {
-            //alert('물품 감소');
-
-        });
-
-        $('.inc').click(function () {
-            //alert('물품 증가');
-
-        });
-
 
         $('#chBox').click(function () {
 //            alert($('#chBox').data('cartId'));
@@ -283,24 +274,24 @@
     };
 
     function plusAmount(amount) {
-        var temAmount = parseInt(amount) - 1;
-        if (amount < 0 || amount > 100) {
+        var tepAmount = parseInt(amount)+1;
+        if (amount < 1 || amount > 99) {
             return;
         }
-        $('#productQty').val(parseInt(amount) + 1);
+        $('#productQty').val(tepAmount);
 
-        alert(amount);
+        alert(tepAmount);
 
     };
 
     function minusAmount(amount) {
-        var temAmount = parseInt(amount) - 1;
-        if (amount < 0 || amount > 100) {
+        var tepAmount = parseInt(amount)-1;
+        if (amount < 1 || amount > 99) {
             return;
         }
-        $('#productQty').val(parseInt(amount) - 1);
+        $('#productQty').val(tepAmount);
 
-        alert(amount);
+        alert(tepAmount);
 
     };
 
