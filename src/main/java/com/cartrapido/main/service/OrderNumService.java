@@ -49,6 +49,26 @@ public class OrderNumService {
         return  orderNumDTOList;
     }
 
+    public void acceptOrder(Long orderNum, String shopperEmail) {
+        OrderNum orderNum1 = orderNumRepository.findByOrderNum(orderNum);
+        orderNum1.setShopper(shopperEmail);
+        orderNumRepository.save(orderNum1);
+
+    }
+
+    public List<OrderNumDTO> getMyOrderNumListShopper(String shopperEmail) {
+        List<OrderNum> orderNumList = orderNumRepository.findAllByShopper(shopperEmail);
+        List<OrderNumDTO> orderNumDTOList = new ArrayList<>();
+        for (OrderNum orderNum : orderNumList) {
+            OrderNumDTO orderNumDTO = new OrderNumDTO(
+                    orderNum.getOrderNum(), orderNum.getUserEmail(), orderNum.getShopper(),
+                    orderNum.getLongitude(), orderNum.getLatitud()
+            );
+            orderNumDTOList.add(orderNumDTO);
+        }
+        return  orderNumDTOList;
+    }
+
 /*    public OrderNumDTO getOrderNum(OrderNum orderNum){
         OrderNumDTO orderNumDTO = orderNum.builder()
                 .orderNum(orderNum.getOrderNum())

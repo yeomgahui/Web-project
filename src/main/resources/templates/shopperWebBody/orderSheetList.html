@@ -42,7 +42,16 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="widget-content-right"> <button class="border-0 btn-transition btn btn-outline-success"> <i class="fa fa-check"></i></button> <button class="border-0 btn-transition btn btn-outline-danger"> <i class="fa fa-trash"></i> </button> </div>
+                                                        <div class="widget-content-right">
+                                                            <!--수락버튼-->
+                                                            <button class="border-0 btn-transition btn btn-outline-success"
+                                                                    th:onclick="|javascript:acceptOrder('${orderNumList.orderNum}')|">
+                                                            <i class="fa fa-check"></i></button>
+
+                                                            <!--삭제버튼 ? 살릴지 고민
+                                                            <button class="border-0 btn-transition btn btn-outline-danger">
+                                                            <i class="fa fa-trash"></i> </button> </div>-->
+
                                                     </div>
                                                 </div>
                                             </li>
@@ -66,6 +75,8 @@
     </div>
 </div>
 <script type="text/javascript" th:inline="javascript">
+
+    //오더 상세정보보기
     function viewOrder(orderNum) {
         alert(orderNum);
         $.ajax({
@@ -74,15 +85,24 @@
             type: "POST",
             dataType: "json",
             success: function (data) {
+                alert(JSON.stringify(data.list));
+/*                $.each(data.list, function(index, items) {
 
-                alert(data);
-                //swal('주문서 제출 성공!', '', 'success');
+                });*/
             }
         });
+    }//viewOrder
 
 
+    //주문 수락
+    function acceptOrder(orderNum) {
 
-    }
+        $.ajax({
+            url: "/acceptOrder",
+            data: {orderNum: orderNum},
+            type: "POST"
+        });
+    };
 
 </script>
 
