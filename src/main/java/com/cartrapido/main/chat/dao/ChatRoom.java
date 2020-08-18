@@ -1,5 +1,6 @@
 package com.cartrapido.main.chat.dao;
 
+import com.cartrapido.main.domain.entity.TimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +11,7 @@ import java.util.UUID;
 @Getter
 @NoArgsConstructor
 @Entity
-public class ChatRoom {
+public class ChatRoom extends TimeEntity {
 
 
     @Id
@@ -24,6 +25,7 @@ public class ChatRoom {
     private String shopperId;
 
     private String clientId;
+
 
 
 
