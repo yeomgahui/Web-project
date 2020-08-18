@@ -25,9 +25,8 @@ public class OrderSheetService {
 
     public List<OrderSheetDTO> getOrderSheetList(Long orderNum) {
         List<OrderSheet> orderSheetList = orderSheetRepository.findAllByOrderNum(orderNum);
-
-
         List<OrderSheetDTO> orderSheetDTOList = new ArrayList<>();
+
             for(OrderSheet orderSheet : orderSheetList){
                 OrderSheetDTO orderSheetDTO = new OrderSheetDTO(
                         orderNum, orderSheet.getUserEmail(),
