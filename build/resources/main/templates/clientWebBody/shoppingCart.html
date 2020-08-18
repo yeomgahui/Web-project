@@ -56,15 +56,6 @@
                                              th:data-userEmail="${cart.userEmail}"
                                              th:data-amount="${cart.amount}"
                                     />
-                                    <!--데이터를 자바스크립으로 보내기-->
-                                    <!--<input type="hidden" class="cartData"
-                                       th:data-id="${cart.cartId}"
-                                       th:data-name="${cart.productName}"
-                                       th:data-price="${cart.productPrice}"
-                                       th:data-image="${cart.image}"
-                                       th:data-userEmail="${cart.userEmail}"
-                                       th:data-amount="${cart.amount}"
-                                    >&lt;!&ndash;!--데이터를 자바스크립으로 보내기-->
 
                                     <div class="row mb-4">
                                         <div class="col-md-5 col-lg-3 col-xl-3">
@@ -102,17 +93,19 @@
                                                         <span th:align="center" th:text="${cart.productPrice}"/>
                                                     </strong></span></p>
                                                 </div>
-                                                <div align="right" >
+                                                <div align="right">
                                                     <input type="button"
                                                            class="btn btn-success btn-sm btn-minus"
-                                                           onclick="minusAmount($('#productQty').val())"
+                                                           th:onclick="|javascript:amountMins('${cart.cartId}','${cart.amount}','${cart.productPrice}')|"
                                                            value="-"/>
-                                                    <input type="number" id="productQty"
+                                                    <input type="number"
+                                                           th:id="${cart.cartId}"
                                                            style="width: 50px;"
-                                                           value="1">
+                                                           th:value="${cart.amount}"
+                                                    >
                                                     <input type="button"
                                                            class="btn btn-success btn-sm btn-plus"
-                                                           onclick="plusAmount($('#productQty').val())"
+                                                           th:onclick="|javascript:amountPlus('${cart.cartId}','${cart.amount}','${cart.productPrice}')|"
                                                            value="+"/>
                                                 </div>
                                             </div>
@@ -197,21 +190,12 @@
 
     $(document).ready(function () {
         for (i = 0; i < cartList.length; i++) {
-            /*          alert(cartList[i].productName);*/
-            tot += (cartList[i].productPrice * cartList[i].amount); //
-            //alert(tot);
+            tot += (cartList[i].productPrice * cartList[i].amount);
         }
-
         payTot = tot + 5000;
-
-        //alert($(this).data('cartId'));
-
         //total amount of에 뿌리기
         $('#productTot').text(tot);
-
         $('#payTot').text(payTot);
-
-
 
         $('#chBox').click(function () {
 //            alert($('#chBox').data('cartId'));
@@ -220,15 +204,23 @@
 
 //결제버튼
         $('#payBtn').click(function () {
-            swal('주문서 제출 성공!', '', 'success');
+
             //1. 체크박스만 추출
             var checkArr = new Array();
+            var amountArr = new Array();
 //        alert(lastCartId.length+"카트 길이");
             var i;
             for (i = firstCartId; i <= lastCartId; i++) {
                 // var chBox = document.getElementById('cartNum' + (i + 1));
                 //alert(document.getElementById('cartNum' + (i + 1)).dataset.id) ;
-                checkArr.push(document.getElementById('cartNum' + i).dataset.id);
+                var cartAmount =  $('#'+i).val();
+
+                /*                alert(i);
+                alert(cartAmount);
+                alert(document.getElementById('cartNum'+i).dataset.id);*/
+
+                amountArr.push(cartAmount);
+                checkArr.push(document.getElementById('cartNum'+i).dataset.id);
 
                 /*if($("input:checkbox[name='cartNum'+"+i+"]").is(":checked") == true) {
 
@@ -246,7 +238,10 @@
 
             $.ajax({
                 url: "/clientWeb/pushOrder",
-                data: {chbox: checkArr},
+                data: {
+                    chbox: checkArr,
+                    amountArr: amountArr
+                },
                 type: "POST",
                 //dataType: "json",
 
@@ -268,32 +263,30 @@
             data: {cartId: cartId},
             type: "POST",
             success: function () {
+                swal('상품 제거 성공!', '', 'success');
                 location.href = '/shoppingCart';
             }
         });
     };
 
-    function plusAmount(amount) {
-        var tepAmount = parseInt(amount)+1;
-        if (amount < 1 || amount > 99) {
-            return;
-        }
-        $('#productQty').val(tepAmount);
-
-        alert(tepAmount);
-
+    function amountPlus(cartId, amount, price) {
+        var cartAmount =  $('#'+cartId).val();
+        $('#'+cartId).val(parseInt(cartAmount)+1)
+//        alert( $('#'+cartId).val() );
+        tot+=parseInt(price);
+        $('#productTot').text(tot);
+        payTot = tot + 5000;
+        $('#payTot').text(payTot);
+    };
+    function amountMins(cartId, amount, price) {
+        var cartAmount =  $('#'+cartId).val();
+        $('#'+cartId).val(parseInt(cartAmount)-1)
+        tot-=parseInt(price);
+        $('#productTot').text(tot);
+        payTot = tot + 5000;
+        $('#payTot').text(payTot);
     };
 
-    function minusAmount(amount) {
-        var tepAmount = parseInt(amount)-1;
-        if (amount < 1 || amount > 99) {
-            return;
-        }
-        $('#productQty').val(tepAmount);
-
-        alert(tepAmount);
-
-    };
 
 
 </script>

@@ -137,15 +137,32 @@ public class ClientController {
 
         if(cartService.checkCart(productId, userEmail)==true) cartService.saveCart(cartDTO);
     }
+
     @PostMapping("/deleteInCart")
     @ResponseBody
     public void deleteInCart(@RequestParam Long cartId) {
         cartService.deleteCart(cartId);
     }
 
+    @PostMapping("/amountPlus")
+    @ResponseBody
+    public void amountPlus(@RequestParam Long cartId) {
+        cartService.amountPlus(cartId);
+    }
+
+    @PostMapping("/amountMinus")
+    @ResponseBody
+    public void amountMinus(@RequestParam Long cartId) {
+        cartService.amountPlus(cartId);
+    }
+
+
     @PostMapping("/clientWeb/pushOrder")
     @ResponseBody /*@ModelAttribute List<CartDTO> cartList*/
-    public void pushOrder(@RequestParam (value = "chbox[]") List<String> checkArr ) {
+    public void pushOrder(@RequestParam (value = "chbox[]") List<String> checkArr,
+                          @RequestParam (value = "amountArr[]") List<Integer> amountArr
+                          ) {
+
         CartDTO cartDTO = cartService.getCartIdInfo(Long.parseLong(checkArr.get(0)));
         String userEmail =cartDTO.getUserEmail();
         OrderNumDTO orderNumDTO = new OrderNumDTO(
@@ -155,15 +172,16 @@ public class ClientController {
         OrderNum orderNum = orderNumService.saveOrderNum(orderNumDTO);
         Long orderNum1 = orderNum.getOrderNum();
         //OrderSheet 저장
-        for(String cartId : checkArr) {
-            cartDTO = cartService.getCartIdInfo(Long.parseLong(cartId));
+        for(int i = 0 ; i <checkArr.size() ;i++){
+            cartDTO = cartService.getCartIdInfo(Long.parseLong(checkArr.get(i)));
             OrderSheetDTO orderSheetDTO = new OrderSheetDTO(
                     orderNum1, orderNumDTO.getUserEmail(),
-                    cartDTO.getProductId(), cartDTO.getAmount()
+                    cartDTO.getProductId(), amountArr.get(i)
             );
             orderSheetService.saveOrderSheet(orderSheetDTO);
-            cartService.deleteCart(Long.parseLong(cartId));
+            cartService.deleteCart(Long.parseLong(checkArr.get(i)));
         }
+
     }
 
     @GetMapping("/clientLayout")
@@ -187,7 +205,6 @@ public class ClientController {
         if(orderNumDTOList.size()!=0){
             model.addAttribute("orderNumList", orderNumDTOList);
         }
-
         return "/clientWebBody/myOrderList";
     }
 
@@ -220,7 +237,6 @@ public class ClientController {
 
     @GetMapping("/clientChatting")
     public String clientChatting() {
-
         return "/clientWebBody/clientChatting.html";
     }
 

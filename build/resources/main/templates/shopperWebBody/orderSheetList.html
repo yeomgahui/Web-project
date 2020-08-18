@@ -100,7 +100,10 @@
         $.ajax({
             url: "/acceptOrder",
             data: {orderNum: orderNum},
-            type: "POST"
+            type: "POST",
+            success: function () {
+                location.href="/orderSheetList"
+            }
         });
     };
 
