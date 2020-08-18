@@ -355,22 +355,17 @@
 <script type="text/javascript">
 
     function putInCart(productId) {
-        //swal('','','success');
         swal('상품을 장바구니에 넣었습니다.','','success');
-        //alert('상품을 장바구니에 추가하였습니다.');
 
         $.ajax({
             url: "/clientMart/putInCart",
             data: {productId:productId},
-            type: "POST",
-            dataType: "json"
+            type: "POST"
         }).done(function(json) {
         }).error(function(xhr, status, errorThrown) {
             alert(xhr.status);
             alert(errorThrown);
         });
-
-
 
     }
 

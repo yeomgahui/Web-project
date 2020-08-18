@@ -36,6 +36,19 @@ public class OrderNumService {
         return  orderNumDTOList;
     }
 
+    public List<OrderNumDTO> getMyOrderNumList(String userEmail) {
+        List<OrderNum> orderNumList = orderNumRepository.findAllByUserEmail(userEmail);
+        List<OrderNumDTO> orderNumDTOList = new ArrayList<>();
+        for (OrderNum orderNum : orderNumList) {
+            OrderNumDTO orderNumDTO = new OrderNumDTO(
+                    orderNum.getOrderNum(), orderNum.getUserEmail(), orderNum.getShopper(),
+                    orderNum.getLongitude(), orderNum.getLatitud()
+            );
+            orderNumDTOList.add(orderNumDTO);
+        }
+        return  orderNumDTOList;
+    }
+
 /*    public OrderNumDTO getOrderNum(OrderNum orderNum){
         OrderNumDTO orderNumDTO = orderNum.builder()
                 .orderNum(orderNum.getOrderNum())

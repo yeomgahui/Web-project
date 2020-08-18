@@ -48,15 +48,21 @@ public class ShopperController {
 
         List<OrderNumDTO> orderNumDTOList = orderNumService.getOrderNumList();
         System.out.println(orderNumDTOList.get(0).getOrderNum());
-        model.addAttribute("orderNumList", orderNumDTOList);
+        if(orderNumDTOList.size()!=0){
+            model.addAttribute("orderNumList", orderNumDTOList);
+        }
         return "/shopperWebBody/orderSheetList";
     }
 
-    @PostMapping("/viewOrderSheet")
+    @PostMapping("/shopper/viewOrderSheet")
     public String viewOrderSheet(@RequestParam Long orderNum, Model model){
-        System.out.println("view 컨트롤러에 들어온다"+orderNum);
         List<OrderSheetDTO> orderSheetList =
                 orderSheetService.getOrderSheetList(orderNum);
+
+        for(OrderSheetDTO dto:orderSheetList){
+            System.out.println("view 상품 = "+dto.getProductName());
+        }
+
         model.addAttribute("orderSheetList",orderSheetList);
 
         return "/shopperWebBody/viewOrderSheet";

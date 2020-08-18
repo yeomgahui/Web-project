@@ -133,6 +133,11 @@ public class ClientController {
 
         if(cartService.checkCart(productId, userEmail)==true) cartService.saveCart(cartDTO);
     }
+    @PostMapping("/deleteInCart")
+    @ResponseBody
+    public void deleteInCart(@RequestParam Long cartId) {
+        cartService.deleteCart(cartId);
+    }
 
     @PostMapping("/clientWeb/pushOrder")
     @ResponseBody /*@ModelAttribute List<CartDTO> cartList*/
@@ -167,6 +172,19 @@ public class ClientController {
     public String clientMypage() {
 
         return "/clientWebBody/myPage";
+    }
+
+    @GetMapping("/myOrderList")
+    public String myOrderList(Model model, HttpSession session) {
+        SessionUser user = (SessionUser) session.getAttribute("user");
+        String userEmail = user.getEmail();
+        List<OrderNumDTO> orderNumDTOList = orderNumService.getMyOrderNumList(userEmail);
+        System.out.println(orderNumDTOList.get(0).getOrderNum());
+        if(orderNumDTOList.size()!=0){
+            model.addAttribute("orderNumList", orderNumDTOList);
+        }
+
+        return "/clientWebBody/myOrderList";
     }
 
     @GetMapping("/shoppingCart")
