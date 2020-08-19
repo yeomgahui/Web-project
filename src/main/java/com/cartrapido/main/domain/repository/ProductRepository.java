@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +24,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query("SELECT distinct p.category FROM Product p where p.store =:store")
     List<String> findDistinctByStore(String store);
+
+    @Query("SELECT p.modifiedDate FROM Product p ORDER BY p.modifiedDate DESC")
+    List<LocalDateTime> emartDate();
 
     /*Optional<Member> findByEmail(String email);*/
     /*@Query("SELECT p FROM member p ORDER BY p.id DESC")
