@@ -87,4 +87,15 @@ public class CartService {
 
 //        cartRepository.deleteAllByCartId(cartId);
     }
+
+    public void amountPlus(Long cartId) {
+        Cart cart = cartRepository.findAllByCartId(cartId);
+        cart.setAmount(cart.getAmount()+1);
+        cartRepository.save(cart);
+    }
+    public void amountMinus(Long cartId) {
+        Cart cart = cartRepository.findAllByCartId(cartId);
+        cart.setAmount(cart.getAmount()-1);
+        cartRepository.save(cart);
+    }
 }
