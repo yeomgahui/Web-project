@@ -27,6 +27,7 @@
             <div class="col-lg-8 col-md-7 order-md-1 order-1">
 
                 <!--            여기서부터 바디부분-->
+                <h2>My OrderList</h2>
 
 
                 <div class="card-hover-shadow-2x mb-3 card">
@@ -39,17 +40,20 @@
 
                                         <!--for each-->
                                         <li class="list-group-item" th:each="orderNumList : ${orderNumList}">
-                                            <div class="todo-indicator bg-focus"/>
+
                                             <div class="widget-content p-0">
                                                 <div class="widget-content-wrapper">
-                                                    <a class="widget-content-left">
-                                                        <!--<a href="#!"
-                                                           th:onclick="|javascript:deleteInCart('${cart.cartId}')|">--></a>
-                                                        <div class="widget-heading orderTitle">
+                                                    <a class="widget-content-left"
+                                                       style="
+                                                        color: darkgreen;
+                                                        font-size: 1.5em;
+                                                        font-weight: bold;
+                                                        "
+                                                       th:href="@{'/clientWeb/viewOrderSheet/'+${orderNumList.orderNum}}">
                                                                 <span id="orderNum"
                                                                       th:value="${orderNumList.orderNum}"
                                                                       th:text="${orderNumList.orderNum}"/>번 주문서
-                                                        </div>
+
                                                     </a>
                                                     <div class="widget-subheading">
                                                         <br>

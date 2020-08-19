@@ -28,7 +28,57 @@
 
                 <!--            여기서부터 바디부분-->
 
+                <div class="scroll-area-sm">
+                    <perfect-scrollbar class="ps-show-limits">
+                        <div style="position: static;" class="ps ps--active-y">
+                            <div class="ps-content">
+                                <ul class=" list-group list-group-flush">
 
+
+
+                                    <!--for each-->
+                                    <div class="card wish-list mb-3">
+                                        <br>
+                                        <h5 align="center" class="mb-4"> <span th:text="${orderSize}"></span>개의 품목을 주문하셨습니다!</h5>
+
+
+                                        <!--여기서부터 for each로 돌려서 장바구니 추가되게 해야함-->
+                                        <div class="card-body" th:each="orderSheet : ${orderNumList}">
+
+                                            <div class="row mb-4">
+                                                <div class="col-md-5 col-lg-3 col-xl-3">
+                                                    <img th:src="@{${orderSheet.image}}" align="right" width="60%">
+                                                </div>
+                                                <div class="col-md-7 col-lg-9 col-xl-9">
+                                                    <div>
+                                                        <div class="d-flex justify-content-between">
+                                                            <div>
+                                                                <span th:text="${orderSheet.store}"/><br>
+                                                                <h5><span th:text="${orderSheet.productName}"/></h5>
+                                                                <!--                                                        <p class="mb-3 text-muted text-uppercase small">Shirt - blue</p>
+                                                                                                                        <p class="mb-2 text-muted text-uppercase small">Color: blue</p>
+                                                                                                                        <p class="mb-3 text-muted text-uppercase small">Size: M</p>-->
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-flex justify-content-between align-items-center">
+
+                                                            <p class="mb-0"><span><strong>
+                                                        <span th:align="center" th:text="${orderSheet.productPrice}"/>원
+                                                                * <span th:align="center" th:text="${orderSheet.amount}"/>개
+                                                    </strong></span></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--for each 여기까지 -->
+                                    </div>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </perfect-scrollbar>
+                </div>
 
 
                 <!--for each 여기까지 -->
