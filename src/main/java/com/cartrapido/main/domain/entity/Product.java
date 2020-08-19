@@ -7,16 +7,20 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
 @Table(name = "product")
-public class Product {
+public class Product extends TimeEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productId;
+
+    @Column(length = 100, nullable = false)
+    private String itemId;
 
     @Column(length = 100, nullable = false)
     private String store;
@@ -40,10 +44,18 @@ public class Product {
     private String image;
 
     @Builder
-    public Product(Long productId, String productName, String productContent,
-                   int productPrice, int productQty, String store,
-                   String category, String image) {
+    public Product(Long productId,
+                   String itemId,
+                   String productName,
+                   String productContent,
+                   int productPrice,
+                   int productQty,
+                   String store,
+                   String category,
+                   String image) {
+
         this.productId = productId;
+        this.itemId = itemId;
         this.productName = productName;
         this.productPrice = productPrice;
         this.productQty = productQty;
