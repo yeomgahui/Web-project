@@ -235,6 +235,23 @@ public class ClientController {
         return "/clientWebBody/shoppingCart";
     }
 
+    @GetMapping("/clientWeb/viewOrderSheet/{orderNum}")
+    public String viewOrderSheet(@PathVariable("orderNum") String orderNum, Model model){
+        System.out.println(orderNum);
+        Long orderNum1 = Long.parseLong(orderNum);
+        List<OrderSheetDTO> orderSheetList =
+                orderSheetService.getOrderSheetList(orderNum1);
+
+        for(OrderSheetDTO dto:orderSheetList){
+            System.out.println("view 상품 = "+dto.getProductName());
+        }
+        model.addAttribute("orderNumList", orderSheetList);
+        model.addAttribute("orderSize", orderSheetList.size());
+
+        return "/clientWebBody/viewMyOrder";
+    }
+
+
     @GetMapping("/clientChatting")
     public String clientChatting() {
         return "/clientWebBody/clientChatting.html";

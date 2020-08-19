@@ -9,10 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -44,6 +41,9 @@ public class ShopperController {
 
     @GetMapping("/myPage")
     public String layout() {
+
+
+
         return "/shopperWebBody/myPage";
     }
 
@@ -75,19 +75,19 @@ public class ShopperController {
         return "/shopperWebBody/myOrderSheets";
     }
 
-    @PostMapping("/shopper/viewOrderSheet")
-    @ResponseBody
-    public ModelAndView viewOrderSheet(@RequestParam Long orderNum, Model model){
+    @GetMapping("/viewOrderSheet/{orderNum}")
+    public String viewOrderSheet(@PathVariable("orderNum") String orderNum, Model model){
+        System.out.println(orderNum);
+        Long orderNum1 = Long.parseLong(orderNum);
         List<OrderSheetDTO> orderSheetList =
-                orderSheetService.getOrderSheetList(orderNum);
+                orderSheetService.getOrderSheetList(orderNum1);
 
         for(OrderSheetDTO dto:orderSheetList){
             System.out.println("view 상품 = "+dto.getProductName());
         }
-
-        ModelAndView mv = new ModelAndView("jsonView");
-        mv.addObject("list",orderSheetList);
-        return mv;
+        model.addAttribute("orderNumList", orderSheetList);
+        model.addAttribute("orderSize", orderSheetList.size());
+        return "/shopperWebBody/viewOrderSheet";
     }
 
     @PostMapping("/acceptOrder")
