@@ -31,12 +31,22 @@ public class OrderNum {
     @Column(length = 200)
     private int longitude;
 
+    @Column(length = 200)
+    private int deliveryCost;
+
+    @Column(length = 200)
+    private int productTot;
+
+
     @Builder
-    public OrderNum(String userEmail, String shopper , int latitud, int longitude){
+    public OrderNum(String userEmail, String shopper , int latitud, int longitude,
+                     int deliveryCost, int productTot ){
         this.userEmail = userEmail;
         this.shopper = shopper ;
         this.latitud = latitud;
         this.longitude = longitude;
+        this.deliveryCost = deliveryCost;
+        this.productTot = productTot;
     }
 
     @Builder

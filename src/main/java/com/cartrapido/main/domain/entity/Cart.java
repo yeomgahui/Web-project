@@ -33,7 +33,7 @@ public class Cart {
     @Column(length = 100)
     private int productPrice;
 
-    @Column(length = 100)
+    @Column
     private String image;
 
 

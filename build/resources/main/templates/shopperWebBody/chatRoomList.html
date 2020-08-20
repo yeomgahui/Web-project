@@ -1,26 +1,14 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 >
 <header th:replace="shopperWeb/header :: headerFragment"></header>
+
+<body>
+<div class="container-lg mt-5">
+    <div class="row">
+        <th:block th:include="shopperWeb/sidebar.html" ></th:block>
 <style>
-
-    body{margin-top:20px;}
-    /*************** 1.Variables ***************/
-
-
-    /* ------------------ Color Pallet ------------------ */
-
-
-    /*************** 2.Mixins ***************/
-
-
-    /************************************************
-        ************************************************
-                                            Search Box
-        ************************************************
-    ************************************************/
 
     .chat-search-box {
         -webkit-border-radius: 3px 0 0 0;
@@ -374,7 +362,11 @@
         margin: 0;
         padding: 0;
     }
-    .card {
+
+    /*이 부분은 주석걸어놔야 sidebar모양이 유지됨!
+        해당 스타일을 chatRoom.html 에서 강제로 card div 스타일로 걸어두었음. 0820 다혜
+    */
+/*    .card {
         border: 0;
         background: #f4f5fb;
         -webkit-border-radius: 2px;
@@ -382,7 +374,7 @@
         border-radius: 2px;
         margin-bottom: 2rem;
         box-shadow: none;
-    }
+    }*/
     .hidden{
         display: none;
     }
@@ -392,23 +384,19 @@
         overflow-x:hidden;
     }
 
-
 </style>
-</head>
+            <!--            여기서부터 바디부분-->
+            <th:block th:include="chat/chatRoom.html" ></th:block>
 
-<body>
-<div class="container-lg mt-5">
-    <div class="row">
-        <th:block th:include="shopperWeb/sidebar.html" ></th:block>
-        <th:block th:include="chat/chatRoom.html" ></th:block>
+            <!--여기까지 바디-->
+
+
+
+
 
     </div>
 </div>
 
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-<script src="/js/chat/chatRoomList.js"></script>
+
 </body>
 </html>

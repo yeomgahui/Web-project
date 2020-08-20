@@ -28,7 +28,6 @@
                 <!--Section: Block Content-->
                 <section>
 
-
                     <!--Grid row-->
                     <div class="row">
 
@@ -101,6 +100,7 @@
                                                            th:id="${cart.cartId}"
                                                            style="width: 50px;"
                                                            th:value="${cart.amount}"
+                                                           readonly
                                                     >
                                                     <input type="button"
                                                            class="btn btn-success btn-sm btn-plus"
@@ -137,14 +137,15 @@
                                             <span id="productTot">0</span>원
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                                            배달비
-                                            <span>5000원</span>
+                                            배송비
+                                            <input type="text" id="deliveryCost" value="5000" size="4" disabled>
+                                            <input type="button" id="deliveryCostBtn" size="2" value="edit">
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
                                             <div>
                                                 <strong>총 결제금액</strong>
                                             </div>
-                                            <span><strong id="payTot">5000</strong></span>원
+                                            <span><strong id="payTot">0</strong></span>원
                                         </li>
                                     </ul>
 
@@ -186,45 +187,64 @@
     var cartList = [[${cartList}]];
     var firstCartId = cartList[0].cartId;
     var lastCartId = cartList[cartList.length - 1].cartId;
-
+    var deliveryCost = parseInt($('#deliveryCost').val());
+    let readyToPay = true;
     $(document).ready(function () {
         for (i = 0; i < cartList.length; i++) {
             tot += (cartList[i].productPrice * cartList[i].amount);
         }
-        payTot = tot + 5000;
+        payTot = tot + deliveryCost;
+
         //total amount of에 뿌리기
         $('#productTot').text(tot);
         $('#payTot').text(payTot);
         $('#productLength').text(cartList.length);
-        $('#chBox').click(function () {
-//            alert($('#chBox').data('cartId'));
-        });
 
+    });
 
-//결제버튼
-        $('#payBtn').click(function () {
+    //배송비 수정버튼
+    $('#deliveryCostBtn').click(function () {
+        if ($("#deliveryCost").is(":disabled")) {
+            $("#deliveryCost").removeAttr("disabled");
+            $("#deliveryCostBtn").val('done');
+            readyToPay = false;
+
+        } else {
+            if (parseInt($("#deliveryCost").val()) < 5000) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: '배송비는 5000원 이상으로 기입하셔야 합니다!',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                return;
+            }
+            $("#deliveryCost").attr("disabled", true);
+            $("#deliveryCostBtn").val('edit');
+            readyToPay = true;
+        }
+
+    });
+
+    //결제버튼
+    $('#payBtn').click(function () {
+        if (readyToPay) {
 
             //1. 체크박스만 추출
             var checkArr = new Array();
             var amountArr = new Array();
-//        alert(lastCartId.length+"카트 길이");
+
             var i;
             for (i = firstCartId; i <= lastCartId; i++) {
-                // var chBox = document.getElementById('cartNum' + (i + 1));
-                //alert(document.getElementById('cartNum' + (i + 1)).dataset.id) ;
-                var cartAmount =  $('#'+i).val();
-
-                /*                alert(i);
-                alert(cartAmount);
-                alert(document.getElementById('cartNum'+i).dataset.id);*/
-
+                var cartAmount = $('#' + i).val();
                 amountArr.push(cartAmount);
-                checkArr.push(document.getElementById('cartNum'+i).dataset.id);
+                checkArr.push(document.getElementById('cartNum' + i).dataset.id);
 
                 /*if($("input:checkbox[name='cartNum'+"+i+"]").is(":checked") == true) {
 
             }*/
             }
+
 //            var article = document.getElementById('cart');
             /*            $("input[class='chBox']:checked").each(function () {
 
@@ -234,12 +254,13 @@
                         });*/
 
             //2.DB에 주문서 저장
-
             $.ajax({
                 url: "/clientWeb/pushOrder",
                 data: {
                     chbox: checkArr,
-                    amountArr: amountArr
+                    amountArr: amountArr,
+                    deliveryCost: parseInt($("#deliveryCost").val()),
+                    productTot: tot
                 },
                 type: "POST",
                 //dataType: "json",
@@ -254,10 +275,15 @@
                     //swal('주문서 제출 성공!', '', 'success');
                     location.href = '/shoppingCart';
                 }
-            });
-
-
-        });//결제 버튼
+            });//결제 버튼
+        } else {
+            Swal.fire({
+                icon: 'warning',
+                title: '배송비 수정완료 버튼을 클릭해주세요!',
+                showConfirmButton: false,
+                timer: 1500
+            })
+        }
     });
 
 
@@ -280,23 +306,29 @@
     };
 
     function amountPlus(cartId, amount, price) {
-        var cartAmount =  $('#'+cartId).val();
-        $('#'+cartId).val(parseInt(cartAmount)+1)
+        var cartAmount = parseInt($('#' + cartId).val());
+        if (cartAmount >= 99) {
+            return;
+        }
+        $('#' + cartId).val(cartAmount + 1)
 //        alert( $('#'+cartId).val() );
-        tot+=parseInt(price);
+        tot += parseInt(price);
         $('#productTot').text(tot);
-        payTot = tot + 5000;
-        $('#payTot').text(payTot);
-    };
-    function amountMins(cartId, amount, price) {
-        var cartAmount =  $('#'+cartId).val();
-        $('#'+cartId).val(parseInt(cartAmount)-1)
-        tot-=parseInt(price);
-        $('#productTot').text(tot);
-        payTot = tot + 5000;
+        payTot = tot + parseInt($("#deliveryCost").val());
         $('#payTot').text(payTot);
     };
 
+    function amountMins(cartId, amount, price) {
+        var cartAmount = parseInt($('#' + cartId).val());
+        if (cartAmount <= 1) {
+            return;
+        }
+        $('#' + cartId).val(cartAmount - 1)
+        tot -= parseInt(price);
+        $('#productTot').text(tot);
+        payTot = tot + parseInt($("#deliveryCost").val());
+        $('#payTot').text(payTot);
+    };
 
 
 </script>

@@ -12,7 +12,8 @@ public class OrderNumDTO {
     private String shopper;
     private int latitud;
     private int longitude;
-
+    private int deliveryCost;
+    private int productTot;
 
 
     public OrderNum toEntitiy(){
@@ -21,16 +22,20 @@ public class OrderNumDTO {
                 .shopper(shopper)
                 .latitud(latitud)
                 .longitude(longitude)
+                .deliveryCost(deliveryCost)
+                .productTot(productTot)
                 .build();
         return orderNum;
     }
 
     @Builder
-    public OrderNumDTO(String userEmail, String shopper, int latitud, int longitude){
+    public OrderNumDTO(String userEmail, String shopper, int latitud, int longitude,  int deliveryCost, int productTot){
         this.userEmail = userEmail;
         this.shopper = shopper ;
         this.latitud = latitud;
         this.longitude = longitude;
+        this.deliveryCost = deliveryCost;
+        this.productTot = productTot;
     }
 
     @Builder
