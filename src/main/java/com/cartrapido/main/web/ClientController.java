@@ -160,13 +160,16 @@ public class ClientController {
     @PostMapping("/clientWeb/pushOrder")
     @ResponseBody /*@ModelAttribute List<CartDTO> cartList*/
     public void pushOrder(@RequestParam (value = "chbox[]") List<String> checkArr,
-                          @RequestParam (value = "amountArr[]") List<Integer> amountArr
+                          @RequestParam (value = "amountArr[]") List<Integer> amountArr,
+                          @RequestParam int productTot,
+                          @RequestParam int deliveryCost
                           ) {
+
 
         CartDTO cartDTO = cartService.getCartIdInfo(Long.parseLong(checkArr.get(0)));
         String userEmail =cartDTO.getUserEmail();
         OrderNumDTO orderNumDTO = new OrderNumDTO(
-                userEmail,null,0,0
+                userEmail,null,0,0, deliveryCost, productTot
         );
         //OrderNum 저장
         OrderNum orderNum = orderNumService.saveOrderNum(orderNumDTO);
@@ -202,9 +205,10 @@ public class ClientController {
         String userEmail = user.getEmail();
         List<OrderNumDTO> orderNumDTOList = orderNumService.getMyOrderNumList(userEmail);
         System.out.println(orderNumDTOList.get(0).getOrderNum());
-        if(orderNumDTOList.size()!=0){
+        if(orderNumDTOList.size()!=0) {
             model.addAttribute("orderNumList", orderNumDTOList);
         }
+
         return "/clientWebBody/myOrderList";
     }
 
@@ -236,11 +240,10 @@ public class ClientController {
     }
 
     @GetMapping("/clientWeb/viewOrderSheet/{orderNum}")
-    public String viewOrderSheet(@PathVariable("orderNum") String orderNum, Model model){
-        System.out.println(orderNum);
-        Long orderNum1 = Long.parseLong(orderNum);
+    public String viewOrderSheet(@PathVariable("orderNum") Long orderNum, Model model){
+
         List<OrderSheetDTO> orderSheetList =
-                orderSheetService.getOrderSheetList(orderNum1);
+                orderSheetService.getOrderSheetList(orderNum);
 
         for(OrderSheetDTO dto:orderSheetList){
             System.out.println("view 상품 = "+dto.getProductName());
