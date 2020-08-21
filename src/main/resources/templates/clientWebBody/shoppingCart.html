@@ -47,7 +47,6 @@
                                 <div class="card-body" th:each="cart : ${cartList}">
 
                                     <article id="cart"
-
                                              th:data-name="${cart.productName}"
                                              th:data-price="${cart.productPrice}"
                                              th:data-image="${cart.image}"
@@ -139,7 +138,7 @@
                                         <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                                             배송비
                                             <input type="text" id="deliveryCost" value="5000" size="4" disabled>
-                                            <input type="button" id="deliveryCostBtn" size="2" value="edit">
+                                            <input type="button" class="btn-outline-success" id="deliveryCostBtn" size="2" value="edit">
                                         </li>
                                         <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
                                             <div>
@@ -222,6 +221,8 @@
             $("#deliveryCost").attr("disabled", true);
             $("#deliveryCostBtn").val('edit');
             readyToPay = true;
+            payTot+=parseInt($("#deliveryCost").val())
+            $('#payTot').text(payTot);
         }
 
     });
@@ -266,14 +267,17 @@
                 //dataType: "json",
 
                 success: function () {
-                    Swal.fire({
-                        icon: 'success',
-                        title: '주문서를 제출합니다.',
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
-                    //swal('주문서 제출 성공!', '', 'success');
-                    location.href = '/shoppingCart';
+
+                     Swal.fire({
+                         icon: 'success',
+                         title: '주문서를 제출합니다.',
+                         showConfirmButton: false,
+                         timer: 1500
+                     })
+                    // //swal('주문서 제출 성공!', '', 'success');
+
+
+
                 }
             });//결제 버튼
         } else {
@@ -305,19 +309,19 @@
         });
     };
 
+    // + 버튼
     function amountPlus(cartId, amount, price) {
         var cartAmount = parseInt($('#' + cartId).val());
         if (cartAmount >= 99) {
             return;
         }
         $('#' + cartId).val(cartAmount + 1)
-//        alert( $('#'+cartId).val() );
         tot += parseInt(price);
         $('#productTot').text(tot);
         payTot = tot + parseInt($("#deliveryCost").val());
         $('#payTot').text(payTot);
     };
-
+    // - 버튼
     function amountMins(cartId, amount, price) {
         var cartAmount = parseInt($('#' + cartId).val());
         if (cartAmount <= 1) {
