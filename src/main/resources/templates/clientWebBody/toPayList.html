@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>MyPage</title>
+
+    <header th:replace="clientWeb/header :: headerFragment"></header>
+
+</head>
+<body>
+
+<!--section부분 / what's in my bag-->
+<th:block th:include="clientWeb/wmSection.html"></th:block>
+<!--section부분-->
+
+
+<!-- Blog Details Section Begin -->
+<section class="blog-details spad">
+    <div class="container">
+        <div class="row">
+
+            <th:block th:include="clientWeb/mypageSidebar.html"></th:block>
+
+            <div class="col-lg-8 col-md-7 order-md-1 order-1">
+
+                <!--            여기서부터 바디부분-->
+                <h2>- 결제 대기중 -</h2>
+
+
+                <div class="card-hover-shadow-2x mb-3 card">
+                    <div class="scroll-area-sm">
+                        <perfect-scrollbar class="ps-show-limits">
+                            <div style="position: static;" class="ps ps--active-y">
+                                <div class="ps-content">
+                                    <ul class=" list-group list-group-flush">
+
+
+                                        <!--for each-->
+                                        <li class="list-group-item" th:each="orderNumList : ${orderNumList}">
+                                            <article id="orderNumData"
+                                                     th:data-productTot="${orderNumList.productTot}"
+                                                     th:data-deliveryCost="${orderNumList.deliveryCost}"
+                                                     th:data-orderNum="${orderNumList.orderNum}"
+                                            />
+                                            <div class="widget-content p-0">
+                                                <div class="widget-content-wrapper">
+                                                    <a class="widget-content-left"
+                                                       style="
+                                                        color: darkgreen;
+                                                        font-size: 1.5em;
+                                                        font-weight: bold;
+                                                        "
+                                                       th:href="@{'/clientWeb/viewOrderSheet/'+${orderNumList.orderNum}}">
+                                                                <span id="orderNum"
+                                                                      th:value="${orderNumList.orderNum}"
+                                                                      th:text="${orderNumList.orderNum}"/>번 주문서
+
+                                                    </a>
+                                                    <div class="widget-subheading">
+                                                        <br>
+                                                        <div>
+                                                            product cost - <span id="productTot"
+                                                                      th:value="${orderNumList.productTot}"
+                                                                      th:text="${orderNumList.productTot}"/>won
+                                                            <br>
+                                                            delivery cost - <span id="deliveryCost"
+                                                                                   th:value="${orderNumList.deliveryCost}"
+                                                                                   th:text="${orderNumList.deliveryCost}"/>won
+                                                            <br><br>
+
+                                                            <strong>Tot. <span id="deliveryCost"
+                                                                  th:text="${orderNumList.deliveryCost}+${orderNumList.productTot}"/>Won </strong>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <div class="widget-content-right">
+                                                    <button id="kakaoPayBtn"
+                                                            class="border-0 btn-transition btn btn-outline-success">
+                                                        <i class="fa fa-credit-card"></i></button>
+                                                    <button id="deleteOrder"
+                                                            class="border-0 btn-transition btn btn-outline-danger">
+                                                        <i class="fa fa-trash"></i></button>
+                                                </div>
+                                            </div>
+                                        </li>
+                                <!--for each 여기까지 -->
+
+                                </ul>
+
+                                </div></div>
+                        </perfect-scrollbar>
+                    </div>
+                </div>
+
+
+            <!--for each 여기까지 -->
+
+        </div>
+    </div>
+    </perfect-scrollbar>
+    </div>
+
+    </div>
+
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+
+</section>
+
+<!-- Blog Details Section End -->
+
+
+<footer th:replace="clientWeb/footer :: footerFragment"></footer>
+<script type="text/javascript" th:inline="javascript">
+
+
+    $('#kakaoPayBtn').click(function () {
+        let orderNumData= document.getElementById('orderNumData').dataset;
+        let payTot=parseInt(orderNumData.producttot)+parseInt(orderNumData.deliverycost);
+        let orderNum=orderNumData.ordernum;
+        location.href="/payment/kakaoPay/"+orderNum+"/"+payTot;
+    });
+
+    $('#deleteOrder').click(function () {
+        Swal.fire({
+            title: '정말로 삭제하시겠습니까?',
+            text: "삭제하신 주문서는 다시 복구되지 않습니다.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#00B23B',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '네, 삭제합니다!'
+        }).then((result) => {
+            if (result.value) {
+                Swal.fire(
+                    '삭제 완료!',
+                    '주문서가 삭제되었습니다.',
+                    'success'
+                )
+
+            }
+        })
+    });
+
+</script>
+
+</body>
+</html>

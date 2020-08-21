@@ -1,11 +1,8 @@
 package com.cartrapido.main.web;
 
 import com.cartrapido.main.config.auth.dto.SessionUser;
-import com.cartrapido.main.domain.entity.Cart;
 import com.cartrapido.main.domain.entity.OrderNum;
-import com.cartrapido.main.domain.entity.OrderSheet;
 import com.cartrapido.main.domain.entity.Product;
-import com.cartrapido.main.domain.repository.ProductRepository;
 import com.cartrapido.main.service.*;
 import com.cartrapido.main.web.dto.CartDTO;
 import com.cartrapido.main.web.dto.OrderNumDTO;
@@ -169,7 +166,7 @@ public class ClientController {
         CartDTO cartDTO = cartService.getCartIdInfo(Long.parseLong(checkArr.get(0)));
         String userEmail =cartDTO.getUserEmail();
         OrderNumDTO orderNumDTO = new OrderNumDTO(
-                userEmail,null,0,0, deliveryCost, productTot
+                userEmail,null,0,0, deliveryCost, productTot, 0
         );
         //OrderNum 저장
         OrderNum orderNum = orderNumService.saveOrderNum(orderNumDTO);
@@ -203,14 +200,30 @@ public class ClientController {
     public String myOrderList(Model model, HttpSession session) {
         SessionUser user = (SessionUser) session.getAttribute("user");
         String userEmail = user.getEmail();
-        List<OrderNumDTO> orderNumDTOList = orderNumService.getMyOrderNumList(userEmail);
-        System.out.println(orderNumDTOList.get(0).getOrderNum());
-        if(orderNumDTOList.size()!=0) {
-            model.addAttribute("orderNumList", orderNumDTOList);
-        }
+        List<OrderNumDTO> orderNumDTOList = orderNumService.getPaidOrder(userEmail, 1);
 
-        return "/clientWebBody/myOrderList";
+        if(orderNumDTOList.size()==0)
+            return "/payment/noList";
+        else
+            model.addAttribute("orderNumList", orderNumDTOList);
+            return "/clientWebBody/myOrderList";
+
     }
+
+    @GetMapping("/toPayList")
+    public String toPayList(Model model, HttpSession session) {
+        SessionUser user = (SessionUser) session.getAttribute("user");
+        String userEmail = user.getEmail();
+        List<OrderNumDTO> orderNumDTOList = orderNumService.getPaidOrder(userEmail, 0);
+
+        if(orderNumDTOList.size()==0)
+            return "/payment/noList";
+        else
+            model.addAttribute("orderNumList", orderNumDTOList);
+        return "/clientWebBody/toPayList";
+
+    }
+
 
     @GetMapping("/shoppingCart")
     public String shoppingCart(HttpSession session, Model model) {
@@ -260,9 +273,40 @@ public class ClientController {
         return "/clientWebBody/clientChatting.html";
     }
 
+    @GetMapping("/payComplete")
+    public String payComplete() {
+        return "/payment/payComplete";
+    }
+
+    @GetMapping("/payFail")
+    public String payFail() {
+        return "/payment/payFail";
+    }
+
+    @PostMapping("/updatePay")
+    @ResponseBody
+    public void updatePay(@RequestParam Long orderNum) {
+        System.out.println("-----------updatePay 컨트롤러 -------------------------");
+        orderNumService.updatePay(orderNum);
+    }
 
 
+    @GetMapping("/payment/kakaoPay/{orderNum}/{payTot}")
+    public String kakaoPay( @PathVariable("payTot") int payTot,
+                            @PathVariable("orderNum") Long orderNum,
+                            Model model, HttpSession session) {
+        SessionUser user = (SessionUser) session.getAttribute("user");
+        String userEmail = user.getEmail();
+        String userName = user.getName();
+        System.out.print(userName);
 
+        model.addAttribute("orderNum",orderNum);
+        model.addAttribute("payTot",payTot);
+        model.addAttribute("userEmail",userEmail);
+        model.addAttribute("userName",userName);
+
+        return "/payment/kakaoPay";
+    }
 
 
 

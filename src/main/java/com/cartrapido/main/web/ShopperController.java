@@ -50,7 +50,7 @@ public class ShopperController {
     @GetMapping("/orderSheetList")
     public String orderSheetList(Model model) {
 
-        List<OrderNumDTO> orderNumDTOList = orderNumService.getOrderNumList();
+        List<OrderNumDTO> orderNumDTOList = orderNumService.shopperGetPaidOrder(1);
         for(int i = 0 ; i<orderNumDTOList.size();i++){
             if(orderNumDTOList.get(i).getShopper()!=null){
                 orderNumDTOList.remove(i);

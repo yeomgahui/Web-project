@@ -37,16 +37,20 @@ public class OrderNum {
     @Column(length = 200)
     private int productTot;
 
+    @Column
+    private int pay;//1 = true  , 0 = false
+
 
     @Builder
     public OrderNum(String userEmail, String shopper , int latitud, int longitude,
-                     int deliveryCost, int productTot ){
+                     int deliveryCost, int productTot ,int pay){
         this.userEmail = userEmail;
         this.shopper = shopper ;
         this.latitud = latitud;
         this.longitude = longitude;
         this.deliveryCost = deliveryCost;
         this.productTot = productTot;
+        this.pay = pay;
     }
 
     @Builder
