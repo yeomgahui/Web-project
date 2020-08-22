@@ -79,11 +79,16 @@
                                                 </div>
                                                 <div class="widget-content-right">
                                                     <button id="kakaoPayBtn"
-                                                            class="border-0 btn-transition btn btn-outline-success">
+                                                            class="border-0 btn-transition btn btn-outline-warning">
                                                         <i class="fa fa-credit-card"></i></button>
                                                     <button id="deleteOrder"
                                                             class="border-0 btn-transition btn btn-outline-danger">
                                                         <i class="fa fa-trash"></i></button>
+                                                </div>
+                                                <div class="widget-content-right">
+                                                    <span>kakao</span>
+                                                    <span>delete</span>
+
                                                 </div>
                                             </div>
                                         </li>
@@ -129,6 +134,9 @@
     });
 
     $('#deleteOrder').click(function () {
+        let orderNumData= document.getElementById('orderNumData').dataset;
+        let orderNum=orderNumData.ordernum;
+
         Swal.fire({
             title: '정말로 삭제하시겠습니까?',
             text: "삭제하신 주문서는 다시 복구되지 않습니다.",
@@ -139,12 +147,21 @@
             confirmButtonText: '네, 삭제합니다!'
         }).then((result) => {
             if (result.value) {
-                Swal.fire(
+
+/*                Swal.fire(
                     '삭제 완료!',
                     '주문서가 삭제되었습니다.',
                     'success'
-                )
+                )*/
 
+                $.ajax({
+                    url: "/deleteOrder",
+                    data: {orderNum: orderNum},
+                    type: "POST",
+                    success: function () {
+                        location.href = '/toPayList';
+                    }
+                });
             }
         })
     });

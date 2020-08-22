@@ -89,8 +89,8 @@
     <div class="login-form">
         <div class="main-div">
             <div class="panel">
-                <h2>Welcome back</h2>
-                <p>Log in with your email and password</p>
+                <h2>WM 로그인</h2>
+                <p>로그인에 필요한 이메일과 비밀번호를 입력하세요</p>
             </div>
             <form name="LoginForm" th:action="@{/user/loginPage}" method="post">
 <!--
@@ -107,19 +107,19 @@
                 <div th:if="${param.error}">
                     <p class="error-message" th:text="${errorMessage}">User Name or Password invalid, please verify</p>
                 </div>
-                <input type="button" id="loginBtn" class="btn btn-primary" value="Log in">
+                <input type="button" id="loginBtn" class="btn btn-primary" value="로그인">
             </form>
             <hr id="leftLine">
             <span style="color: gray">or</span>
             <hr id="rightLine">
             <br>
-            <a href="/oauth2/authorization/google" class="btn btn-google active" role="button">Continue with Google</a>
+            <a href="/oauth2/authorization/google" class="btn btn-google active" role="button">구글 로그인</a>
             <br><br>
             <span>계정이 없으신가요?
-            <a href="/" style="color: green">Sign up</a>
+            <a href="/" style="color: green">회원가입</a>
             </span><br><br>
             <span>비밀번호를 잊으셨나요?
-            <a href="/mail" style="color: green; font-weight: bold">Reset it</a>
+            <a href="/mail" style="color: green; font-weight: bold">비밀번호 찾기</a>
             </span>
         </div>
     </div></div></div>

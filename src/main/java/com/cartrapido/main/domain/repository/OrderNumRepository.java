@@ -10,12 +10,11 @@ public interface OrderNumRepository extends JpaRepository<OrderNum,Long> {
     List<OrderNum> findAllByUserEmail(String userEmail);
     List<OrderNum> findAllByUserEmailAndPay(String userEmail, int pay);
     List<OrderNum> findAllByPay(int pay);
-
-
     List<OrderNum> findAllByShopper(String shopper);
 
-
     OrderNum findByOrderNum(Long orderNum);
+
+//    void deleteAllByOrderNum(Long orderNum);
 
 /*    @Query("update OrderNum set pay=:pay  where orderNum =:orderNum")
     void updatePay(Long orderNum, int pay);*/

@@ -76,15 +76,19 @@ public class ShopperController {
     }
 
     @GetMapping("/viewOrderSheet/{orderNum}")
-    public String viewOrderSheet(@PathVariable("orderNum") String orderNum, Model model){
-        System.out.println(orderNum);
-        Long orderNum1 = Long.parseLong(orderNum);
+    public String viewOrderSheet(@PathVariable("orderNum") Long orderNum, Model model){
+        OrderNumDTO orderNumDTO = orderNumService.getOrderNum(orderNum);
+        int productTot = orderNumDTO.getProductTot();
+        int deliveryCost = orderNumDTO.getDeliveryCost();
+
         List<OrderSheetDTO> orderSheetList =
-                orderSheetService.getOrderSheetList(orderNum1);
+                orderSheetService.getOrderSheetList(orderNum);
 
         for(OrderSheetDTO dto:orderSheetList){
             System.out.println("view 상품 = "+dto.getProductName());
         }
+        model.addAttribute("productTot", productTot);
+        model.addAttribute("deliveryCost", deliveryCost);
         model.addAttribute("orderNumList", orderSheetList);
         model.addAttribute("orderSize", orderSheetList.size());
         return "/shopperWebBody/viewOrderSheet";

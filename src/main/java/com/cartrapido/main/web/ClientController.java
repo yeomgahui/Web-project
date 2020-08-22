@@ -141,6 +141,13 @@ public class ClientController {
         cartService.deleteCart(cartId);
     }
 
+    @PostMapping("/deleteOrder")
+    @ResponseBody
+    public void deleteOrder(@RequestParam Long orderNum) {
+        orderNumService.deleteOrder(orderNum);
+    }
+
+
     @PostMapping("/amountPlus")
     @ResponseBody
     public void amountPlus(@RequestParam Long cartId) {
@@ -254,6 +261,9 @@ public class ClientController {
 
     @GetMapping("/clientWeb/viewOrderSheet/{orderNum}")
     public String viewOrderSheet(@PathVariable("orderNum") Long orderNum, Model model){
+        OrderNumDTO orderNumDTO = orderNumService.getOrderNum(orderNum);
+        int productTot = orderNumDTO.getProductTot();
+        int deliveryCost = orderNumDTO.getDeliveryCost();
 
         List<OrderSheetDTO> orderSheetList =
                 orderSheetService.getOrderSheetList(orderNum);
@@ -261,6 +271,10 @@ public class ClientController {
         for(OrderSheetDTO dto:orderSheetList){
             System.out.println("view 상품 = "+dto.getProductName());
         }
+
+        model.addAttribute("productTot", productTot);
+        model.addAttribute("deliveryCost", deliveryCost);
+
         model.addAttribute("orderNumList", orderSheetList);
         model.addAttribute("orderSize", orderSheetList.size());
 

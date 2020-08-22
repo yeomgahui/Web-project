@@ -188,6 +188,7 @@
     var lastCartId = cartList[cartList.length - 1].cartId;
     var deliveryCost = parseInt($('#deliveryCost').val());
     let readyToPay = true;
+    var oriDeliveryCost=parseInt($('#deliveryCost').val());
     $(document).ready(function () {
         for (i = 0; i < cartList.length; i++) {
             tot += (cartList[i].productPrice * cartList[i].amount);
@@ -203,10 +204,12 @@
 
     //배송비 수정버튼
     $('#deliveryCostBtn').click(function () {
+
         if ($("#deliveryCost").is(":disabled")) {
             $("#deliveryCost").removeAttr("disabled");
             $("#deliveryCostBtn").val('done');
             readyToPay = false;
+            oriDeliveryCost = parseInt($("#deliveryCost").val());
 
         } else {
             if (parseInt($("#deliveryCost").val()) < 5000) {
@@ -218,11 +221,14 @@
                 })
                 return;
             }
+
             $("#deliveryCost").attr("disabled", true);
             $("#deliveryCostBtn").val('edit');
             readyToPay = true;
+            payTot-=oriDeliveryCost;
             payTot+=parseInt($("#deliveryCost").val())
             $('#payTot').text(payTot);
+
         }
 
     });
@@ -267,7 +273,6 @@
                 //dataType: "json",
 
                 success: function () {
-
                      Swal.fire({
                          icon: 'success',
                          title: '주문서를 제출합니다.',
@@ -275,9 +280,7 @@
                          timer: 1500
                      })
                     // //swal('주문서 제출 성공!', '', 'success');
-
-
-
+                    location.href = '/shoppingCart';
                 }
             });//결제 버튼
         } else {
