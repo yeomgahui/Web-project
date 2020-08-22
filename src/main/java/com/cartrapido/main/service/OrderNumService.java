@@ -114,15 +114,19 @@ public class OrderNumService {
         orderNumRepository.save(orderNum1);
     }
 
-/*    public OrderNumDTO getOrderNum(OrderNum orderNum){
-        OrderNumDTO orderNumDTO = orderNum.builder()
-                .orderNum(orderNum.getOrderNum())
-                .latitud(orderNum.getLatitud())
-                .longitude(orderNum.getLongitude())
-                .shopper(orderNum.getShopper())
-                .userEmail(orderNum.getUserEmail())
-                .build();
+    public void deleteOrder(Long orderNum) {
+        orderNumRepository.deleteById(orderNum);
+    }
 
-    }*/
+    public OrderNumDTO getOrderNum(Long orderNum1){
+        OrderNum orderNum = orderNumRepository.findByOrderNum(orderNum1);
+        OrderNumDTO orderNumDTO = new OrderNumDTO(
+                orderNum.getOrderNum(), orderNum.getUserEmail(), orderNum.getShopper(),
+                orderNum.getLongitude(), orderNum.getLatitud(),
+                orderNum.getDeliveryCost(), orderNum.getProductTot(),
+                orderNum.getPay()
+        );
+        return orderNumDTO;
+    }
 
 }
