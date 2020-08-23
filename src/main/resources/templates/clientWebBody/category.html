@@ -259,6 +259,7 @@
 <script type="text/javascript">
 
     function putInCart(productId) {
+        alert(productId);
         Swal.fire({
             icon: 'success',
             title: '상품을 장바구니에 보관합니다',
@@ -269,31 +270,50 @@
         $.ajax({
             url: "/clientMart/putInCart",
             data: {productId:productId},
-            type: "POST",
-            dataType: "json"
+            type: "POST"
         }).done(function(json) {
         }).error(function(xhr, status, errorThrown) {
             alert(xhr.status);
             alert(errorThrown);
         });
 
-
-
     }
+
+
     $(document).ready(function () {
         $('.modaldata').click(function () {
             //$.ajax()
+            $('.modalPId').text($(this).data('id'));
             $('h3.product-name').text($(this).data('name'));
-            $('span.product-price').text($(this).data('price'));
+            $('span.product-price').text($(this).data('price')+"won");
             $('span.product-content').text($(this).data('content'));
-            $('img.product__details__pic__item--large').attr( 'src', $(this).data('image'));
+            $('img.product__details__pic__item--large').attr('src', $(this).data('image'));
+
+
+
         });
+
+        $('#addCart').click(function () {
+            Swal.fire({
+                icon: 'success',
+                title: '상품을 장바구니에 보관합니다',
+                showConfirmButton: false,
+                timer: 1500
+            })
+
+            $.ajax({
+                url: "/clientMart/putInCart",
+                data: {productId:$('.modalPId').text()},
+                type: "POST"
+            }).done(function(json) {
+            }).error(function(xhr, status, errorThrown) {
+                alert(xhr.status);
+                alert(errorThrown);
+            });
+
+        });
+
     });
-    /*
-    $('#myModal').on('show.bs.modal', function (e) {
-        var productId = $(e.relatedTarget).data('test');
-        alert(productId);
-    });*/
 
 </script>
 
