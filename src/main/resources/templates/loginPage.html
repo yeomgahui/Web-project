@@ -2,14 +2,15 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>CartRapido</title>
+    <title>What's in My cart?</title>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <style>
-        body#LoginForm{ background-image:url("https://hdwallsource.com/img/2014/9/blur-26347-27038-hd-wallpapers.jpg");
-            background-repeat:no-repeat;
-            background-position:center;
-            background-size:cover;
-            padding:10px;}
+        html{
+            height: 100%;
+        }
+        body#LoginForm{
+            background-image:url("https://thumbs.dreamstime.com/z/healthy-eating-background-food-photography-different-fruits-vegetables-isolated-white-copy-space-high-resolution-68279520.jpg");
+            background-repeat:no-repeat; background-position:center; background-size:cover; padding:10px;}
 
         .panel h2{ color:#444444; font-size:18px; margin:0 0 8px 0;}
         .panel p { color:#777777; font-size:14px; margin-bottom:30px; line-height:24px;}
@@ -87,7 +88,9 @@
 <body id="LoginForm">
 <div class="container">
     <div class="login-form">
-        <div class="main-div">
+        <div class="main-div"
+             style="display: flex; flex-direction: column; background: white; width: 540px;
+                                                margin: 0px auto 20px; box-shadow: rgb(136,136,136) 2px 1px 20px; min-height: 350px">
             <div class="panel">
                 <h2>WM 로그인</h2>
                 <p>로그인에 필요한 이메일과 비밀번호를 입력하세요</p>
