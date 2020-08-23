@@ -64,6 +64,41 @@
                                             </div>
                                         </div>
                                     <!--for each 여기까지 -->
+
+
+                                        <!--주문 총 합계 테이블-->
+                                        <div class="card-body">
+
+                                            <div class="row mb-4">
+                                                <table class="table table-bordered"
+                                                       style="width: 70%;" align="center">
+
+                                                    <thead>
+                                                    <tr  align="center" >
+                                                        <th>상품가격</th>
+                                                        <th>서비스 가격</th>
+                                                        <th>총 합계</th>
+                                                    </tr>
+                                                    </thead>
+
+                                                    <tbody>
+                                                    <tr class="success" align="center">
+                                                        <td><span th:text="${productTot}"></span>원</td>
+                                                        <td><span th:text="${deliveryCost}"></span>원</td>
+                                                        <td><span th:text="${deliveryCost}+${productTot}"></span>원</td>
+                                                    </tr>
+                                                    </tbody>
+
+
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <!--주문 총 합계 테이블-->
+
+
+
+
+
                                     </div>
                                 </ul>
 
@@ -71,7 +106,8 @@
                         </div>
                     </perfect-scrollbar>
                 </div>
-                <div class="d-block text-right card-footer"><button class="mr-2 btn btn-link btn-sm">Cancel</button><button class="btn btn-primary">Add Task</button></div>
+                <div class="d-block text-right card-footer">
+                    </div>
             </div>
 
             <!--여기까지 바디-->

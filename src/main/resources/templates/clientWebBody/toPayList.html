@@ -79,9 +79,12 @@
                                                 </div>
                                                 <div class="widget-content-right">
                                                     <button id="kakaoPayBtn"
-                                                            class="border-0 btn-transition btn btn-outline-warning">
+                                                            th:onclick="|javascript:kakaoPay('${orderNumList.orderNum}','${orderNumList.deliveryCost}','${orderNumList.productTot}')|"
+                                                            class="border-0 btn-transition btn btn-outline-warning"
+                                                    >
                                                         <i class="fa fa-credit-card"></i></button>
                                                     <button id="deleteOrder"
+                                                            th:onclick="|javascript:deleteOrder('${orderNumList.orderNum}')|"
                                                             class="border-0 btn-transition btn btn-outline-danger">
                                                         <i class="fa fa-trash"></i></button>
                                                 </div>
@@ -126,16 +129,12 @@
 <script type="text/javascript" th:inline="javascript">
 
 
-    $('#kakaoPayBtn').click(function () {
-        let orderNumData= document.getElementById('orderNumData').dataset;
-        let payTot=parseInt(orderNumData.producttot)+parseInt(orderNumData.deliverycost);
-        let orderNum=orderNumData.ordernum;
+    function kakaoPay(orderNum, deliveryCost, productCost ) {
+        payTot = parseInt(deliveryCost)+parseInt(productCost)
         location.href="/payment/kakaoPay/"+orderNum+"/"+payTot;
-    });
+    };
 
-    $('#deleteOrder').click(function () {
-        let orderNumData= document.getElementById('orderNumData').dataset;
-        let orderNum=orderNumData.ordernum;
+     function deleteOrder(orderNum) {
 
         Swal.fire({
             title: '정말로 삭제하시겠습니까?',
@@ -164,7 +163,7 @@
                 });
             }
         })
-    });
+    }
 
 </script>
 
