@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+<header th:replace="shopperWeb/header :: headerFragment"></header>
+
+<body>
+<div class="container-lg mt-5">
+    <div class="row">
+        <th:block th:include="shopperWeb/sidebar.html" ></th:block>
+
+        <div class="col-lg-9 jumbotron" id="col-lg-9" >
+
+            <!--            여기서부터 바디부분-->
+<!--            <p class="lead"><span th:text="${session.user.name}"></span>님의 개인 페이지입니다.-->
+            <form id="shopperInfo" method="post">
+                <div class="row">
+                        <div >
+                            <div class="row">
+                                <div class="col-8 offset-4">
+                                    <h2>My Info</h2>
+                                </div>
+                            </div>
+                            <form action="/examples/actions/confirmation.php" method="post" class="form-horizontal">
+
+
+                                <div class="form-group row">
+                                    <label class="col-form-label col-4">Username</label>
+                                    <div class="col-8">
+                                        <input type="text" class="form-control" name="username" th:value="${session.user.name}" required="required">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-form-label col-4">이메일</label>
+                                    <div class="col-8">
+                                        <input type="email" class="form-control" name="email" th:value="${session.user.email}" required="required">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-form-label col-4">주소</label>
+                                    <div class="col-8">
+                                        <input type="text" width="400px"
+
+                                               class="form-control" name="address" th:value="${session.user.address}" required="required">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-form-label col-4">비밀번호</label>
+                                    <div class="col-8">
+                                        <input type="password" class="form-control" name="password" required="required">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-form-label col-4">비밀번호 확인</label>
+                                    <div class="col-8">
+                                        <input type="password" class="form-control" name="confirm_password" required="required">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-8 offset-4">
+                                        <button type="submit" class="btn btn-primary btn-lg">저장하기 </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+            </div>
+            </form>
+
+            <!--여기까지 바디-->
+        </div>
+
+
+
+
+
+    </div>
+</div>
+</body>
+</html>

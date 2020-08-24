@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+<header th:replace="shopperWeb/header :: headerFragment"></header>
+
+<body>
+<div class="container-lg mt-5">
+    <div class="row">
+        <th:block th:include="shopperWeb/sidebar.html" ></th:block>
+
+        <div class="col-lg-9" id="col-lg-9" >
+
+            <!--            여기서부터 바디부분-->
+            <div class="jumbotron">
+                <h1 class="display-4">비밀번호 변경 </h1>
+                <p class="lead">
+                    <!-- <br><a href="http://localhost:8080/" target="_blank">rapido cart</a>.--></p>
+                <div class="form-group">
+                    <input type="password" class="form-control" name="nowPwd" id="nowPwd" placeholder="현재 비밀번호" required="required">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" name="chPwd" id="chPwd" placeholder="변경할 비밀번호" required="required">
+                </div>
+                <div class="form-group">
+                    <a class="btn btn-primary btn-withdrawal" id="chPwdBtn" href="#" target="_blank">비밀번호 변경</a>
+                </div>
+            </div>
+
+            <!--여기까지 바디-->
+        </div>
+
+
+
+
+
+    </div>
+</div>
+</body>
+</html>

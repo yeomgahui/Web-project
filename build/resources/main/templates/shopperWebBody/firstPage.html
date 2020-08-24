@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+<header th:replace="shopperWeb/header :: headerFragment"></header>
+
+<body>
+<div class="container-lg mt-5">
+    <div class="row">
+        <th:block th:include="shopperWeb/sidebar.html" ></th:block>
+
+        <div class="col-lg-9" id="col-lg-9" >
+
+            <!--            여기서부터 바디부분-->
+            <h1 class="display-4">Welcome!  </h1>
+            <p class="lead"> 해당 홈페이지는 shopper 전용 홈페이지입니다.<br> rapido cart의 딜리버리 서비스를 지원해보세요.
+                <!-- <br><a href="http://localhost:8080/" target="_blank">rapido cart</a>.--></p>
+            <hr class="my-4">
+            <a class="btn btn-primary btn-lg" href="http://localhost:8080/" target="_blank">rapido 홈페이지</a>
+
+
+            <!--여기까지 바디-->
+        </div>
+
+
+
+
+
+    </div>
+</div>
+</body>
+</html>

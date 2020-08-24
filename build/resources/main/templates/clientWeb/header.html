@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <header class="header"th:fragment="headerFragment" >
+        <head>
+        <meta charset="UTF-8">
+        <meta name="description" content="Ogani Template">
+        <meta name="keywords" content="Ogani, unica, creative, html">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+            <style>
+
+
+                .quantity {
+                    float: left;
+                    margin-right: 15px;
+                    /*background-color: #eee;*/
+                    position: relative;
+                    width: 80px;
+                    overflow: hidden
+                }
+
+                .quantity input {
+                    margin: 0;
+                    text-align: center;
+                    width: 15px;
+                    height: 15px;
+                    padding: 0;
+                    float: right;
+                    color: #000;
+                    font-size: 20px;
+                    border: 0;
+                    outline: 0;
+                    background-color: #F6F6F6
+                }
+
+                .quantity input.qty {
+                    position: relative;
+                    border: 0;
+                    width: 100%;
+                    height: 40px;
+                    padding: 10px 25px 10px 10px;
+                    text-align: center;
+                    font-weight: 400;
+                    font-size: 15px;
+                    border-radius: 0;
+                    background-clip: padding-box
+                }
+
+                .quantity .minus, .quantity .plus {
+                    line-height: 0;
+                    background-clip: padding-box;
+                    -webkit-border-radius: 0;
+                    -moz-border-radius: 0;
+                    border-radius: 0;
+                    -webkit-background-size: 6px 30px;
+                    -moz-background-size: 6px 30px;
+                    color: #bbb;
+                    font-size: 20px;
+                    position: absolute;
+                    height: 50%;
+                    border: 0;
+                    right: 0;
+                    padding: 0;
+                    width: 25px;
+                    z-index: 3
+                }
+
+                .quantity .minus:hover, .quantity .plus:hover {
+                    background-color: #dad8da
+                }
+
+                .quantity .minus {
+                    bottom: 0
+                }
+                .shopping-cart {
+                    margin-top: 20px;
+                }
+
+
+                .form-control {
+                    border-color: #eee;
+                    min-height: 41px;
+                    box-shadow: none !important;
+                }
+                .form-control:focus {
+                    border-color: #5cd3b4;
+                }
+                .form-control, .btn {
+                    border-radius: 3px;
+                }
+                .signup-form {
+                    width: 500px;
+                    margin: 0 auto;
+                    padding: 30px 0;
+                }
+                .signup-form h2 {
+                    color: #333;
+                    margin: 0 0 30px 0;
+                    display: inline-block;
+                    padding: 0 30px 10px 0;
+                    border-bottom: 3px solid #5cd3b4;
+                }
+                .signup-form form {
+                    color: #999;
+                    border-radius: 3px;
+                    margin-bottom: 15px;
+                    background: #fff;
+                    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+                    padding: 30px;
+                }
+                .signup-form .form-group row {
+                    margin-bottom: 20px;
+                }
+                .signup-form label {
+                    font-weight: normal;
+                    font-size: 14px;
+                    line-height: 2;
+                }
+                .signup-form input[type="checkbox"] {
+                    position: relative;
+                    top: 1px;
+                }
+                .signup-form .btn {
+                    font-size: 16px;
+                    font-weight: bold;
+                    background: #5cd3b4;
+                    border: none;
+                    margin-top: 20px;
+                    min-width: 140px;
+                }
+                .signup-form .btn:hover, .signup-form .btn:focus {
+                    background: #41cba9;
+                    outline: none !important;
+                }
+                .signup-form a {
+                    color: #5cd3b4;
+                    text-decoration: underline;
+                }
+                .signup-form a:hover {
+                    text-decoration: none;
+                }
+                .signup-form form a {
+                    color: #5cd3b4;
+                    text-decoration: none;
+                }
+                .signup-form form a:hover {
+                    text-decoration: underline;
+                }
+
+                .borderCircle div {
+                    border: 0.4em inset #009688;
+                   /* border-radius: 80px / 40px;*/
+                }
+
+            </style>
+
+        <!-- Google Font -->
+        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
+
+        <!-- Css Styles -->
+        <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+        <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css">
+        <link rel="stylesheet" href="/css/elegant-icons.css" type="text/css">
+        <link rel="stylesheet" href="/css/nice-select.css" type="text/css">
+        <link rel="stylesheet" href="/css/jquery-ui.min.css" type="text/css">
+        <link rel="stylesheet" href="/css/owl.carousel.min.css" type="text/css">
+        <link rel="stylesheet" href="/css/slicknav.min.css" type="text/css">
+        <link rel="stylesheet" href="/css/style.css" type="text/css">
+    </head>
+
+    <meta charset="UTF-8">
+    <title>WM?</title>
+    <!-- Header Section Begin -->
+
+        <div class="header__top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="header__top__left">
+                            <ul>
+                                <li><i class="fa fa-enelope"></i> What's in My cart?</li>
+                                <li><span th:text="${session.user.name}" ></span>님 환영합니다.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="header__top__right">
+                            <div class="header__top__right__social">
+                                <a href="/clientMypage"><i class="fa fa-user"></i> My page</a>
+                            </div>
+
+                            <div class="header__top__right__auth">
+                                <a href="/logout" role="button">Log out</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="header__logo">
+                        <a href="/clientMain"><img src="/img/WM.png" width="60%" height="auto" alt=""></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <nav class="header__menu">
+                        <ul>
+                            <li class="active"><a href="./clientMain">Home</a></li>
+                            <li><a href="#">Shop</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-3">
+                    <div class="header__cart">
+                        <ul>
+                            <li><a href="#"><i class="fa fa-heart"></i> </a></li>
+                            <li><a href="/shoppingCart"><i class="fa fa-shopping-bag"></i> </a></li>
+                        </ul>
+<!--                        <div class="header__cart__price">item: <span>$150.00</span></div>-->
+                    </div>
+                </div>
+            </div>
+            <div class="humberger__open">
+                <i class="fa fa-bars"></i>
+            </div>
+        </div>
+    </header>
+    <!-- Header Section End -->
+</head>
+
+
+</html>
