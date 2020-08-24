@@ -1,6 +1,5 @@
-package com.cartrapido.main.service;
+package com.cartrapido.main.service.crawlingServicce;
 
-import com.cartrapido.main.domain.entity.Product;
 import com.cartrapido.main.domain.repository.ProductRepository;
 import com.cartrapido.main.web.dto.ProductDTO;
 import org.jsoup.Jsoup;
@@ -12,13 +11,8 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.FieldPosition;
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -67,53 +61,64 @@ public class EmartCrawlingService {
     public void getEmartDatas() {
 
         //날짜 비교해서 크롤링하기
-        List<LocalDateTime> list = productRepository.emartDate();
+        List<LocalDateTime> list = productRepository.martDate("emart");
 
         if (list.size() != 0) {
             LocalDate latest = LocalDate.from(list.get(0));
             LocalDate today = LocalDate.from(LocalDateTime.now());
 
             if (today.isAfter(latest)) {
-//              productRepository.deleteAll();
-                for (int j = 0; j < array_url.length; j++) {
+                productRepository.deleteByStore("emart");
+                crawling();
+            }
+        }
+        else {
+            crawling();
+        }
+    }
 
-                    try {
+    public void crawling() {
 
-                        //크롤링 차단 막기
-                        Document doc = Jsoup.connect(array_url[j])
-                                .userAgent("Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36")
-                                .header("scheme", "https")
-                                .header("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8")
-                                .header("accept-encoding", "gzip, deflate, br")
-                                .header("accept-language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7,es;q=0.6")
-                                .header("cache-control", "no-cache")
-                                .header("pragma", "no-cache")
-                                .header("upgrade-insecure-requests", "1")
-                                .get();
+        System.out.println("emart");
+        for (int j = 0; j < array_url.length; j++) {
 
-                        Elements elements = doc.select("div#ty_thmb_view ul");
+            try {
 
-                        for (Element element : elements) {
-                            int i;
+                //크롤링 차단 막기
+                Document doc = Jsoup.connect(array_url[j])
+                        .userAgent("Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36")
+                        .header("scheme", "https")
+                        .header("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8")
+                        .header("accept-encoding", "gzip, deflate, br")
+                        .header("accept-language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7,es;q=0.6")
+                        .header("cache-control", "no-cache")
+                        .header("pragma", "no-cache")
+                        .header("upgrade-insecure-requests", "1")
+                        .get();
 
-                            for (i = 0; i < elements.select("li.cunit_t232").size(); i++) {
+                Elements elements = doc.select("div#ty_thmb_view ul");
 
-                                String itemId = elements.select("input[name=attnTgtIdnfNo1]").get(i).attr("value");
+                for (Element element : elements) {
+                    int i;
 
-                                String productName = elements.select("em.tx_en").get(i).text();
+                    for (i = 0; i < elements.select("li.cunit_t232").size(); i++) {
 
-                                String stringProductPrice = elements.select("em.ssg_price").get(i).text();
-                                String[] ProductPriceSplit = stringProductPrice.split(",");
-                                String productPrice = "";
-                                for (String str : ProductPriceSplit) {
-                                    productPrice = productPrice + str;
-                                }
+                        String itemId = elements.select("input[name=attnTgtIdnfNo1]").get(i).attr("value");
 
-                                String image = elements.select("a.clickable img.i1").get(i).attr("src");
+                        String productName = elements.select("em.tx_en").get(i).text();
 
-                                //Productcontent 가져오기
-                                String productcontent = "";
-                                //if (itemId.equals("0000010006566")) {
+                        String stringProductPrice = elements.select("em.ssg_price").get(i).text();
+                        String[] ProductPriceSplit = stringProductPrice.split(",");
+                        String productPrice = "";
+                        for (String str : ProductPriceSplit) {
+                            productPrice = productPrice + str;
+                        }
+
+                        String image = elements.select("a.clickable img.i1").get(i).attr("src");
+
+                        //Productcontent 가져오기
+                        String productcontent = "";
+                        //if (itemId.equals("0000010006566")) {
 
 //                                   String array_contentUrl = "http://emart.ssg.com/item/itemView.ssg?itemId=" + itemId;
 //                                   System.out.println(array_contentUrl);
@@ -121,28 +126,27 @@ public class EmartCrawlingService {
 //                                    Document doc1 = Jsoup.connect(array_contentUrl).get();
 //
 //                                    productcontent = doc1.select("table[summary='상품 필수정보 보여주는 표']").html();
-                                //}
+                        //}
 
-                                ProductDTO productDTO = ProductDTO.builder()
-                                        .itemId(itemId)
-                                        .productName(productName)
-                                        .productPrice(Integer.parseInt(productPrice))
-                                        .productQty(10)
-                                        .productContent(productcontent)
-                                        .store("emart")
-                                        .category(array_category[j])
-                                        .image(image)
-                                        .build();
+                        ProductDTO productDTO = ProductDTO.builder()
+                                .itemId(itemId)
+                                .productName(productName)
+                                .productPrice(Integer.parseInt(productPrice))
+                                .productQty(10)
+                                .productContent(productcontent)
+                                .store("emart")
+                                .category(array_category[j])
+                                .image(image)
+                                .build();
 
-                                productRepository.save(productDTO.toEntity()).getProductId();
-                            }
-                        }
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                        productRepository.save(productDTO.toEntity()).getProductId();
                     }
                 }
+
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
+
     }
 }

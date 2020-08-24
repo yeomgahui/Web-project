@@ -130,7 +130,7 @@
             $('.modalPId').text($(this).data('id'));
             $('h3.product-name').text($(this).data('name'));
             $('span.product-price').text($(this).data('price')+"won");
-            $('span.product-content').text($(this).data('content'));
+            $('p.product-content').html($(this).data('content'));
             $('img.product__details__pic__item--large').attr('src', $(this).data('image'));
 
 
