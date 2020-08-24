@@ -43,6 +43,7 @@
 
                                             <div class="widget-content p-0">
                                                 <div class="widget-content-wrapper">
+
                                                     <a class="widget-content-left"
                                                        style="
                                                         color: darkgreen;
@@ -56,20 +57,33 @@
 
                                                     </a>
                                                     <div class="widget-subheading">
-                                                        <br>
-                                                        <div>
-                                                                <span th:text="${orderNumList.shopper != null} ?
-                                                                 ${orderNumList.shopper} : '아직 shopper와 매칭되지 않았습니다!'">
-                                                                님과 매칭 성공!</span>
-                                                        </div>
+                                                        <span th:if="${orderNumList.shopper != null}">
+                                                        &emsp;<img src="img/matching.png" style="width:10%">
+                                                        &emsp;&emsp;
+                                                            <strong ><span
+                                                                    style="font-size: 20px;"
+                                                                    th:text="${orderNumList.shopper}"></span></strong>
+                                                            님과 매칭되셨어요!<br>
+                                                            &nbsp;<span class="btn-outline-success" onclick="location.href='/clientChatting'">
+                                                                채팅하러 가기</span>
+                                                        </span>
+                                                        <span th:if="${orderNumList.shopper == null}">
+                                                        아직 shopper와 매칭되지 않았습니다!
+                                                        </span>
+                                                    </div>
+
+
+
+                                                    <div class="widget-content-right">
+                                                    <span th:if="${orderNumList.shopper == null}">
+                                                        <button class="border-0 btn-transition btn btn-outline-success"><i
+                                                                class="fa fa-check"></i></button>
+                                                        <button class="border-0 btn-transition btn btn-outline-danger"><i
+                                                                class="fa fa-trash"></i></button>
+                                                    </span>
                                                     </div>
                                                 </div>
-                                                <div class="widget-content-right">
-                                                    <button class="border-0 btn-transition btn btn-outline-success"><i
-                                                            class="fa fa-check"></i></button>
-                                                    <button class="border-0 btn-transition btn btn-outline-danger"><i
-                                                            class="fa fa-trash"></i></button>
-                                                </div>
+
                                             </div>
                                         </li>
                                 <!--for each 여기까지 -->

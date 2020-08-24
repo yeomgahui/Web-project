@@ -37,9 +37,14 @@
 
 
                                     <!--for each-->
-                                    <div class="card wish-list mb-3">
+                                    <div class="card wish-list mb-3"
+                                    style="
+                                    background-repeat:no-repeat; background-position:center; background-size:cover; padding:10px;
+                                    background-image:url('https://previews.123rf.com/images/kurhan/kurhan1609/kurhan160900049/62711306-organic-vegetables-and-fruits-dieting-and-grocery-background-.jpg');"
+                                    >
                                         <br>
-                                        <h5 align="center" class="mb-4"> <span th:text="${orderSize}"></span>개의 품목을 주문하셨습니다!</h5>
+                                        <strong align="center" class="mb-4 text-success"><strong>
+                                            </strong><span th:text="${orderSize}"></span>개의 품목을 주문하셨습니다!</strong></h5>
 
 
                                         <!--여기서부터 for each로 돌려서 장바구니 추가되게 해야함-->
@@ -78,11 +83,11 @@
                                         <div class="card-body">
 
                                             <div class="row mb-4">
-                                                    <table class="table table-bordered"
+                                                    <table class="table table-bordered "
                                                            style="width: 70%;" align="center">
 
                                                         <thead>
-                                                        <tr  align="center" >
+                                                        <tr class="table-light" align="center" >
                                                             <th>상품가격</th>
                                                             <th>서비스 가격</th>
                                                             <th>총 합계</th>
@@ -90,7 +95,7 @@
                                                         </thead>
 
                                                         <tbody>
-                                                        <tr class="success" align="center">
+                                                        <tr class="table-light" align="center">
                                                             <td><span th:text="${productTot}"></span>원</td>
                                                             <td><span th:text="${deliveryCost}"></span>원</td>
                                                             <td><span th:text="${deliveryCost}+${productTot}"></span>원</td>

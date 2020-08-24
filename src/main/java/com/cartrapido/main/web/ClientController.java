@@ -163,15 +163,14 @@ public class ClientController {
 
     @PostMapping("/clientWeb/pushOrder")
     @ResponseBody /*@ModelAttribute List<CartDTO> cartList*/
-    public void pushOrder(@RequestParam (value = "chbox[]") List<String> checkArr,
+    public void pushOrder(@RequestParam (value = "chbox[]") List<Long> checkArr,
                           @RequestParam (value = "amountArr[]") List<Integer> amountArr,
                           @RequestParam int productTot,
                           @RequestParam int deliveryCost
                           ) {
 
-
-        CartDTO cartDTO = cartService.getCartIdInfo(Long.parseLong(checkArr.get(0)));
-        String userEmail =cartDTO.getUserEmail();
+        CartDTO cartDTO = cartService.getCartIdInfo(checkArr.get(0));
+        String userEmail = cartDTO.getUserEmail();
         OrderNumDTO orderNumDTO = new OrderNumDTO(
                 userEmail,null,0,0, deliveryCost, productTot, 0
         );
@@ -180,13 +179,13 @@ public class ClientController {
         Long orderNum1 = orderNum.getOrderNum();
         //OrderSheet 저장
         for(int i = 0 ; i <checkArr.size() ;i++){
-            cartDTO = cartService.getCartIdInfo(Long.parseLong(checkArr.get(i)));
+            cartDTO = cartService.getCartIdInfo(checkArr.get(i));
             OrderSheetDTO orderSheetDTO = new OrderSheetDTO(
                     orderNum1, orderNumDTO.getUserEmail(),
                     cartDTO.getProductId(), amountArr.get(i)
             );
             orderSheetService.saveOrderSheet(orderSheetDTO);
-            cartService.deleteCart(Long.parseLong(checkArr.get(i)));
+            cartService.deleteCart(checkArr.get(i));
         }
 
     }
@@ -323,7 +322,10 @@ public class ClientController {
     }
 
 
-
+    @GetMapping("/myFavorites")
+    public String myFavorites() {
+        return "/clientWebBody/myFavorites";
+    }
 
 
 
