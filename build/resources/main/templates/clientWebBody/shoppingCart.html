@@ -189,6 +189,7 @@
     var deliveryCost = parseInt($('#deliveryCost').val());
     let readyToPay = true;
     var oriDeliveryCost=parseInt($('#deliveryCost').val());
+
     $(document).ready(function () {
         for (i = 0; i < cartList.length; i++) {
             tot += (cartList[i].productPrice * cartList[i].amount);
@@ -242,23 +243,15 @@
             var amountArr = new Array();
 
             var i;
-            for (i = firstCartId; i <= lastCartId; i++) {
-                var cartAmount = $('#' + i).val();
-                amountArr.push(cartAmount);
-                checkArr.push(document.getElementById('cartNum' + i).dataset.id);
+            for (i=firstCartId; i<= lastCartId; i++) {
+                  var cartAmount=$('#'+i).val();
+                    amountArr.push(cartAmount);
+                    checkArr.push(document.getElementById('cartNum'+i).dataset.id);
+                    alert(document.getElementById('cartNum'+i).dataset.id);
 
-                /*if($("input:checkbox[name='cartNum'+"+i+"]").is(":checked") == true) {
-
-            }*/
             }
 
-//            var article = document.getElementById('cart');
-            /*            $("input[class='chBox']:checked").each(function () {
 
-                            alert(chBox.dataset.id) ;
-            //                alert(article.dataset.name) ;
-
-                        });*/
 
             //2.DB에 주문서 저장
             $.ajax({
@@ -270,16 +263,9 @@
                     productTot: tot
                 },
                 type: "POST",
-                //dataType: "json",
-
                 success: function () {
-                     Swal.fire({
-                         icon: 'success',
-                         title: '주문서를 제출합니다.',
-                         showConfirmButton: false,
-                         timer: 1500
-                     })
-                    // //swal('주문서 제출 성공!', '', 'success');
+
+                    swal('주문서 제출 성공!', '', 'success');
                     location.href = '/shoppingCart';
                 }
             });//결제 버튼
@@ -291,6 +277,7 @@
                 timer: 1500
             })
         }
+
     });
 
 
