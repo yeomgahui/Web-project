@@ -25,8 +25,10 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("SELECT distinct p.category FROM Product p where p.store =:store")
     List<String> findDistinctByStore(String store);
 
-    @Query("SELECT p.modifiedDate FROM Product p ORDER BY p.modifiedDate DESC")
-    List<LocalDateTime> emartDate();
+    @Query("SELECT p.modifiedDate FROM Product p where p.store=:store ORDER BY p.modifiedDate DESC")
+    List<LocalDateTime> martDate(String store);
+
+    void deleteByStore(String store);
 
     /*Optional<Member> findByEmail(String email);*/
     /*@Query("SELECT p FROM member p ORDER BY p.id DESC")
