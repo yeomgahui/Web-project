@@ -47,10 +47,12 @@ dependencies {
     implementation 'org.webjars:sockjs-client:1.0.2'
     implementation 'org.webjars:stomp-websocket:2.3.3'
 
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.4.1'
+   implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    /* implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.4.1'*/
 
     //crawling
     compile group: 'org.jsoup', name: 'jsoup', version: '1.11.3'
+
+    runtimeOnly 'mysql:mysql-connector-java'
 
 }

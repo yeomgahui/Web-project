@@ -1,5 +1,7 @@
 package com.cartrapido.main.web;
 
+import com.cartrapido.main.chat.dto.ChatRoomSaveRequestDTO;
+import com.cartrapido.main.chat.service.ChatRoomService;
 import com.cartrapido.main.config.auth.dto.SessionUser;
 import com.cartrapido.main.service.OrderNumService;
 import com.cartrapido.main.service.OrderSheetService;
@@ -22,6 +24,9 @@ public class ShopperController {
     OrderSheetService orderSheetService;
     @Autowired
     OrderNumService orderNumService;
+
+    ChatRoomService chatRoomService;
+
 
     @GetMapping("/shopperWeb")
     public String shopperWeb() {
@@ -101,7 +106,17 @@ public class ShopperController {
         SessionUser user = (SessionUser) session.getAttribute("user");
         String shopperEmail = user.getEmail();
         System.out.println(shopperEmail+" 쇼퍼의 이메일 ");
-        orderNumService.acceptOrder(orderNum,shopperEmail);
+        String clientId = orderNumService.acceptOrder(orderNum,shopperEmail);
+
+        //채팅방 생성
+        String roomName = orderNum.toString();
+        ChatRoomSaveRequestDTO requestDTO = ChatRoomSaveRequestDTO.builder()
+                .roomname(roomName)
+                .shopperId(shopperEmail)
+                .clientId(clientId).build();
+
+        chatRoomService.save(requestDTO);
+
     }
 
 }

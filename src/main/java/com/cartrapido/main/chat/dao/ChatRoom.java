@@ -26,9 +26,6 @@ public class ChatRoom extends TimeEntity {
 
     private String clientId;
 
-
-
-
     @Builder
     public ChatRoom(String roomName,String shopperId, String clientId){
         this.roomId = UUID.randomUUID().toString();
@@ -36,5 +33,4 @@ public class ChatRoom extends TimeEntity {
         this.shopperId = shopperId;
         this.clientId = clientId;
     }
-
 }

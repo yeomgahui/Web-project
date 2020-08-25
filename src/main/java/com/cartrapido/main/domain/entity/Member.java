@@ -51,6 +51,13 @@ public class Member {
             this.name = name;
             return this;
         }
+        public Member update(String name,String address, String pwd){
+            System.out.println("update들어옴");
+            this.name = name;
+            this.address = address;
+            this.password = pwd;
+            return this;
+        }
         public Member updatePwd(String pwd){
             this.password = pwd;
             return this;
