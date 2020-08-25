@@ -7,6 +7,7 @@ import com.cartrapido.main.domain.repository.MemberRepository;
 import com.cartrapido.main.domain.Role;
 import com.cartrapido.main.exception.ValidCustomException;
 import com.cartrapido.main.web.dto.MemberRequestDTO;
+import com.cartrapido.main.web.dto.MemberUpdateRequestDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -103,6 +104,39 @@ public class MemberService implements UserDetailsService {
             System.out.println(e);
         }
     }
+
+    //비밀번화 확인
+    public Boolean checkPwd(String email, String temppwd){
+        Optional<Member> member = memberRepository.findByEmail(email);
+        String pwd = null;
+        if(member.isPresent()){
+            pwd = member.get().getPassword();
+        }
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        return passwordEncoder.matches(temppwd, pwd);
+    }
+
+    @Transactional
+    public void updateMyPage(String email, MemberUpdateRequestDTO requestDTO){
+        Member member = memberRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다. id"+ email));
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String pwd = passwordEncoder.encode(requestDTO.getPassword());
+
+        System.out.println("바꿀 주소 ="+requestDTO.getAddress());
+        System.out.println("바꿀 이름 ="+requestDTO.getName());
+
+
+        Member userEntity =  member.update(requestDTO.getName(), requestDTO.getAddress(), pwd);
+        httpSession.setAttribute("user", new SessionUser(userEntity));
+
+    }
+    @Transactional
+    public void deleteUser(String email){
+        Member member= memberRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("해당 아이디가 없습니다. email ="+email ));
+        memberRepository.delete(member);
+    }
+
+
 
 
     @Override

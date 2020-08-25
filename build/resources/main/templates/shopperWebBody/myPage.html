@@ -4,78 +4,215 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 >
 <header th:replace="shopperWeb/header :: headerFragment"></header>
+<style>
+    .myPageForm{
+        width: 500px;
+
+    }
+    .hidden{
+        display: none;
+    }
+
+
+
+</style>
 
 <body>
 <div class="container-lg mt-5">
     <div class="row">
         <th:block th:include="shopperWeb/sidebar.html" ></th:block>
 
-        <div class="col-lg-9 jumbotron" id="col-lg-9" >
+        <div class="col-lg-9" id="col-lg-9" >
 
             <!--            여기서부터 바디부분-->
-<!--            <p class="lead"><span th:text="${session.user.name}"></span>님의 개인 페이지입니다.-->
-            <form id="shopperInfo" method="post">
+
+            <form method="post" class="form-horizontal myPageForm">
                 <div class="row">
-                        <div >
-                            <div class="row">
-                                <div class="col-8 offset-4">
-                                    <h2>My Info</h2>
-                                </div>
-                            </div>
-                            <form action="/examples/actions/confirmation.php" method="post" class="form-horizontal">
-
-
-                                <div class="form-group row">
-                                    <label class="col-form-label col-4">Username</label>
-                                    <div class="col-8">
-                                        <input type="text" class="form-control" name="username" th:value="${session.user.name}" required="required">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-form-label col-4">이메일</label>
-                                    <div class="col-8">
-                                        <input type="email" class="form-control" name="email" th:value="${session.user.email}" required="required">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-form-label col-4">주소</label>
-                                    <div class="col-8">
-                                        <input type="text" width="400px"
-
-                                               class="form-control" name="address" th:value="${session.user.address}" required="required">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-form-label col-4">비밀번호</label>
-                                    <div class="col-8">
-                                        <input type="password" class="form-control" name="password" required="required">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-form-label col-4">비밀번호 확인</label>
-                                    <div class="col-8">
-                                        <input type="password" class="form-control" name="confirm_password" required="required">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-8 offset-4">
-                                        <button type="submit" class="btn btn-primary btn-lg">저장하기 </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-
-            </div>
+                    <div class="col-8 offset-4">
+                        <h2>My Info</h2>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+                <div class="form-group row " >
+                    <label class="col-form-label col-4">Username</label>
+                    <div class="col-8">
+                        <input type="text" class="form-control correctable" id="name" name="name" th:value="${session.user.name}" required="required" readonly ="true">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-4">이메일</label>
+                    <div class="col-8">
+                        <input type="email" class="form-control" name="email" id="email" th:value="${session.user.email}" readonly>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-4" >주소</label>
+                    <div class="col-8">
+                        <input type="text" class="form-control correctable" name="address" id="address" th:value="${session.user.address}" required="required" readonly ="true">
+                    </div>
+                </div>
+                <div class="form-group row pwd hidden" >
+                    <label class="col-form-label col-4" >비밀번호</label>
+                    <div class="col-8 hidden">
+                        <input type="password" class="form-control" id="password" name="password" required="required">
+                    </div>
+                </div>
+                <div class="form-group row pwd hidden" >
+                    <label class="col-form-label col-4">비밀번호 확인</label>
+                    <div class="col-8">
+                        <input type="password" class="form-control" id="confirmPwd" name="confirm_password" required="required">
+                        <div id="pwdDiv"></div>
+                    </div>
+                </div>
+                <div class="form-group row pageBtn">
+                    <div class="col-8 offset-4">
+                        <input type="button" value="수정하기" class="btn btn-primary btn-lg" id ="myPageBtn">
+                    </div>
+                </div>
             </form>
 
             <!--여기까지 바디-->
         </div>
-
-
-
-
-
     </div>
 </div>
+<!-- 모달 시작-->
+<div id="pwdpop" class="modal fade" role="dialog">
+    <div class ="modal-dialog">
+        <!-- 모달 content시작-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">비밀번호를 입력해주세요.</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+            </div>
+
+            <div class="modal-body">
+                <table style="margin: auto; text-align: center">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <input type="password" id="passwordTextBox" placeholder="Password" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span id="passwordSpan"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="button" style="" class="btn btn-primary" id="pwdButton" value="확인" />
+                            <div id="pwdCheckDiv"></div>
+                        </td>
+                    </tr>
+
+
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success"  data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+        <!-- 모달 content끝-->
+
+    </div>
+
+</div>
+<!-- 모달 끝-->
+<script>
+
+    //유효성 검사 함수
+    var markingErrorField = function (response) {
+        const errorFields = response.responseJSON.errors;
+        if(!errorFields){
+            alert(response.response.message);
+            return;
+        }
+        var $field, error;
+        for(var i=0, length = errorFields.length; i<length;i++){
+            error = errorFields[i];
+            $field = $('#'+error['field']);
+
+            if($field && $field.length > 0){
+                $field.siblings('.error-message').remove();
+                $field.after('<span class="error-message text-muted taxt-small text-danger">'+error.defaultMessage+'</span>');
+            }
+        }
+    };
+
+
+    $(".pageBtn #myPageBtn").on("click", function () {
+        if($(".pageBtn #myPageBtn").val() == '수정하기'){
+            $("#passwordTextBox").val('');
+            $("#pwdpop").modal("show");
+
+        }else{
+            if($('#password').val() != $('#confirmPwd').val()){
+                $('#pwdDiv').text("비밀번호가 일치하지 않습니다.");
+            }else{
+                var member = {
+                    name: $('#name').val(),
+                    password: $('#password').val(),
+                    address: $("#address").val(),
+                };
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/myPageUpdate',
+                    data: JSON.stringify(member),
+                    contentType: "application/json; charset=utf-8",
+                    success: function (response) {
+                        $(".pageBtn #myPageBtn").val("수정하기");
+                        $(".correctable").prop("readonly",true);
+                        $(".myPageForm .pwd").addClass("hidden");
+                        $('.error-message').remove();
+
+                    },
+                    error: function (response) {
+                        markingErrorField(response);
+                    }
+                });
+            }
+        }
+
+    });
+
+    $("#pwdButton").click(function () {
+        $("#passwordSpan").text('');
+        if($("#passwordTextBox").val() ==''){
+            $("#passwordSpan").text("비밀번호를 입력해주세요.");
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/checkPwd",
+            data: "password="+ $('#passwordTextBox').val(),
+            dataType: "text",
+            //contentType:'application/json; charset=utf-8',
+            success: function(data){
+                alert(data);
+                if(data == "ok"){
+
+                    $("#pwdpop").modal("hide");
+                    $(".pageBtn #myPageBtn").val("수정완료");
+                    $(".correctable").prop("readonly",false);
+                    $(".myPageForm div").removeClass("hidden");
+
+
+                }else{
+                    $("#passwordSpan").text("비밀번호가 다릅니다.");
+                }
+            }
+        });
+
+    });
+
+
+</script>
+
 </body>
 </html>

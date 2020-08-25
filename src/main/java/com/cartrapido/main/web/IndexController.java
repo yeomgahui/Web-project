@@ -21,6 +21,7 @@ public class IndexController {
 
     private final HttpSession httpSession;
     private final ChatRoomService chatRoomService;
+    private final MemberService memberService;
 
 
 
@@ -88,4 +89,14 @@ public class IndexController {
         return "/errorPage";
     }
 
+    //회원탈퇴 처리
+    @GetMapping("/withdrawalMember")
+    public String withdrawalMember(HttpSession session){
+        System.out.println("withdrawalMember 진입");
+        SessionUser user = (SessionUser) session.getAttribute("user");
+        String email = user.getEmail();
+        memberService.deleteUser(email);
+
+        return "redirect:/logout";
+    }
 }

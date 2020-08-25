@@ -86,10 +86,11 @@ public class OrderNumService {
     }
 
 
-    public void acceptOrder(Long orderNum, String shopperEmail) {
+    public String acceptOrder(Long orderNum, String shopperEmail) {
         OrderNum orderNum1 = orderNumRepository.findByOrderNum(orderNum);
         orderNum1.setShopper(shopperEmail);
-        orderNumRepository.save(orderNum1);
+
+        return orderNumRepository.save(orderNum1).getUserEmail();
 
     }
 
