@@ -88,6 +88,7 @@ public class ClientController {
         model.addAttribute("endEndPage",endEndPage);
         model.addAttribute("mart",mart);
         model.addAttribute("products",products);
+        model.addAttribute("category","ALL");
 
         return "/clientWebBody/mart";
     }
@@ -116,7 +117,7 @@ public class ClientController {
         model.addAttribute("mart",mart);
         model.addAttribute("products",products);
 
-        return "/clientWebBody/category";
+        return "/clientWebBody/mart";
     }
 
     @PostMapping("/clientMart/putInCart")

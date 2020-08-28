@@ -21,6 +21,8 @@ public class EmartCrawlingService {
     @Autowired
     private ProductRepository productRepository;
 
+    private String store = "emart";
+
     private String[] array_url = {
             "http://emart.ssg.com/category/main.ssg?dispCtgId=6000095739", //EMART_FRUIT_URL
             "http://emart.ssg.com/category/main.ssg?dispCtgId=6000095740", //EMART_VEGETABLE_URL
@@ -57,18 +59,18 @@ public class EmartCrawlingService {
             "HealthFood"       //EMART_HEALTHFOOD_URL
     };
 
-    @PostConstruct
+    //@PostConstruct
     public void getEmartDatas() {
 
         //날짜 비교해서 크롤링하기
-        List<LocalDateTime> list = productRepository.martDate("emart");
+        List<LocalDateTime> list = productRepository.martDate(store);
 
         if (list.size() != 0) {
             LocalDate latest = LocalDate.from(list.get(0));
             LocalDate today = LocalDate.from(LocalDateTime.now());
 
             if (today.isAfter(latest)) {
-                productRepository.deleteByStore("emart");
+                productRepository.deleteByStore(store);
                 crawling();
             }
         }
@@ -79,7 +81,7 @@ public class EmartCrawlingService {
 
     public void crawling() {
 
-        System.out.println("emart");
+        System.out.println(store);
         for (int j = 0; j < array_url.length; j++) {
 
             try {
@@ -134,7 +136,7 @@ public class EmartCrawlingService {
                                 .productPrice(Integer.parseInt(productPrice))
                                 .productQty(10)
                                 .productContent(productcontent)
-                                .store("emart")
+                                .store(store)
                                 .category(array_category[j])
                                 .image(image)
                                 .build();
