@@ -55,5 +55,6 @@ dependencies {
 
     //crawling
     compile group: 'org.jsoup', name: 'jsoup', version: '1.11.3'
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.13.0'
 
 }

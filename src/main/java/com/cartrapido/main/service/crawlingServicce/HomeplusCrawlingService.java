@@ -21,6 +21,8 @@ public class HomeplusCrawlingService {
     @Autowired
     private ProductRepository productRepository;
 
+    private String store = "homeplus";
+
     private String[] array_url = {
             "http://www.homeplus.co.kr/app.exhibition.category.Category.ghs?comm=category.list&cid=60002", //Homeplus_Fruit_url
             "http://www.homeplus.co.kr/app.exhibition.category.Category.ghs?comm=category.list&cid=60037", //Homeplus_Vegetable_url
@@ -54,17 +56,17 @@ public class HomeplusCrawlingService {
             "Sauce&Can"
     };
 
-    @PostConstruct
+    //@PostConstruct
     public void getHomeplusDatas() {
 
-        List<LocalDateTime> list = productRepository.martDate("homeplus");
+        List<LocalDateTime> list = productRepository.martDate(store);
 
         if (list.size() != 0) {
             LocalDate latest = LocalDate.from(list.get(0));
             LocalDate today = LocalDate.from(LocalDateTime.now());
 
             if (today.isAfter(latest)) {
-                productRepository.deleteByStore("homeplus");
+                productRepository.deleteByStore(store);
                 crawling();
             }
         }else {
@@ -74,7 +76,7 @@ public class HomeplusCrawlingService {
 
     public void crawling() {
 
-        System.out.println("homeplus");
+        System.out.println(store);
         for (int j = 0; j < array_url.length; j++) {
 
             try {
@@ -126,7 +128,7 @@ public class HomeplusCrawlingService {
                             .productPrice(Integer.parseInt(productPrice))
                             .productQty(10)
                             .productContent(productcontent)
-                            .store("homeplus")
+                            .store(store)
                             .category(array_category[j])
                             .image(image)
                             .build();

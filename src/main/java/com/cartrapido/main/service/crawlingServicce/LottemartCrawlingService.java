@@ -20,6 +20,8 @@ public class LottemartCrawlingService {
     @Autowired
     private ProductRepository productRepository;
 
+    private String store = "lottemart";
+
     private String[] array_url = {
             "https://www.lotteon.com/search/render/render.ecn?render=nqapi&collection_id=7&mallId=4&platform=pc&login=Y&u9=eachmall&u1=LTMT&u2=LM10100002&u3=LM10100002&u4", //Lotte_Fruit&Nuts_URL
             "https://www.lotteon.com/search/render/render.ecn?render=nqapi&collection_id=7&mallId=4&platform=pc&login=Y&u9=eachmall&u1=LTMT&u2=LM10100009&u3=LM10100009&u4", //Lotte_Seafood_URL
@@ -48,17 +50,17 @@ public class LottemartCrawlingService {
             "HealthFood"
     };
 
-    @PostConstruct
+    //@PostConstruct
     public void getLottermartDatas() {
 
-        List<LocalDateTime> list = productRepository.martDate("lottemart");
+        List<LocalDateTime> list = productRepository.martDate(store);
 
         if (list.size() != 0) {
             LocalDate latest = LocalDate.from(list.get(0));
             LocalDate today = LocalDate.from(LocalDateTime.now());
 
             if (today.isAfter(latest)) {
-                productRepository.deleteByStore("lottemart");
+                productRepository.deleteByStore(store);
                 crawling();
 
             }
@@ -69,7 +71,7 @@ public class LottemartCrawlingService {
 
     public void crawling() {
 
-        System.out.println("lottemart");
+        System.out.println(store);
         for (int j = 0; j < array_url.length; j++) {
 
             try {
@@ -117,7 +119,7 @@ public class LottemartCrawlingService {
                             .productPrice(Integer.parseInt(productPrice))
                             .productQty(10)
                             .productContent(productcontent)
-                            .store("lottemart")
+                            .store(store)
                             .category(array_category[j])
                             .image(image)
                             .build();

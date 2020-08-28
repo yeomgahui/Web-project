@@ -9,113 +9,97 @@
 
     <header th:replace="clientWeb/header :: headerFragment"></header>
 
+    <style>
+
+    </style>
+
 </head>
 <body>
 
 <!-- 내 반경에 있는 마트들 -->
 <!-- Featured Section Begin -->
-<section class="featured spad">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="section-title">
-                    <span th:text="${session.user.address}"></span><br>
-                    <h2>근처에 있는 마트</h2>
-                </div>
+<section class="featured spad"
+         style="background-image:url('https://images.unsplash.com/photo-1498579809087-ef1e558fd1da?ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80');
+                background-repeat:no-repeat;
+                background-position:center;
+                background-size:cover;">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="section-title">
+                <span th:text="${session.user.address}"></span><br>
+                <h2>근처에 있는 마트</h2>
             </div>
         </div>
+    </div>
 
-
+    <div class="container" style="max-width:1000px">
         <div class="row featured__filter">
-
 
             <!--홈플러스-->
             <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">
                 <div class="featured__item">
-                    <div class="featured__item__pic set-bg borderCircle" data-setbg="img/mart/homeplus.jpg">
-                        <ul class="featured__item__pic__hover">
-                            <li><a th:href="@{/clientMart/homeplus}"><i class="fa fa-heart"></i></a></li>
-                        </ul>
-                    </div>
+                    <a th:href="@{/clientMart/homeplus}">
+                        <div class="featured__item__pic set-bg borderCircle" data-setbg="img/mart/1homeplus.png"></div>
+                        <h4 align="center" style="color: #555555"><strong>HOMEPLUS</strong></h4>
+                    </a>
                 </div>
             </div>
-
-
 
             <!--이마트-->
             <div class="col-lg-3 col-md-4 col-sm-6 mix vegetables fastfood">
                 <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="img/mart/emart.png">
-                        <ul class="featured__item__pic__hover">
-                            <li><a th:href="@{/clientMart/emart}"><i class="fa fa-heart"></i></a></li>
-                        </ul>
-                    </div>
-
+                    <a th:href="@{/clientMart/emart}">
+                        <div class="featured__item__pic set-bg" data-setbg="img/mart/1emart.png"></div>
+                        <h4 align="center" style="color: #555555"><strong>EMART</strong></h4>
+                    </a>
                 </div>
+
             </div>
-
-
 
             <!--롯데마트-->
             <div class="col-lg-3 col-md-4 col-sm-6 mix vegetables fresh-meat">
                 <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="img/mart/lottemart.png">
-                        <ul class="featured__item__pic__hover">
-                            <li><a th:href="@{/clientMart/lottemart}"><i class="fa fa-heart"></i></a></li>
-                        </ul>
-                    </div>
-
+                    <a th:href="@{/clientMart/lottemart}">
+                    <div class="featured__item__pic set-bg" data-setbg="img/mart/1lottemart.png"></div>
+                    <h4 align="center" style="color: #555555"><strong>LOTTE MART</strong></h4>
+                    </a>
                 </div>
             </div>
 
-
-
-            <!--코스트코-->
-            <div class="col-lg-3 col-md-4 col-sm-6 mix fastfood oranges">
+            <!--cu-->
+            <div class="col-lg-3 col-md-4 col-sm-6 mix vegetables fresh-meat">
                 <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="img/mart/costco.jpg">
-                        <ul class="featured__item__pic__hover">
-                            <li><a th:href="@{/clientMart/costco}"><i class="fa fa-heart"></i></a></li>
-                        </ul>
-                    </div>
+                    <a th:href="@{/clientMart/cu}">
+                    <div class="featured__item__pic set-bg" data-setbg="img/mart/1cu.png"></div>
+                    <h4 align="center" style="color: #555555"><strong>CU</strong></h4>
+                    </a>
                 </div>
             </div>
 
-
-
-            <!-- 마트 두번째라인 -->
-<!--
-
-            <div class="col-lg-3 col-md-4 col-sm-6 mix fresh-meat vegetables">
+            <!--gs25-->
+            <div class="col-lg-3 col-md-4 col-sm-6 mix vegetables fresh-meat">
                 <div class="featured__item">
-                    <div class="featured__item__pic set-bg" data-setbg="img/mart/lottemart.png">
-                        <ul class="featured__item__pic__hover">
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                        </ul>
-                    </div>
+                    <a th:href="@{/clientMart/gs25}">
+                    <div class="featured__item__pic set-bg" data-setbg="img/mart/1gs25.png"></div>
+                    <h4 align="center" style="color: #555555"><strong>GS25</strong></h4>
+                    </a>
                 </div>
             </div>
 
--->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            <!--ministop-->
+            <div class="col-lg-3 col-md-4 col-sm-6 mix vegetables fresh-meat">
+                <div class="featured__item">
+                    <a th:href="@{/clientMart/ministop}">
+                    <div class="featured__item__pic set-bg" data-setbg="img/mart/1logo_ministop.png"></div>
+                    <h4 align="center" style="color: #555555"><strong>MINISTOP</strong></h4>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </section>
 <!-- Featured Section End -->
-
 
 
 <footer th:replace="clientWeb/footer :: footerFragment"></footer>
