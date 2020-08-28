@@ -164,12 +164,11 @@ public class ClientController {
 
     @PostMapping("/clientWeb/pushOrder")
     @ResponseBody /*@ModelAttribute List<CartDTO> cartList*/
-    public void pushOrder(@RequestParam (value = "chbox[]") List<Long> checkArr,
+    public String pushOrder(@RequestParam (value = "chbox[]") List<Long> checkArr,
                           @RequestParam (value = "amountArr[]") List<Integer> amountArr,
                           @RequestParam int productTot,
                           @RequestParam int deliveryCost
                           ) {
-
         CartDTO cartDTO = cartService.getCartIdInfo(checkArr.get(0));
         String userEmail = cartDTO.getUserEmail();
         OrderNumDTO orderNumDTO = new OrderNumDTO(
@@ -189,6 +188,7 @@ public class ClientController {
             cartService.deleteCart(checkArr.get(i));
         }
 
+        return orderNum1+"";
     }
 
     @GetMapping("/clientLayout")
@@ -259,6 +259,28 @@ public class ClientController {
         return "/clientWebBody/shoppingCart";
     }
 
+    @GetMapping("/clientWeb/payMyOrder/{orderNum}")
+    public String payMyOrder(@PathVariable("orderNum") Long orderNum, Model model){
+        OrderNumDTO orderNumDTO = orderNumService.getOrderNum(orderNum);
+        int productTot = orderNumDTO.getProductTot();
+        int deliveryCost = orderNumDTO.getDeliveryCost();
+
+        List<OrderSheetDTO> orderSheetList =
+                orderSheetService.getOrderSheetList(orderNum);
+
+        for(OrderSheetDTO dto:orderSheetList){
+            System.out.println("view 상품 = "+dto.getProductName());
+        }
+        model.addAttribute("productTot", orderNum);
+        model.addAttribute("productTot", productTot);
+        model.addAttribute("deliveryCost", deliveryCost);
+
+        model.addAttribute("orderNumList", orderSheetList);
+        model.addAttribute("orderSize", orderSheetList.size());
+
+        return "/clientWebBody/payMyOrder";
+    }
+
     @GetMapping("/clientWeb/viewOrderSheet/{orderNum}")
     public String viewOrderSheet(@PathVariable("orderNum") Long orderNum, Model model){
         OrderNumDTO orderNumDTO = orderNumService.getOrderNum(orderNum);
@@ -271,7 +293,7 @@ public class ClientController {
         for(OrderSheetDTO dto:orderSheetList){
             System.out.println("view 상품 = "+dto.getProductName());
         }
-
+        model.addAttribute("productTot", orderNum);
         model.addAttribute("productTot", productTot);
         model.addAttribute("deliveryCost", deliveryCost);
 

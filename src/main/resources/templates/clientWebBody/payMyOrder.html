@@ -43,8 +43,9 @@
                                             background-image:url('/img/backFruit.jpg');"
                                     >
                                         <br>
-                                        <br><br><br><br><br><br>
-
+                                        <strong align="center" class="mb-4 text-success">
+                                        <br><br><br><br>
+                                            <h2><span th:text="${orderSize}"></span>개의 품목을 주문하셨습니다!</h2></strong>
                                         <br><br><br>
 
                                         <!--여기서부터 for each로 돌려서 장바구니 추가되게 해야함-->
@@ -121,6 +122,23 @@
                                                 <br>
                                                 <div align="center">
 
+                                                    <input type="button" align="center"
+                                                            id="saveBtn"
+                                                            style="width: 150px;"
+                                                           class="border-0 btn-transition btn btn-outline-success"
+                                                           value="저장하기"/>
+
+
+                                                    <input align="center" type="button" style="width: 150px;"
+                                                           th:onclick="|javascript:deleteOrder('${orderNum}')|"
+                                                           class="border-0 btn-transition btn btn-outline-danger"
+                                                           value="주문서 삭제"/>
+                                                    <br><br>
+
+                                                    <input align="center" type="button" style="width: 200px;"
+                                                           th:onclick="|javascript:kakaoPay('${orderNum}','${deliveryCost}','${productTot}')|"
+                                                           class="border-0 btn-transition btn btn-warning"
+                                                           value="카카오페이로 결제하기"/>
 
                                             </div>
                                         </div>
@@ -161,7 +179,48 @@
 
 
 <footer th:replace="clientWeb/footer :: footerFragment"></footer>
+<script type="text/javascript" th:inline="javascript">
 
+    $('#saveBtn').click(function () {
+        alert('주소를 저장');
+    });
+
+    function kakaoPay(orderNum, deliveryCost, productCost ) {
+        payTot = parseInt(deliveryCost)+parseInt(productCost)
+        location.href="/payment/kakaoPay/"+orderNum+"/"+payTot;
+    };
+
+    function deleteOrder(orderNum) {
+
+        Swal.fire({
+            title: '정말로 삭제하시겠습니까?',
+            text: "삭제하신 주문서는 다시 복구되지 않습니다.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#00B23B',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '네, 삭제합니다!'
+        }).then((result) => {
+            if (result.value) {
+
+                /*                Swal.fire(
+                                    '삭제 완료!',
+                                    '주문서가 삭제되었습니다.',
+                                    'success'
+                                )*/
+
+                $.ajax({
+                    url: "/deleteOrder",
+                    data: {orderNum: orderNum},
+                    type: "POST",
+                    success: function () {
+                        location.href = '/toPayList';
+                    }
+                });
+            }
+        })
+    }
+</script>
 
 
 </body>
