@@ -4,10 +4,7 @@ import com.cartrapido.main.config.auth.dto.SessionUser;
 import com.cartrapido.main.domain.entity.OrderNum;
 import com.cartrapido.main.domain.entity.Product;
 import com.cartrapido.main.service.*;
-import com.cartrapido.main.web.dto.CartDTO;
-import com.cartrapido.main.web.dto.OrderNumDTO;
-import com.cartrapido.main.web.dto.OrderSheetDTO;
-import com.cartrapido.main.web.dto.ProductDTO;
+import com.cartrapido.main.web.dto.*;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -164,16 +162,15 @@ public class ClientController {
 
     @PostMapping("/clientWeb/pushOrder")
     @ResponseBody /*@ModelAttribute List<CartDTO> cartList*/
-    public void pushOrder(@RequestParam (value = "chbox[]") List<Long> checkArr,
+    public String pushOrder(@RequestParam (value = "chbox[]") List<Long> checkArr,
                           @RequestParam (value = "amountArr[]") List<Integer> amountArr,
                           @RequestParam int productTot,
                           @RequestParam int deliveryCost
                           ) {
-
         CartDTO cartDTO = cartService.getCartIdInfo(checkArr.get(0));
         String userEmail = cartDTO.getUserEmail();
         OrderNumDTO orderNumDTO = new OrderNumDTO(
-                userEmail,null,0,0, deliveryCost, productTot, 0
+                userEmail,null,deliveryCost, productTot, "false"
         );
         //OrderNum 저장
         OrderNum orderNum = orderNumService.saveOrderNum(orderNumDTO);
@@ -189,6 +186,7 @@ public class ClientController {
             cartService.deleteCart(checkArr.get(i));
         }
 
+        return orderNum1+"";
     }
 
     @GetMapping("/clientLayout")
@@ -207,7 +205,7 @@ public class ClientController {
     public String myOrderList(Model model, HttpSession session) {
         SessionUser user = (SessionUser) session.getAttribute("user");
         String userEmail = user.getEmail();
-        List<OrderNumDTO> orderNumDTOList = orderNumService.getPaidOrder(userEmail, 1);
+        List<OrderNumDTO> orderNumDTOList = orderNumService.getPaidOrder(userEmail, "true");
 
         if(orderNumDTOList.size()==0)
             return "/payment/noList";
@@ -221,7 +219,7 @@ public class ClientController {
     public String toPayList(Model model, HttpSession session) {
         SessionUser user = (SessionUser) session.getAttribute("user");
         String userEmail = user.getEmail();
-        List<OrderNumDTO> orderNumDTOList = orderNumService.getPaidOrder(userEmail, 0);
+        List<OrderNumDTO> orderNumDTOList = orderNumService.getPaidOrder(userEmail, "false");
 
         if(orderNumDTOList.size()==0)
             return "/payment/noList";
@@ -259,6 +257,27 @@ public class ClientController {
         return "/clientWebBody/shoppingCart";
     }
 
+    @GetMapping("/clientWeb/payMyOrder/{orderNum}")
+    public String payMyOrder(@PathVariable("orderNum") Long orderNum, Model model){
+        OrderNumDTO orderNumDTO = orderNumService.getOrderNum(orderNum);
+        int productTot = orderNumDTO.getProductTot();
+        int deliveryCost = orderNumDTO.getDeliveryCost();
+
+        List<OrderSheetDTO> orderSheetList =
+                orderSheetService.getOrderSheetList(orderNum);
+
+        for(OrderSheetDTO dto:orderSheetList){
+            System.out.println("view 상품 = "+dto.getProductName());
+        }
+        System.out.println("======payMyOrder getRequest================= "+orderNumDTO.getRequest());
+
+        model.addAttribute("orderNumDTO", orderNumDTO);
+        model.addAttribute("orderNumList", orderSheetList);
+        model.addAttribute("orderSize", orderSheetList.size());
+
+        return "/clientWebBody/payMyOrder";
+    }
+
     @GetMapping("/clientWeb/viewOrderSheet/{orderNum}")
     public String viewOrderSheet(@PathVariable("orderNum") Long orderNum, Model model){
         OrderNumDTO orderNumDTO = orderNumService.getOrderNum(orderNum);
@@ -271,7 +290,7 @@ public class ClientController {
         for(OrderSheetDTO dto:orderSheetList){
             System.out.println("view 상품 = "+dto.getProductName());
         }
-
+        model.addAttribute("productTot", orderNum);
         model.addAttribute("productTot", productTot);
         model.addAttribute("deliveryCost", deliveryCost);
 
@@ -302,6 +321,15 @@ public class ClientController {
     public void updatePay(@RequestParam Long orderNum) {
         System.out.println("-----------updatePay 컨트롤러 -------------------------");
         orderNumService.updatePay(orderNum);
+    }
+
+    @PostMapping("/saveAddress")
+    @ResponseBody
+    public void saveAddress(@RequestBody @Valid OrderExtraInfoDTO OrderExtraInfoDTO) {
+        System.out.println("-----------OrderExtraInfoDTO 컨트롤러"+OrderExtraInfoDTO.getRequest());
+
+        System.out.println("-----------saveAddress 컨트롤러 -------------------------");
+        orderNumService.saveAddress(OrderExtraInfoDTO);
     }
 
 

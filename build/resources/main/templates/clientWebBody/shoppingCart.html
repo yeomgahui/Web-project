@@ -149,7 +149,7 @@
                                     </ul>
 
                                     <button type="button" id="payBtn"
-                                            class="btn btn-success btn-block waves-effect waves-light">결제하기
+                                            class="btn btn-success btn-block waves-effect waves-light">주문서 제출
                                     </button>
 
                                 </div>
@@ -247,7 +247,7 @@
                   var cartAmount=$('#'+i).val();
                     amountArr.push(cartAmount);
                     checkArr.push(document.getElementById('cartNum'+i).dataset.id);
-                    alert(document.getElementById('cartNum'+i).dataset.id);
+/*                    alert(document.getElementById('cartNum'+i).dataset.id);*/
 
             }
 
@@ -263,10 +263,9 @@
                     productTot: tot
                 },
                 type: "POST",
-                success: function () {
-
-                    swal('주문서 제출 성공!', '', 'success');
-                    location.href = '/shoppingCart';
+                dataType: "text",
+                success: function (data) {
+                    location.href = '/clientWeb/payMyOrder/'+data;
                 }
             });//결제 버튼
         } else {
