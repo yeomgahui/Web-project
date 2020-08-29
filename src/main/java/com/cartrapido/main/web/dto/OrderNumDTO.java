@@ -10,69 +10,81 @@ public class OrderNumDTO {
     private Long orderNum;
     private String userEmail;
     private String shopper;
-    private int latitud;
-    private int longitude;
     private int deliveryCost;
     private int productTot;
-    private int pay;
+    private String pay;
+    private String address;
+    private String detailAddress;
+    private String request;
+    private String agree;
+
 
 
     public OrderNum toEntitiy(){
         OrderNum orderNum = OrderNum.builder()
                 .userEmail(userEmail)
                 .shopper(shopper)
-                .latitud(latitud)
-                .longitude(longitude)
                 .deliveryCost(deliveryCost)
                 .productTot(productTot)
                 .pay(pay)
+                .address(address)
+                .detailAddress(detailAddress)
                 .build();
         return orderNum;
     }
 
-    public OrderNumDTO(Long orderNum, String userEmail, String shopper, int latitud, int longitude,
-                       int deliveryCost, int productTot, int pay){
+    public OrderNumDTO(Long orderNum, String userEmail, String shopper,
+                       int deliveryCost, int productTot, String pay){
         this.orderNum = orderNum;
         this.userEmail = userEmail;
         this.shopper = shopper ;
-        this.latitud = latitud;
-        this.longitude = longitude;
         this.deliveryCost = deliveryCost;
         this.productTot = productTot;
         this.pay = pay;
     }
 
-    public OrderNumDTO(String userEmail, String shopper, int latitud, int longitude,
-                       int deliveryCost, int productTot, int pay){
+    public OrderNumDTO(String userEmail, String shopper,
+                       int deliveryCost, int productTot, String pay
+                    ){
         this.orderNum = orderNum;
         this.userEmail = userEmail;
         this.shopper = shopper ;
-        this.latitud = latitud;
-        this.longitude = longitude;
         this.deliveryCost = deliveryCost;
         this.productTot = productTot;
         this.pay = pay;
     }
 
-
-    @Builder
-    public OrderNumDTO(String userEmail, String shopper, int latitud, int longitude,
-                       int deliveryCost, int productTot){
+    public OrderNumDTO(Long orderNum, String userEmail, String shopper,
+                       int deliveryCost, int productTot, String pay,
+                       String address , String detailAddress,
+                       String agree, String request){
+        this.orderNum = orderNum;
         this.userEmail = userEmail;
         this.shopper = shopper ;
-        this.latitud = latitud;
-        this.longitude = longitude;
+        this.deliveryCost = deliveryCost;
+        this.productTot = productTot;
+        this.pay = pay;
+        this.agree =agree;
+        this.request =request;
+        this.address = address;
+        this.detailAddress = detailAddress;
+    }
+
+    @Builder
+    public OrderNumDTO(String userEmail, String shopper,
+                       int deliveryCost, int productTot,
+                       String address, String detailAddress){
+        this.userEmail = userEmail;
+        this.shopper = shopper ;
         this.deliveryCost = deliveryCost;
         this.productTot = productTot;
     }
 
     @Builder
-    public OrderNumDTO(Long orderNum, String userEmail, String shopper, int latitud, int longitude){
+    public OrderNumDTO(Long orderNum, String userEmail, String shopper){
         this.orderNum = orderNum;
         this.userEmail = userEmail;
         this.shopper = shopper ;
-        this.latitud = latitud;
-        this.longitude = longitude;
     }
 
 
