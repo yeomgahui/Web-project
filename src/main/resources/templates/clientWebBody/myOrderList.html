@@ -27,7 +27,10 @@
             <div class="col-lg-8 col-md-7 order-md-1 order-1">
 
                 <!--            여기서부터 바디부분-->
-                <h2>My OrderList</h2>
+                <div>
+                   <h2>My Order List</h2>
+                </div>
+                <br>
 
 
                 <div class="card-hover-shadow-2x mb-3 card">
@@ -66,6 +69,10 @@
                                                             님과 매칭되셨어요!<br>
                                                             &nbsp;<span class="btn-outline-success" onclick="location.href='/clientChatting'">
                                                                 채팅하러 가기</span>
+                                                            &emsp;&emsp;
+                                                            <span class="btn-success"
+                                                                  th:onclick="|javascript:finishOrder('${orderNumList.orderNum}')|">
+                                                                거래 종료</span>
                                                         </span>
                                                         <span th:if="${orderNumList.shopper == null}">
                                                         아직 shopper와 매칭되지 않았습니다!
@@ -118,6 +125,39 @@
 
 <footer th:replace="clientWeb/footer :: footerFragment"></footer>
 
+<script>
+    //주문 제거
 
+    function finishOrder(orderNum) {
+        Swal.fire({
+            title: '쇼퍼로부터 배달을 받으셨나요?',
+            text: "거래를 종료합니다.",
+            icon: 'success',
+            showCancelButton: true,
+            confirmButtonColor: '#00B23B',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '네, 수령했어요!',
+            cancelButtonText: '아직이요.'
+        }).then((result) => {
+            if (result.value) {
+
+                $.ajax({
+                    url: "/finishOrder",
+                    data: {orderNum: orderNum},
+                    type: "POST",
+                    success: function () {
+                        alert('거래 종료');
+                        location.href = '/myOrderList';
+
+                    }
+                });
+
+            }
+        })
+
+
+    };
+
+</script>
 </body>
 </html>

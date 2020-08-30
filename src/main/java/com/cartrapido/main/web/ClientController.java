@@ -36,36 +36,8 @@ public class ClientController {
     @Autowired
     private OrderNumService orderNumService;
 
-/*    @GetMapping("/clientMain")
-    public String clientWeb() {
-
-        return "/clientWebBody/clientMain";
-    }*/
-
-
-//    //마트들 상품 보여줌
-//    @GetMapping("/clientMart")
-//    public String clientMart(Model model) {
-//        List<ProductDTO> productList = productService.getProductList();
-//        model.addAttribute("productList",productList);
-//
-//        return "/clientWebBody/mart";
-//    }
-
-
-
-//    //마트별로(where store) 상품 보여줌 //
-//    @GetMapping("/clientMart/{mart}")
-//    public String detail( @PathVariable("mart") String mart, Model model) {
-////        List<ProductDTO> productList = productService.getProductList();
-//        System.out.println(mart);
-//        List<ProductDTO> productList = productService.getStoreProductList(mart);
-//        model.addAttribute("productList",productList);
-//        model.addAttribute("mart",mart);
-//
-//        return "/clientWebBody/mart";
-//    }
-
+    @Autowired
+    private OrderNumHistoryService orderNumHistoryService;
     //페이징 적용
     //마트별로(where store) 상품 보여줌 //
     @GetMapping("/clientMart/{mart}")
@@ -146,6 +118,20 @@ public class ClientController {
         orderNumService.deleteOrder(orderNum);
     }
 
+    @PostMapping("/finishOrder")
+    @ResponseBody
+    public void finishOrder(@RequestParam Long orderNum) {
+        System.out.println("===============finishOrderfinishOrderfinishOrderfinishOrderfinishOrder=========");
+        OrderNumDTO orderNumDTO = orderNumService.getOrderNum(orderNum);
+        OrderNumHistoryDTO orderNumHistoryDTO = new OrderNumHistoryDTO(
+                orderNum, orderNumDTO.getUserEmail(), orderNumDTO.getShopper(),
+                orderNumDTO.getDeliveryCost(), orderNumDTO.getProductTot(), orderNumDTO.getPay(),
+                orderNumDTO.getAddress(), orderNumDTO.getDetailAddress(),
+                orderNumDTO.getAgree(), orderNumDTO.getRequest());
+
+        orderNumHistoryService.saveOrderNum(orderNumHistoryDTO);
+        orderNumService.deleteOrder(orderNum);
+    }
 
     @PostMapping("/amountPlus")
     @ResponseBody
@@ -182,6 +168,7 @@ public class ClientController {
                     orderNum1, orderNumDTO.getUserEmail(),
                     cartDTO.getProductId(), amountArr.get(i)
             );
+            orderSheetDTO.setOtherInfo(cartDTO.getProductName(), cartDTO.getProductPrice(), cartDTO.getStore(),cartDTO.getImage());
             orderSheetService.saveOrderSheet(orderSheetDTO);
             cartService.deleteCart(checkArr.get(i));
         }
@@ -201,33 +188,6 @@ public class ClientController {
         return "/clientWebBody/myPage";
     }
 
-    @GetMapping("/myOrderList")
-    public String myOrderList(Model model, HttpSession session) {
-        SessionUser user = (SessionUser) session.getAttribute("user");
-        String userEmail = user.getEmail();
-        List<OrderNumDTO> orderNumDTOList = orderNumService.getPaidOrder(userEmail, "true");
-
-        if(orderNumDTOList.size()==0)
-            return "/payment/noList";
-        else
-            model.addAttribute("orderNumList", orderNumDTOList);
-            return "/clientWebBody/myOrderList";
-
-    }
-
-    @GetMapping("/toPayList")
-    public String toPayList(Model model, HttpSession session) {
-        SessionUser user = (SessionUser) session.getAttribute("user");
-        String userEmail = user.getEmail();
-        List<OrderNumDTO> orderNumDTOList = orderNumService.getPaidOrder(userEmail, "false");
-
-        if(orderNumDTOList.size()==0)
-            return "/payment/noList";
-        else
-            model.addAttribute("orderNumList", orderNumDTOList);
-        return "/clientWebBody/toPayList";
-
-    }
 
 
     @GetMapping("/shoppingCart")
@@ -290,10 +250,7 @@ public class ClientController {
         for(OrderSheetDTO dto:orderSheetList){
             System.out.println("view 상품 = "+dto.getProductName());
         }
-        model.addAttribute("productTot", orderNum);
-        model.addAttribute("productTot", productTot);
-        model.addAttribute("deliveryCost", deliveryCost);
-
+        model.addAttribute("orderNumDTO", orderNumDTO);
         model.addAttribute("orderNumList", orderSheetList);
         model.addAttribute("orderSize", orderSheetList.size());
 
@@ -327,8 +284,6 @@ public class ClientController {
     @ResponseBody
     public void saveAddress(@RequestBody @Valid OrderExtraInfoDTO OrderExtraInfoDTO) {
         System.out.println("-----------OrderExtraInfoDTO 컨트롤러"+OrderExtraInfoDTO.getRequest());
-
-        System.out.println("-----------saveAddress 컨트롤러 -------------------------");
         orderNumService.saveAddress(OrderExtraInfoDTO);
     }
 
