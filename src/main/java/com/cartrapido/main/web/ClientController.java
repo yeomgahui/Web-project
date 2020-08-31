@@ -250,6 +250,9 @@ public class ClientController {
         for(OrderSheetDTO dto:orderSheetList){
             System.out.println("view 상품 = "+dto.getProductName());
         }
+        model.addAttribute("productTot", orderNum);
+        model.addAttribute("productTot", productTot);
+        model.addAttribute("deliveryCost", deliveryCost);
         model.addAttribute("orderNumDTO", orderNumDTO);
         model.addAttribute("orderNumList", orderSheetList);
         model.addAttribute("orderSize", orderSheetList.size());
@@ -303,6 +306,23 @@ public class ClientController {
         model.addAttribute("userName",userName);
 
         return "/payment/kakaoPay";
+    }
+
+    @GetMapping("/payment/cardPay/{orderNum}/{payTot}")
+    public String cardPay( @PathVariable("payTot") int payTot,
+                            @PathVariable("orderNum") Long orderNum,
+                            Model model, HttpSession session) {
+        SessionUser user = (SessionUser) session.getAttribute("user");
+        String userEmail = user.getEmail();
+        String userName = user.getName();
+        System.out.print(userName);
+
+        model.addAttribute("orderNum",orderNum);
+        model.addAttribute("payTot",payTot);
+        model.addAttribute("userEmail",userEmail);
+        model.addAttribute("userName",userName);
+
+        return "/payment/cardPay";
     }
 
 

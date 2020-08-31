@@ -91,7 +91,39 @@
 
 
                                                 </table>
+
                                             </div>
+
+                                            <form id="addressForm">
+                                                <div class="inside-widget">
+                                                    <label class="col-form-label col-4">주소</label>
+                                                    <input type="text" class="form-control correctable"
+                                                           name="address" id="address"
+                                                           th:value="${session.user.address}"
+                                                           required="required" readonly ="true">
+                                                    <label class="col-form-label col-4" >상세주소</label>
+                                                    <input type="text"
+                                                           class="form-control correctable"
+                                                           name="address" id="detailAddress"
+                                                           th:value="${orderNumDTO.detailAddress}"
+                                                           required="required">
+                                                    <br>
+                                                    <label class="col-form-label col-4">추가 요청사항</label>
+                                                    <textarea name="request" id="request"
+                                                              rows="5" cols="92" wrap="hard"
+                                                              placeholder="추가 요청사항을 기입하세요."
+                                                              th:text="${orderNumDTO.request}"></textarea>
+                                                    <span th:if="${orderNumDTO.agree=='true'}">
+                                                        <br>
+                                                    <span>구매 차액을 마일리지에서 차감하는데 동의였습니다.</span>
+                                                    </span>
+                                                </div>
+
+                                                <br>
+
+                                            </form>
+
+
                                         </div>
                                         <!--주문 총 합계 테이블-->
 
