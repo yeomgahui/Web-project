@@ -144,7 +144,11 @@
                                                     <input align="center" type="button" style="width: 200px;"
                                                            th:onclick="|javascript:kakaoPay('${orderNumDTO.orderNum}','${orderNumDTO.deliveryCost}','${orderNumDTO.productTot}')|"
                                                            class="border-0 btn-transition btn btn-warning"
-                                                           value="카카오페이로 결제하기"/>
+                                                           value="카카오페이 결제하기"/>
+                                                    <input align="center" type="button" style="width: 200px;"
+                                                           th:onclick="|javascript:cardPay('${orderNumDTO.orderNum}','${orderNumDTO.deliveryCost}','${orderNumDTO.productTot}')|"
+                                                           class="border-0 btn-transition btn btn-info"
+                                                           value="신용카드 결제하기"/>
                                             </div>
                                             </form>
 
@@ -248,6 +252,30 @@
 
         payTot = parseInt(deliveryCost)+parseInt(productCost)
         location.href="/payment/kakaoPay/"+orderNum+"/"+payTot;
+    };
+
+    function cardPay(orderNum, deliveryCost, productCost ) {
+
+        var agree=$('input:checkbox[id="agree"]').is(":checked");
+        var textareaValue = $("textarea#request").val();
+
+        var orderExtraInfo = {
+            orderNum: $('#orderNum').val(),
+            address: $('#address').val(),
+            detailAddress: $('#detailAddress').val(),
+            agree: agree,
+            request: textareaValue
+        };
+
+        $.ajax({
+            url: "/saveAddress",
+            type: 'POST',
+            data: JSON.stringify(orderExtraInfo),
+            contentType: "application/json; charset=utf-8",
+        });
+
+        payTot = parseInt(deliveryCost)+parseInt(productCost)
+        location.href="/payment/cardPay/"+orderNum+"/"+payTot;
     };
 
     function deleteOrder(orderNum) {

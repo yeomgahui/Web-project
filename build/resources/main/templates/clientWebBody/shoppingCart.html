@@ -190,6 +190,7 @@
     let readyToPay = true;
     var oriDeliveryCost=parseInt($('#deliveryCost').val());
 
+
     $(document).ready(function () {
         for (i = 0; i < cartList.length; i++) {
             tot += (cartList[i].productPrice * cartList[i].amount);
@@ -236,22 +237,22 @@
 
     //결제버튼
     $('#payBtn').click(function () {
+
+
         if (readyToPay) {
 
             //1. 체크박스만 추출
             var checkArr = new Array();
             var amountArr = new Array();
 
-            var i;
-            for (i=firstCartId; i<= lastCartId; i++) {
-                  var cartAmount=$('#'+i).val();
+            for (var i=firstCartId; i<= lastCartId; i++) {
+                var cartAmount=$('#'+i).val();
+                var isChecked = $('input:checkbox[id="cartNum'+i+'"]').is(":checked");
+                if(isChecked==true){
                     amountArr.push(cartAmount);
                     checkArr.push(document.getElementById('cartNum'+i).dataset.id);
-/*                    alert(document.getElementById('cartNum'+i).dataset.id);*/
-
+                }
             }
-
-
 
             //2.DB에 주문서 저장
             $.ajax({
@@ -268,6 +269,7 @@
                     location.href = '/clientWeb/payMyOrder/'+data;
                 }
             });//결제 버튼
+
         } else {
             Swal.fire({
                 icon: 'warning',

@@ -27,7 +27,7 @@
             <div class="col-lg-8 col-md-7 order-md-1 order-1">
 
                 <!--            여기서부터 바디부분-->
-                <h2>- 거래 완료된 주문서들 -</h2>
+                <h2> 거래 완료된 주문서들 </h2>
 
 
                 <div class="card-hover-shadow-2x mb-3 card">
@@ -62,12 +62,17 @@
                                                     <div class="widget-subheading">
                                                         <br>
                                                         <div>
-
+                                                            product cost - <span id="productTot"
+                                                                      th:value="${orderNumList.productTot}"
+                                                                      th:text="${orderNumList.productTot}"/>won
                                                             <br>
-
+                                                            delivery cost - <span id="deliveryCost"
+                                                                                   th:value="${orderNumList.deliveryCost}"
+                                                                                   th:text="${orderNumList.deliveryCost}"/>won
                                                             <br><br>
 
-
+                                                            <strong>Tot. <span id="deliveryCost"
+                                                                  th:text="${orderNumList.deliveryCost}+${orderNumList.productTot}"/>Won </strong>
                                                         </div>
 
                                                     </div>

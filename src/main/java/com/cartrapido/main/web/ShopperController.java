@@ -92,6 +92,7 @@ public class ShopperController {
         for(OrderSheetDTO dto:orderSheetList){
             System.out.println("view 상품 = "+dto.getProductName());
         }
+        model.addAttribute("orderNumDTO", orderNumDTO);
         model.addAttribute("productTot", productTot);
         model.addAttribute("deliveryCost", deliveryCost);
         model.addAttribute("orderNumList", orderSheetList);
