@@ -31,7 +31,7 @@ public class OrderNumHistoryService {
         List<OrderNumHistoryDTO> orderNumDTOList =new ArrayList<>();
         for(OrderNumHistory orderNum : orderNumList){
             OrderNumHistoryDTO orderNumDTO = new OrderNumHistoryDTO(
-                    orderNum.getOrderNum(), orderNum.getUserEmail(), orderNum.getShopper(),
+                    orderNum.getOriOrderNum(), orderNum.getUserEmail(), orderNum.getShopper(),
                     orderNum.getDeliveryCost(), orderNum.getProductTot(),
                     orderNum.getPay()
             );
@@ -82,4 +82,14 @@ public class OrderNumHistoryService {
         return orderNumDTO;
     }
 
+    public OrderNumHistoryDTO findByOriOrderNum(Long orderNum1) {
+        OrderNumHistory orderNum = orderNumHistoryRepository.findByOriOrderNum(orderNum1);
+        OrderNumHistoryDTO orderNumDTO = new OrderNumHistoryDTO(
+                orderNum.getOrderNum(), orderNum.getUserEmail(), orderNum.getShopper(),
+                orderNum.getDeliveryCost(), orderNum.getProductTot(),
+                orderNum.getPay(), orderNum.getAddress(), orderNum.getDetailAddress(),
+                orderNum.getAgree(), orderNum.getRequest()
+        );
+        return orderNumDTO;
+    }
 }

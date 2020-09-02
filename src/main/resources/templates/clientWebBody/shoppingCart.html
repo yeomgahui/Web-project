@@ -289,12 +289,6 @@
             data: {cartId: cartId},
             type: "POST",
             success: function () {
-                Swal.fire({
-                    icon: 'success',
-                    title: '상품을 제거합니다',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
                 location.href = '/shoppingCart';
             }
         });

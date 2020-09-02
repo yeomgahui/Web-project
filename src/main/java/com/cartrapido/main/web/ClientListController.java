@@ -34,10 +34,10 @@ public class ClientListController {
         List<OrderNumHistoryDTO> orderNumHistoryDTOList = orderNumHistoryService.getOrderNumHistoryList();
 
         if(orderNumHistoryDTOList.size()==0)
-            return "/payment/noList";
+            return "/clientWebBody/clientList/noList";
         else
             model.addAttribute("orderNumList", orderNumHistoryDTOList);
-        return "/clientWebBody/listHistory";
+        return "/clientWebBody/clientList/listHistory";
 
     }
 
@@ -48,10 +48,10 @@ public class ClientListController {
         List<OrderNumDTO> orderNumDTOList = orderNumService.getPaidOrder(userEmail, "true");
 
         if(orderNumDTOList.size()==0)
-            return "/payment/noList";
+            return "/clientWebBody/clientList/noList";
         else
             model.addAttribute("orderNumList", orderNumDTOList);
-        return "/clientWebBody/myOrderList";
+        return "/clientWebBody/clientList/myOrderList";
 
     }
 
@@ -62,10 +62,10 @@ public class ClientListController {
         List<OrderNumDTO> orderNumDTOList = orderNumService.getPaidOrder(userEmail, "false");
 
         if(orderNumDTOList.size()==0)
-            return "/payment/noList";
+            return "/clientWebBody/clientList/noList";
         else
             model.addAttribute("orderNumList", orderNumDTOList);
-        return "/clientWebBody/toPayList";
+        return "/clientWebBody/clientList/toPayList";
 
     }
 

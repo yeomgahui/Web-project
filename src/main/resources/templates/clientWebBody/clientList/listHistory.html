@@ -27,7 +27,7 @@
             <div class="col-lg-8 col-md-7 order-md-1 order-1">
 
                 <!--            여기서부터 바디부분-->
-                <h2>- 결제 대기중 -</h2>
+                <h2> 거래 완료된 주문서들 </h2>
 
 
                 <div class="card-hover-shadow-2x mb-3 card">
@@ -53,7 +53,7 @@
                                                         font-size: 1.5em;
                                                         font-weight: bold;
                                                         "
-                                                       th:href="@{'/clientWeb/payMyOrder/'+${orderNumList.orderNum}}">
+                                                       th:href="@{'/clientWeb/viewHistoryOrder/'+${orderNumList.orderNum}}">
                                                                 <span id="orderNum"
                                                                       th:value="${orderNumList.orderNum}"
                                                                       th:text="${orderNumList.orderNum}"/>번 주문서
