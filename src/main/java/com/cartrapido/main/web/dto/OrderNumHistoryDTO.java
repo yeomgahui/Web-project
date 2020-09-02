@@ -8,6 +8,7 @@ import lombok.Getter;
 @Getter
 public class OrderNumHistoryDTO {
     private Long orderNum;
+    private Long oriOrderNum;
     private String userEmail;
     private String shopper;
     private int deliveryCost;
@@ -19,9 +20,9 @@ public class OrderNumHistoryDTO {
     private String agree;
 
 
-
     public OrderNumHistory toEntitiy(){
-        OrderNumHistory orderNum = OrderNumHistory.builder()
+        OrderNumHistory orderNumHistory = OrderNumHistory.builder()
+                .oriOrderNum(oriOrderNum)
                 .userEmail(userEmail)
                 .shopper(shopper)
                 .deliveryCost(deliveryCost)
@@ -30,7 +31,7 @@ public class OrderNumHistoryDTO {
                 .address(address)
                 .detailAddress(detailAddress)
                 .build();
-        return orderNum;
+        return orderNumHistory;
     }
 
 
@@ -54,6 +55,23 @@ public class OrderNumHistoryDTO {
         this.deliveryCost = deliveryCost;
         this.productTot = productTot;
         this.pay = pay;
+    }
+
+    public OrderNumHistoryDTO(Long orderNum,Long oriOrderNum, String userEmail, String shopper,
+                              int deliveryCost, int productTot, String pay,
+                              String address , String detailAddress,
+                              String agree, String request){
+        this.oriOrderNum = oriOrderNum;
+        this.orderNum = orderNum;
+        this.userEmail = userEmail;
+        this.shopper = shopper ;
+        this.deliveryCost = deliveryCost;
+        this.productTot = productTot;
+        this.pay = pay;
+        this.agree =agree;
+        this.request =request;
+        this.address = address;
+        this.detailAddress = detailAddress;
     }
 
     public OrderNumHistoryDTO(Long orderNum, String userEmail, String shopper,

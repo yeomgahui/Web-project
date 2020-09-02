@@ -19,6 +19,9 @@ public class OrderNumHistory {
     private Long orderNum;
 
     @Column
+    private Long oriOrderNum;
+
+    @Column
     private String userEmail;
 
     @Column
@@ -48,8 +51,9 @@ public class OrderNumHistory {
 
 
     @Builder
-    public OrderNumHistory(String userEmail, String shopper ,
+    public OrderNumHistory(Long oriOrderNum,String userEmail, String shopper ,
                            int deliveryCost, int productTot , String pay, String address, String detailAddress, String agree){
+        this.oriOrderNum = oriOrderNum;
         this.userEmail = userEmail;
         this.shopper = shopper ;
         this.deliveryCost = deliveryCost;

@@ -124,7 +124,7 @@ public class ClientController {
         System.out.println("===============finishOrderfinishOrderfinishOrderfinishOrderfinishOrder=========");
         OrderNumDTO orderNumDTO = orderNumService.getOrderNum(orderNum);
         OrderNumHistoryDTO orderNumHistoryDTO = new OrderNumHistoryDTO(
-                orderNum, orderNumDTO.getUserEmail(), orderNumDTO.getShopper(),
+                orderNum, orderNum, orderNumDTO.getUserEmail(), orderNumDTO.getShopper(),
                 orderNumDTO.getDeliveryCost(), orderNumDTO.getProductTot(), orderNumDTO.getPay(),
                 orderNumDTO.getAddress(), orderNumDTO.getDetailAddress(),
                 orderNumDTO.getAgree(), orderNumDTO.getRequest());
@@ -235,7 +235,24 @@ public class ClientController {
         model.addAttribute("orderNumList", orderSheetList);
         model.addAttribute("orderSize", orderSheetList.size());
 
-        return "/clientWebBody/payMyOrder";
+        return "/clientWebBody/clientView/payMyOrder";
+    }
+
+    @GetMapping("/clientWeb/viewHistoryOrder/{orderNum}")
+    public String viewHistoryOrder(@PathVariable("orderNum") Long orderNum, Model model){
+        OrderNumHistoryDTO orderNumDTO = orderNumHistoryService.findByOriOrderNum(orderNum);
+
+        int productTot = orderNumDTO.getProductTot();
+        int deliveryCost = orderNumDTO.getDeliveryCost();
+
+        List<OrderSheetDTO> orderSheetList =
+                orderSheetService.getOrderSheetList(orderNum);
+
+        model.addAttribute("orderNumDTO", orderNumDTO);
+        model.addAttribute("orderNumList", orderSheetList);
+        model.addAttribute("orderSize", orderSheetList.size());
+
+        return "/clientWebBody/clientView/viewMyHistoryOrder";
     }
 
     @GetMapping("/clientWeb/viewOrderSheet/{orderNum}")
@@ -257,7 +274,7 @@ public class ClientController {
         model.addAttribute("orderNumList", orderSheetList);
         model.addAttribute("orderSize", orderSheetList.size());
 
-        return "/clientWebBody/viewMyOrder";
+        return "/clientWebBody/clientView/viewMyOrder";
     }
 
 

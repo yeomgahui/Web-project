@@ -10,5 +10,6 @@ public interface OrderNumHistoryRepository extends JpaRepository<OrderNumHistory
     List<OrderNumHistory> findAllByUserEmail(String userEmail);
     List<OrderNumHistory> findAllByShopper(String shopper);
     OrderNumHistory findByOrderNum(Long orderNum);
+    OrderNumHistory findByOriOrderNum(Long orderNum);
 
 }
