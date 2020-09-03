@@ -4,6 +4,7 @@ import com.cartrapido.main.config.auth.dto.SessionUser;
 import com.cartrapido.main.service.*;
 import com.cartrapido.main.web.dto.OrderNumDTO;
 import com.cartrapido.main.web.dto.OrderNumHistoryDTO;
+import com.cartrapido.main.web.dto.WishItemDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +27,8 @@ public class ClientListController {
     @Autowired
     private OrderNumHistoryService orderNumHistoryService;
 
+    @Autowired
+    private WishItemService wishItemService;
 
     @GetMapping("/listHistory")
     public String listHistory(Model model, HttpSession session) {
@@ -67,6 +70,19 @@ public class ClientListController {
             model.addAttribute("orderNumList", orderNumDTOList);
         return "/clientWebBody/clientList/toPayList";
 
+    }
+
+    @GetMapping("/wishItems")
+    public String wishItems(Model model, HttpSession session) {
+        SessionUser user = (SessionUser) session.getAttribute("user");
+        String userEmail = user.getEmail();
+        List<WishItemDTO> wishItemDTOList = wishItemService.findByEmail(userEmail);
+        if(wishItemDTOList.size()==0){
+            return "/clientWebBody/wish/noWishItem";
+        }else {
+            model.addAttribute("wishItemDTOList",wishItemDTOList);
+            return "/clientWebBody/wish/wishItemList";
+        }
     }
 
 }

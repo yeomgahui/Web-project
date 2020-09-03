@@ -3,6 +3,7 @@ package com.cartrapido.main.web;
 import com.cartrapido.main.config.auth.dto.SessionUser;
 import com.cartrapido.main.domain.entity.OrderNum;
 import com.cartrapido.main.domain.entity.Product;
+import com.cartrapido.main.domain.repository.WishItemRepository;
 import com.cartrapido.main.service.*;
 import com.cartrapido.main.web.dto.*;
 import lombok.AllArgsConstructor;
@@ -38,6 +39,9 @@ public class ClientController {
 
     @Autowired
     private OrderNumHistoryService orderNumHistoryService;
+
+    @Autowired
+    private WishItemService wishItemService;
     //페이징 적용
     //마트별로(where store) 상품 보여줌 //
     @GetMapping("/clientMart/{mart}")
@@ -188,8 +192,6 @@ public class ClientController {
         return "/clientWebBody/myPage";
     }
 
-
-
     @GetMapping("/shoppingCart")
     public String shoppingCart(HttpSession session, Model model) {
         SessionUser user = (SessionUser) session.getAttribute("user");
@@ -283,71 +285,22 @@ public class ClientController {
         return "/clientWebBody/clientChatting.html";
     }
 
-    @GetMapping("/payComplete")
-    public String payComplete() {
-        return "/payment/payComplete";
-    }
-
-    @GetMapping("/payFail")
-    public String payFail() {
-        return "/payment/payFail";
-    }
-
-    @PostMapping("/updatePay")
-    @ResponseBody
-    public void updatePay(@RequestParam Long orderNum) {
-        System.out.println("-----------updatePay 컨트롤러 -------------------------");
-        orderNumService.updatePay(orderNum);
-    }
 
     @PostMapping("/saveAddress")
     @ResponseBody
     public void saveAddress(@RequestBody @Valid OrderExtraInfoDTO OrderExtraInfoDTO) {
-        System.out.println("-----------OrderExtraInfoDTO 컨트롤러"+OrderExtraInfoDTO.getRequest());
         orderNumService.saveAddress(OrderExtraInfoDTO);
     }
 
-
-    @GetMapping("/payment/kakaoPay/{orderNum}/{payTot}")
-    public String kakaoPay( @PathVariable("payTot") int payTot,
-                            @PathVariable("orderNum") Long orderNum,
-                            Model model, HttpSession session) {
+    @PostMapping("/putInWishList")
+    @ResponseBody
+    public void putInWishList(@RequestBody @Valid WishItemDTO wishItemDTO, HttpSession session) {
+        System.out.println("-----------putInWishList "+wishItemDTO.getProductName());
         SessionUser user = (SessionUser) session.getAttribute("user");
-        String userEmail = user.getEmail();
-        String userName = user.getName();
-        System.out.print(userName);
+        wishItemDTO.setEmail(user.getEmail());
+        wishItemService.saveWishItem(wishItemDTO);
 
-        model.addAttribute("orderNum",orderNum);
-        model.addAttribute("payTot",payTot);
-        model.addAttribute("userEmail",userEmail);
-        model.addAttribute("userName",userName);
-
-        return "/payment/kakaoPay";
     }
-
-    @GetMapping("/payment/cardPay/{orderNum}/{payTot}")
-    public String cardPay( @PathVariable("payTot") int payTot,
-                            @PathVariable("orderNum") Long orderNum,
-                            Model model, HttpSession session) {
-        SessionUser user = (SessionUser) session.getAttribute("user");
-        String userEmail = user.getEmail();
-        String userName = user.getName();
-        System.out.print(userName);
-
-        model.addAttribute("orderNum",orderNum);
-        model.addAttribute("payTot",payTot);
-        model.addAttribute("userEmail",userEmail);
-        model.addAttribute("userName",userName);
-
-        return "/payment/cardPay";
-    }
-
-
-    @GetMapping("/myFavorites")
-    public String myFavorites() {
-        return "/clientWebBody/myFavorites";
-    }
-
 
 
 }
