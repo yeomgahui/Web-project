@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>MyPage</title>
+
+    <header th:replace="clientWeb/header :: headerFragment"></header>
+
+</head>
+<body>
+
+<!--section부분 / what's in my bag-->
+<th:block th:include="clientWeb/wmSection.html"></th:block>
+<!--section부분-->
+
+
+<!-- Blog Details Section Begin -->
+<section class="blog-details spad">
+    <div class="container">
+        <div class="row">
+
+            <th:block th:include="clientWeb/mypageSidebar.html"></th:block>
+
+            <div class="col-lg-8 col-md-7 order-md-1 order-1">
+
+                <!--            여기서부터 바디부분-->
+                <input type="hidden" id="orderNum" th:value="${orderNumDTO.orderNum}"/>
+                <div class="scroll-area-sm">
+                    <perfect-scrollbar class="ps-show-limits">
+                        <div style="position: static;" class="ps ps--active-y">
+                            <div class="ps-content">
+                                <ul class=" list-group list-group-flush">
+
+
+
+                                    <!--for each-->
+                                    <div class="card wish-list mb-3"
+                                         style="
+                                            background-repeat:no-repeat; background-position:center; background-size:cover; pading:10px;
+                                            background-image:url('/img/backFruit.jpg');"
+                                    >
+                                        <br>
+                                        <strong align="center" class="mb-4 text-success">
+                                        <br><br><br><br>
+                                            <h2><span th:text="${orderSize}"></span>개의 품목을 주문하셨습니다!</h2></strong>
+                                        <br><br><br>
+
+                                        <!--여기서부터 for each로 돌려서 장바구니 추가되게 해야함-->
+                                        <div class="card-body" th:each="orderSheet : ${orderNumList}">
+
+                                            <div class="row mb-4">
+                                                <div class="col-md-5 col-lg-3 col-xl-3">
+                                                    <img th:src="@{${orderSheet.image}}" align="right" width="60%">
+                                                </div>
+                                                <div class="col-md-7 col-lg-9 col-xl-9">
+                                                    <div>
+                                                        <div class="d-flex justify-content-between">
+                                                            <div>
+                                                                <span th:text="${orderSheet.store}"/><br>
+                                                                <h5><span th:text="${orderSheet.productName}"/></h5>
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-flex justify-content-between align-items-center">
+
+                                                            <p class="mb-0"><span><strong>
+                                                        <span th:align="center" th:text="${orderSheet.productPrice}"/>원
+                                                                * <span th:align="center" th:text="${orderSheet.amount}"/>개
+                                                    </strong></span></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--for each 여기까지 -->
+
+
+                                        <!--주문 총 합계 테이블-->
+                                        <div class="card-body">
+
+                                            <div class="row mb-4">
+                                                    <table class="table table-bordered "
+                                                           style="width: 70%;" align="center">
+
+                                                        <thead>
+                                                        <tr class="table-light" align="center" >
+                                                            <th>상품가격</th>
+                                                            <th>서비스 가격</th>
+                                                            <th>총 합계</th>
+                                                        </tr>
+                                                        </thead>
+
+                                                        <tbody>
+                                                        <tr class="table-light" align="center">
+                                                            <td><span th:text="${orderNumDTO.productTot}"></span>원</td>
+                                                            <td><span th:text="${orderNumDTO.deliveryCost}"></span>원</td>
+                                                            <td><span th:text="${orderNumDTO.productTot}+${orderNumDTO.deliveryCost}"></span>원</td>
+                                                        </tr>
+                                                        </tbody>
+
+
+                                                    </table>
+
+                                        </div>
+
+                                            <form id="addressForm">
+                                            <div class="inside-widget">
+                                                <label class="col-form-label col-4">주소</label>
+                                                <input type="text" class="form-control correctable"
+                                                       name="address" id="address"
+                                                       th:value="${session.user.address}"
+                                                       required="required" readonly ="true">
+                                                <label class="col-form-label col-4" >상세주소</label>
+                                                <input type="text"
+                                                       class="form-control correctable"
+                                                       name="address" id="detailAddress"
+                                                       th:value="${orderNumDTO.detailAddress}"
+                                                       required="required">
+                                                <br>
+                                                <label class="col-form-label col-4">추가 요청사항</label>
+                                                <textarea name="request" id="request"
+                                                          rows="5" cols="92" wrap="hard"
+                                                          placeholder="추가 요청사항을 기입하세요."
+                                                          th:text="${orderNumDTO.request}"></textarea>
+                                                <input type="checkbox" id="agree" name="agree">
+                                                <span>(선택 사항) 쇼퍼가 대체 상품으로 구매할 경우, 구매 차액을 마일리지에서 차감하는데 동의합니다.</span>
+                                            </div>
+
+                                                <br>
+                                                <div align="center">
+                                                    <input type="button" align="center"
+                                                            id="saveBtn"
+                                                            style="width: 150px;"
+                                                           class="border-0 btn-transition btn btn-outline-success"
+                                                           value="저장하기"/>
+                                                    &emsp;&emsp;
+                                                    <input align="center" type="button" style="width: 150px;"
+                                                           th:onclick="|javascript:deleteOrder('${orderNumDTO.orderNum}')|"
+                                                           class="border-0 btn-transition btn btn-outline-danger"
+                                                           value="주문서 삭제"/>
+                                                    <br><br>
+
+
+                                                    <input align="center" type="button" style="width: 200px;"
+                                                           th:onclick="|javascript:kakaoPay('${orderNumDTO.orderNum}','${orderNumDTO.deliveryCost}','${orderNumDTO.productTot}')|"
+                                                           class="border-0 btn-transition btn btn-warning"
+                                                           value="카카오페이 결제하기"/>
+                                                    <input align="center" type="button" style="width: 200px;"
+                                                           th:onclick="|javascript:cardPay('${orderNumDTO.orderNum}','${orderNumDTO.deliveryCost}','${orderNumDTO.productTot}')|"
+                                                           class="border-0 btn-transition btn btn-info"
+                                                           value="신용카드 결제하기"/>
+                                            </div>
+                                            </form>
+
+                                        </div>
+
+                                        <!--주문 총 합계 테이블-->
+
+
+
+
+
+
+                                    </div>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </perfect-scrollbar>
+                </div>
+
+
+                <!--for each 여기까지 -->
+
+            </div>
+        </div>
+        </perfect-scrollbar>
+    </div>
+
+    </div>
+
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+
+</section>
+
+<!-- Blog Details Section End -->
+
+
+<footer th:replace="clientWeb/footer :: footerFragment"></footer>
+<script type="text/javascript" th:inline="javascript">
+    var orderNumDTO = [[${orderNumDTO}]];
+
+    $(document).ready(function () {
+        let agree = orderNumDTO.agree;
+        if(agree=='true'){
+            $("input:checkbox[id='agree']").prop("checked", true);
+        }
+    });
+
+    $('#saveBtn').click(function () {
+      var agree=$('input:checkbox[id="agree"]').is(":checked");
+      var textareaValue = $("textarea#request").val();
+
+      var orderExtraInfo = {
+            orderNum: $('#orderNum').val(),
+            address: $('#address').val(),
+            detailAddress: $('#detailAddress').val(),
+            agree: agree,
+            request: textareaValue
+        };
+
+        $.ajax({
+            url: "/saveAddress",
+            type: 'POST',
+            data: JSON.stringify(orderExtraInfo),
+            contentType: "application/json; charset=utf-8",
+            success: function () {
+                Swal.fire({
+                    icon: 'success',
+                    title: '저장되었습니다.',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+        });
+
+    });
+
+    function kakaoPay(orderNum, deliveryCost, productCost ) {
+
+        var agree=$('input:checkbox[id="agree"]').is(":checked");
+        var textareaValue = $("textarea#request").val();
+
+        var orderExtraInfo = {
+            orderNum: $('#orderNum').val(),
+            address: $('#address').val(),
+            detailAddress: $('#detailAddress').val(),
+            agree: agree,
+            request: textareaValue
+        };
+
+        $.ajax({
+            url: "/saveAddress",
+            type: 'POST',
+            data: JSON.stringify(orderExtraInfo),
+            contentType: "application/json; charset=utf-8",
+        });
+
+        payTot = parseInt(deliveryCost)+parseInt(productCost)
+        location.href="/payment/kakaoPay/"+orderNum+"/"+payTot;
+    };
+
+    function cardPay(orderNum, deliveryCost, productCost ) {
+
+        var agree=$('input:checkbox[id="agree"]').is(":checked");
+        var textareaValue = $("textarea#request").val();
+
+        var orderExtraInfo = {
+            orderNum: $('#orderNum').val(),
+            address: $('#address').val(),
+            detailAddress: $('#detailAddress').val(),
+            agree: agree,
+            request: textareaValue
+        };
+
+        $.ajax({
+            url: "/saveAddress",
+            type: 'POST',
+            data: JSON.stringify(orderExtraInfo),
+            contentType: "application/json; charset=utf-8",
+        });
+
+        payTot = parseInt(deliveryCost)+parseInt(productCost)
+        location.href="/payment/cardPay/"+orderNum+"/"+payTot;
+    };
+
+    function deleteOrder(orderNum) {
+
+        Swal.fire({
+            title: '정말로 삭제하시겠습니까?',
+            text: "삭제하신 주문서는 다시 복구되지 않습니다.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#00B23B',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '네, 삭제합니다!'
+        }).then((result) => {
+            if (result.value) {
+
+                /*                Swal.fire(
+                                    '삭제 완료!',
+                                    '주문서가 삭제되었습니다.',
+                                    'success'
+                                )*/
+
+                $.ajax({
+                    url: "/deleteOrder",
+                    data: {orderNum: orderNum},
+                    type: "POST",
+                    success: function () {
+                        location.href = '/toPayList';
+                    }
+                });
+            }
+        })
+    }
+</script>
+
+
+</body>
+</html>

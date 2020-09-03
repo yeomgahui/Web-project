@@ -1,13 +1,14 @@
 package com.cartrapido.main.web.dto;
 
 import com.cartrapido.main.domain.entity.OrderSheet;
+import com.cartrapido.main.domain.entity.OrderSheetHistory;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class OrderSheetDTO {
+public class OrderSheetHistoryDTO {
 
     private Long orderId;
     private Long orderNum;
@@ -21,8 +22,8 @@ public class OrderSheetDTO {
     private String store;
     private String image;
 
-    public OrderSheet toEntitiy(){
-        OrderSheet orderSheet = OrderSheet.builder()
+    public OrderSheetHistory toEntitiy(){
+        OrderSheetHistory orderSheet = OrderSheetHistory.builder()
                 .orderNum(orderNum)
                 .userEmail(userEmail)
                 .productId(productId)
@@ -37,7 +38,7 @@ public class OrderSheetDTO {
     }
 
     @Builder //테이블에 값을 넣을때 쓰는 빌더
-    public OrderSheetDTO(Long orderNum, String userEmail, Long productId, int amount){
+    public OrderSheetHistoryDTO(Long orderNum, String userEmail, Long productId, int amount){
         this.orderNum=orderNum;
         this.userEmail =userEmail;
         this.productId = productId;

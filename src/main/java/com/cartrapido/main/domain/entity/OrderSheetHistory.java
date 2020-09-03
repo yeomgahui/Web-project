@@ -9,8 +9,8 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Entity
-@Table(name = "orderSheet")
-public class OrderSheet {
+@Table(name = "orderSheetHistory")
+public class OrderSheetHistory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,8 +42,8 @@ public class OrderSheet {
 
 
     @Builder
-    public OrderSheet(Long orderNum, String userEmail, Long productId, int amount,
-                      String store, String productName, int productPrice, String image
+    public OrderSheetHistory(Long orderNum, String userEmail, Long productId, int amount,
+                             String store, String productName, int productPrice, String image
                         ) {
         this.orderNum = orderNum;
         this.userEmail = userEmail;

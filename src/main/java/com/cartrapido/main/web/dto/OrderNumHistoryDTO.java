@@ -5,10 +5,10 @@ import com.cartrapido.main.domain.entity.OrderNumHistory;
 import lombok.Builder;
 import lombok.Getter;
 
-import javax.persistence.Column;
 @Getter
-public class OrderNumDTO {
+public class OrderNumHistoryDTO {
     private Long orderNum;
+    private Long oriOrderNum;
     private String userEmail;
     private String shopper;
     private int deliveryCost;
@@ -20,9 +20,9 @@ public class OrderNumDTO {
     private String agree;
 
 
-
-    public OrderNum toEntitiy(){
-        OrderNum orderNum = OrderNum.builder()
+    public OrderNumHistory toEntitiy(){
+        OrderNumHistory orderNumHistory = OrderNumHistory.builder()
+                .oriOrderNum(oriOrderNum)
                 .userEmail(userEmail)
                 .shopper(shopper)
                 .deliveryCost(deliveryCost)
@@ -31,13 +31,13 @@ public class OrderNumDTO {
                 .address(address)
                 .detailAddress(detailAddress)
                 .build();
-        return orderNum;
+        return orderNumHistory;
     }
 
 
 
-    public OrderNumDTO(Long orderNum, String userEmail, String shopper,
-                       int deliveryCost, int productTot, String pay){
+    public OrderNumHistoryDTO(Long orderNum, String userEmail, String shopper,
+                              int deliveryCost, int productTot, String pay){
         this.orderNum = orderNum;
         this.userEmail = userEmail;
         this.shopper = shopper ;
@@ -46,8 +46,8 @@ public class OrderNumDTO {
         this.pay = pay;
     }
 
-    public OrderNumDTO(String userEmail, String shopper,
-                       int deliveryCost, int productTot, String pay
+    public OrderNumHistoryDTO(String userEmail, String shopper,
+                              int deliveryCost, int productTot, String pay
                     ){
         this.orderNum = orderNum;
         this.userEmail = userEmail;
@@ -57,10 +57,27 @@ public class OrderNumDTO {
         this.pay = pay;
     }
 
-    public OrderNumDTO(Long orderNum, String userEmail, String shopper,
-                       int deliveryCost, int productTot, String pay,
-                       String address , String detailAddress,
-                       String agree, String request){
+    public OrderNumHistoryDTO(Long orderNum,Long oriOrderNum, String userEmail, String shopper,
+                              int deliveryCost, int productTot, String pay,
+                              String address , String detailAddress,
+                              String agree, String request){
+        this.oriOrderNum = oriOrderNum;
+        this.orderNum = orderNum;
+        this.userEmail = userEmail;
+        this.shopper = shopper ;
+        this.deliveryCost = deliveryCost;
+        this.productTot = productTot;
+        this.pay = pay;
+        this.agree =agree;
+        this.request =request;
+        this.address = address;
+        this.detailAddress = detailAddress;
+    }
+
+    public OrderNumHistoryDTO(Long orderNum, String userEmail, String shopper,
+                              int deliveryCost, int productTot, String pay,
+                              String address , String detailAddress,
+                              String agree, String request){
         this.orderNum = orderNum;
         this.userEmail = userEmail;
         this.shopper = shopper ;
@@ -74,9 +91,9 @@ public class OrderNumDTO {
     }
 
     @Builder
-    public OrderNumDTO(String userEmail, String shopper,
-                       int deliveryCost, int productTot,
-                       String address, String detailAddress){
+    public OrderNumHistoryDTO(String userEmail, String shopper,
+                              int deliveryCost, int productTot,
+                              String address, String detailAddress){
         this.userEmail = userEmail;
         this.shopper = shopper ;
         this.deliveryCost = deliveryCost;
@@ -84,7 +101,7 @@ public class OrderNumDTO {
     }
 
     @Builder
-    public OrderNumDTO(Long orderNum, String userEmail, String shopper){
+    public OrderNumHistoryDTO(Long orderNum, String userEmail, String shopper){
         this.orderNum = orderNum;
         this.userEmail = userEmail;
         this.shopper = shopper ;

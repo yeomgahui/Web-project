@@ -3,11 +3,9 @@ package com.cartrapido.main.web;
 import com.cartrapido.main.config.auth.dto.SessionUser;
 import com.cartrapido.main.domain.entity.OrderNum;
 import com.cartrapido.main.domain.entity.Product;
+import com.cartrapido.main.domain.repository.WishItemRepository;
 import com.cartrapido.main.service.*;
-import com.cartrapido.main.web.dto.CartDTO;
-import com.cartrapido.main.web.dto.OrderNumDTO;
-import com.cartrapido.main.web.dto.OrderSheetDTO;
-import com.cartrapido.main.web.dto.ProductDTO;
+import com.cartrapido.main.web.dto.*;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -38,36 +37,11 @@ public class ClientController {
     @Autowired
     private OrderNumService orderNumService;
 
-/*    @GetMapping("/clientMain")
-    public String clientWeb() {
+    @Autowired
+    private OrderNumHistoryService orderNumHistoryService;
 
-        return "/clientWebBody/clientMain";
-    }*/
-
-
-//    //마트들 상품 보여줌
-//    @GetMapping("/clientMart")
-//    public String clientMart(Model model) {
-//        List<ProductDTO> productList = productService.getProductList();
-//        model.addAttribute("productList",productList);
-//
-//        return "/clientWebBody/mart";
-//    }
-
-
-
-//    //마트별로(where store) 상품 보여줌 //
-//    @GetMapping("/clientMart/{mart}")
-//    public String detail( @PathVariable("mart") String mart, Model model) {
-////        List<ProductDTO> productList = productService.getProductList();
-//        System.out.println(mart);
-//        List<ProductDTO> productList = productService.getStoreProductList(mart);
-//        model.addAttribute("productList",productList);
-//        model.addAttribute("mart",mart);
-//
-//        return "/clientWebBody/mart";
-//    }
-
+    @Autowired
+    private WishItemService wishItemService;
     //페이징 적용
     //마트별로(where store) 상품 보여줌 //
     @GetMapping("/clientMart/{mart}")
@@ -148,6 +122,20 @@ public class ClientController {
         orderNumService.deleteOrder(orderNum);
     }
 
+    @PostMapping("/finishOrder")
+    @ResponseBody
+    public void finishOrder(@RequestParam Long orderNum) {
+        System.out.println("===============finishOrderfinishOrderfinishOrderfinishOrderfinishOrder=========");
+        OrderNumDTO orderNumDTO = orderNumService.getOrderNum(orderNum);
+        OrderNumHistoryDTO orderNumHistoryDTO = new OrderNumHistoryDTO(
+                orderNum, orderNum, orderNumDTO.getUserEmail(), orderNumDTO.getShopper(),
+                orderNumDTO.getDeliveryCost(), orderNumDTO.getProductTot(), orderNumDTO.getPay(),
+                orderNumDTO.getAddress(), orderNumDTO.getDetailAddress(),
+                orderNumDTO.getAgree(), orderNumDTO.getRequest());
+
+        orderNumHistoryService.saveOrderNum(orderNumHistoryDTO);
+        orderNumService.deleteOrder(orderNum);
+    }
 
     @PostMapping("/amountPlus")
     @ResponseBody
@@ -164,16 +152,15 @@ public class ClientController {
 
     @PostMapping("/clientWeb/pushOrder")
     @ResponseBody /*@ModelAttribute List<CartDTO> cartList*/
-    public void pushOrder(@RequestParam (value = "chbox[]") List<Long> checkArr,
+    public String pushOrder(@RequestParam (value = "chbox[]") List<Long> checkArr,
                           @RequestParam (value = "amountArr[]") List<Integer> amountArr,
                           @RequestParam int productTot,
                           @RequestParam int deliveryCost
                           ) {
-
         CartDTO cartDTO = cartService.getCartIdInfo(checkArr.get(0));
         String userEmail = cartDTO.getUserEmail();
         OrderNumDTO orderNumDTO = new OrderNumDTO(
-                userEmail,null,0,0, deliveryCost, productTot, 0
+                userEmail,null,deliveryCost, productTot, "false"
         );
         //OrderNum 저장
         OrderNum orderNum = orderNumService.saveOrderNum(orderNumDTO);
@@ -185,10 +172,12 @@ public class ClientController {
                     orderNum1, orderNumDTO.getUserEmail(),
                     cartDTO.getProductId(), amountArr.get(i)
             );
+            orderSheetDTO.setOtherInfo(cartDTO.getProductName(), cartDTO.getProductPrice(), cartDTO.getStore(),cartDTO.getImage());
             orderSheetService.saveOrderSheet(orderSheetDTO);
             cartService.deleteCart(checkArr.get(i));
         }
 
+        return orderNum1+"";
     }
 
     @GetMapping("/clientLayout")
@@ -202,35 +191,6 @@ public class ClientController {
 
         return "/clientWebBody/myPage";
     }
-
-    @GetMapping("/myOrderList")
-    public String myOrderList(Model model, HttpSession session) {
-        SessionUser user = (SessionUser) session.getAttribute("user");
-        String userEmail = user.getEmail();
-        List<OrderNumDTO> orderNumDTOList = orderNumService.getPaidOrder(userEmail, 1);
-
-        if(orderNumDTOList.size()==0)
-            return "/payment/noList";
-        else
-            model.addAttribute("orderNumList", orderNumDTOList);
-            return "/clientWebBody/myOrderList";
-
-    }
-
-    @GetMapping("/toPayList")
-    public String toPayList(Model model, HttpSession session) {
-        SessionUser user = (SessionUser) session.getAttribute("user");
-        String userEmail = user.getEmail();
-        List<OrderNumDTO> orderNumDTOList = orderNumService.getPaidOrder(userEmail, 0);
-
-        if(orderNumDTOList.size()==0)
-            return "/payment/noList";
-        else
-            model.addAttribute("orderNumList", orderNumDTOList);
-        return "/clientWebBody/toPayList";
-
-    }
-
 
     @GetMapping("/shoppingCart")
     public String shoppingCart(HttpSession session, Model model) {
@@ -259,6 +219,44 @@ public class ClientController {
         return "/clientWebBody/shoppingCart";
     }
 
+    @GetMapping("/clientWeb/payMyOrder/{orderNum}")
+    public String payMyOrder(@PathVariable("orderNum") Long orderNum, Model model){
+        OrderNumDTO orderNumDTO = orderNumService.getOrderNum(orderNum);
+        int productTot = orderNumDTO.getProductTot();
+        int deliveryCost = orderNumDTO.getDeliveryCost();
+
+        List<OrderSheetDTO> orderSheetList =
+                orderSheetService.getOrderSheetList(orderNum);
+
+        for(OrderSheetDTO dto:orderSheetList){
+            System.out.println("view 상품 = "+dto.getProductName());
+        }
+        System.out.println("======payMyOrder getRequest================= "+orderNumDTO.getRequest());
+
+        model.addAttribute("orderNumDTO", orderNumDTO);
+        model.addAttribute("orderNumList", orderSheetList);
+        model.addAttribute("orderSize", orderSheetList.size());
+
+        return "/clientWebBody/clientView/payMyOrder";
+    }
+
+    @GetMapping("/clientWeb/viewHistoryOrder/{orderNum}")
+    public String viewHistoryOrder(@PathVariable("orderNum") Long orderNum, Model model){
+        OrderNumHistoryDTO orderNumDTO = orderNumHistoryService.findByOriOrderNum(orderNum);
+
+        int productTot = orderNumDTO.getProductTot();
+        int deliveryCost = orderNumDTO.getDeliveryCost();
+
+        List<OrderSheetDTO> orderSheetList =
+                orderSheetService.getOrderSheetList(orderNum);
+
+        model.addAttribute("orderNumDTO", orderNumDTO);
+        model.addAttribute("orderNumList", orderSheetList);
+        model.addAttribute("orderSize", orderSheetList.size());
+
+        return "/clientWebBody/clientView/viewMyHistoryOrder";
+    }
+
     @GetMapping("/clientWeb/viewOrderSheet/{orderNum}")
     public String viewOrderSheet(@PathVariable("orderNum") Long orderNum, Model model){
         OrderNumDTO orderNumDTO = orderNumService.getOrderNum(orderNum);
@@ -271,14 +269,14 @@ public class ClientController {
         for(OrderSheetDTO dto:orderSheetList){
             System.out.println("view 상품 = "+dto.getProductName());
         }
-
+        model.addAttribute("productTot", orderNum);
         model.addAttribute("productTot", productTot);
         model.addAttribute("deliveryCost", deliveryCost);
-
+        model.addAttribute("orderNumDTO", orderNumDTO);
         model.addAttribute("orderNumList", orderSheetList);
         model.addAttribute("orderSize", orderSheetList.size());
 
-        return "/clientWebBody/viewMyOrder";
+        return "/clientWebBody/clientView/viewMyOrder";
     }
 
 
@@ -287,47 +285,22 @@ public class ClientController {
         return "/clientWebBody/clientChatting.html";
     }
 
-    @GetMapping("/payComplete")
-    public String payComplete() {
-        return "/payment/payComplete";
-    }
 
-    @GetMapping("/payFail")
-    public String payFail() {
-        return "/payment/payFail";
-    }
-
-    @PostMapping("/updatePay")
+    @PostMapping("/saveAddress")
     @ResponseBody
-    public void updatePay(@RequestParam Long orderNum) {
-        System.out.println("-----------updatePay 컨트롤러 -------------------------");
-        orderNumService.updatePay(orderNum);
+    public void saveAddress(@RequestBody @Valid OrderExtraInfoDTO OrderExtraInfoDTO) {
+        orderNumService.saveAddress(OrderExtraInfoDTO);
     }
 
-
-    @GetMapping("/payment/kakaoPay/{orderNum}/{payTot}")
-    public String kakaoPay( @PathVariable("payTot") int payTot,
-                            @PathVariable("orderNum") Long orderNum,
-                            Model model, HttpSession session) {
+    @PostMapping("/putInWishList")
+    @ResponseBody
+    public void putInWishList(@RequestBody @Valid WishItemDTO wishItemDTO, HttpSession session) {
+        System.out.println("-----------putInWishList "+wishItemDTO.getProductName());
         SessionUser user = (SessionUser) session.getAttribute("user");
-        String userEmail = user.getEmail();
-        String userName = user.getName();
-        System.out.print(userName);
+        wishItemDTO.setEmail(user.getEmail());
+        wishItemService.saveWishItem(wishItemDTO);
 
-        model.addAttribute("orderNum",orderNum);
-        model.addAttribute("payTot",payTot);
-        model.addAttribute("userEmail",userEmail);
-        model.addAttribute("userName",userName);
-
-        return "/payment/kakaoPay";
     }
-
-
-    @GetMapping("/myFavorites")
-    public String myFavorites() {
-        return "/clientWebBody/myFavorites";
-    }
-
 
 
 }

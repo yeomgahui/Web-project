@@ -3,16 +3,17 @@ package com.cartrapido.main.web;
 import com.cartrapido.main.chat.dto.ChatRoomSaveRequestDTO;
 import com.cartrapido.main.chat.service.ChatRoomService;
 import com.cartrapido.main.config.auth.dto.SessionUser;
+import com.cartrapido.main.service.OrderNumHistoryService;
 import com.cartrapido.main.service.OrderNumService;
 import com.cartrapido.main.service.OrderSheetService;
 import com.cartrapido.main.web.dto.OrderNumDTO;
+import com.cartrapido.main.web.dto.OrderNumHistoryDTO;
 import com.cartrapido.main.web.dto.OrderSheetDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -24,6 +25,8 @@ public class ShopperController {
     OrderSheetService orderSheetService;
     @Autowired
     OrderNumService orderNumService;
+    @Autowired
+    OrderNumHistoryService orderNumHistoryService;
 
     ChatRoomService chatRoomService;
 
@@ -55,7 +58,7 @@ public class ShopperController {
     @GetMapping("/orderSheetList")
     public String orderSheetList(Model model) {
 
-        List<OrderNumDTO> orderNumDTOList = orderNumService.shopperGetPaidOrder(1);
+        List<OrderNumDTO> orderNumDTOList = orderNumService.shopperGetPaidOrder("true");
         for(int i = 0 ; i<orderNumDTOList.size();i++){
             if(orderNumDTOList.get(i).getShopper()!=null){
                 orderNumDTOList.remove(i);
@@ -65,7 +68,19 @@ public class ShopperController {
         if(orderNumDTOList.size()!=0){
             model.addAttribute("orderNumList", orderNumDTOList);
         }
-        return "/shopperWebBody/orderSheetList";
+        return "/shopperWebBody/shopperList/orderSheetList";
+    }
+
+    @GetMapping("/myOrderSheetsHistory")
+    public String myOrderSheetsHistory(Model model, HttpSession session ) {
+        SessionUser user = (SessionUser) session.getAttribute("user");
+        String shopperEmail = user.getEmail();
+
+        List<OrderNumHistoryDTO> orderNumDTOList = orderNumHistoryService.getMyOrderNumListShopper(shopperEmail);
+        if(orderNumDTOList.size()!=0){
+            model.addAttribute("orderNumList", orderNumDTOList);
+        }
+        return "/shopperWebBody/shopperList/myOrderSheetsHistory";
     }
 
     @GetMapping("/myOrderSheets")
@@ -77,35 +92,39 @@ public class ShopperController {
         if(orderNumDTOList.size()!=0){
             model.addAttribute("orderNumList", orderNumDTOList);
         }
-        return "/shopperWebBody/myOrderSheets";
+        return "/shopperWebBody/shopperList/myOrderSheets";
+    }
+
+
+    @GetMapping("/viewHistoryOrder/{orderNum}")
+    public String viewHistoryOrder(@PathVariable("orderNum") Long orderNum, Model model){
+        OrderNumHistoryDTO orderNumDTO = orderNumHistoryService.findByOriOrderNum(orderNum);
+        List<OrderSheetDTO> orderSheetList =
+                orderSheetService.getOrderSheetList(orderNum);
+
+        model.addAttribute("orderNumDTO", orderNumDTO);
+        model.addAttribute("orderNumList", orderSheetList);
+        model.addAttribute("orderSize", orderSheetList.size());
+        return "/shopperWebBody/shopperView/viewHistoryOrder";
     }
 
     @GetMapping("/viewOrderSheet/{orderNum}")
     public String viewOrderSheet(@PathVariable("orderNum") Long orderNum, Model model){
         OrderNumDTO orderNumDTO = orderNumService.getOrderNum(orderNum);
-        int productTot = orderNumDTO.getProductTot();
-        int deliveryCost = orderNumDTO.getDeliveryCost();
-
         List<OrderSheetDTO> orderSheetList =
                 orderSheetService.getOrderSheetList(orderNum);
 
-        for(OrderSheetDTO dto:orderSheetList){
-            System.out.println("view 상품 = "+dto.getProductName());
-        }
-        model.addAttribute("productTot", productTot);
-        model.addAttribute("deliveryCost", deliveryCost);
+        model.addAttribute("orderNumDTO", orderNumDTO);
         model.addAttribute("orderNumList", orderSheetList);
         model.addAttribute("orderSize", orderSheetList.size());
-        return "/shopperWebBody/viewOrderSheet";
+        return "/shopperWebBody/shopperView/viewOrderSheet";
     }
 
     @PostMapping("/acceptOrder")
     @ResponseBody
     public void acceptOrder(@RequestParam Long orderNum, Model model, HttpSession session ){
-        System.out.println(orderNum+"번 주문을 수락합니다.");
         SessionUser user = (SessionUser) session.getAttribute("user");
         String shopperEmail = user.getEmail();
-        System.out.println(shopperEmail+" 쇼퍼의 이메일 ");
         String clientId = orderNumService.acceptOrder(orderNum,shopperEmail);
 
         //채팅방 생성

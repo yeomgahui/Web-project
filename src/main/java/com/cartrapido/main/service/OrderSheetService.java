@@ -19,6 +19,7 @@ public class OrderSheetService {
     ProductRepository productRepository;
     @Transactional
     public void saveOrderSheet(OrderSheetDTO orderSheetDTO) {
+        System.out.println("=============saveOrderSheet================"+orderSheetDTO.getProductName());
         OrderSheet orderSheet = orderSheetRepository.save(orderSheetDTO.toEntitiy());
 
     }
@@ -32,10 +33,9 @@ public class OrderSheetService {
                         orderNum, orderSheet.getUserEmail(),
                         orderSheet.getProductId(), orderSheet.getAmount()
                 );
-                Product product = productRepository.findAllByProductId(orderSheet.getProductId());
                 orderSheetDTO.setOtherInfo(
-                        product.getProductName(), product.getProductPrice(),
-                        product.getStore(), product.getImage()
+                        orderSheet.getProductName(), orderSheet.getProductPrice(),
+                        orderSheet.getStore(), orderSheet.getImage()
                 );
                 orderSheetDTOList.add(orderSheetDTO);
             }

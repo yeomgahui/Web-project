@@ -2,6 +2,7 @@ package com.cartrapido.main.service;
 
 import com.cartrapido.main.domain.entity.OrderNum;
 import com.cartrapido.main.domain.repository.OrderNumRepository;
+import com.cartrapido.main.web.dto.OrderExtraInfoDTO;
 import com.cartrapido.main.web.dto.OrderNumDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,6 @@ public class OrderNumService {
         for(OrderNum orderNum : orderNumList){
             OrderNumDTO orderNumDTO = new OrderNumDTO(
                     orderNum.getOrderNum(), orderNum.getUserEmail(), orderNum.getShopper(),
-                    orderNum.getLongitude(), orderNum.getLatitud(),
                     orderNum.getDeliveryCost(), orderNum.getProductTot(),
                     orderNum.getPay()
             );
@@ -47,7 +47,6 @@ public class OrderNumService {
         for (OrderNum orderNum : orderNumList) {
             OrderNumDTO orderNumDTO = new OrderNumDTO(
                     orderNum.getOrderNum(), orderNum.getUserEmail(), orderNum.getShopper(),
-                    orderNum.getLongitude(), orderNum.getLatitud(),
                     orderNum.getDeliveryCost(), orderNum.getProductTot(),
                     orderNum.getPay()
             );
@@ -56,13 +55,12 @@ public class OrderNumService {
         return  orderNumDTOList;
     }
 
-    public List<OrderNumDTO> getPaidOrder(String userEmail, int pay) {
+    public List<OrderNumDTO> getPaidOrder(String userEmail, String pay) {
         List<OrderNum> orderNumList = orderNumRepository.findAllByUserEmailAndPay(userEmail,pay);
         List<OrderNumDTO> orderNumDTOList = new ArrayList<>();
         for (OrderNum orderNum : orderNumList) {
             OrderNumDTO orderNumDTO = new OrderNumDTO(
                     orderNum.getOrderNum(), orderNum.getUserEmail(), orderNum.getShopper(),
-                    orderNum.getLongitude(), orderNum.getLatitud(),
                     orderNum.getDeliveryCost(), orderNum.getProductTot(),
                     orderNum.getPay()
             );
@@ -70,13 +68,12 @@ public class OrderNumService {
         }
         return  orderNumDTOList;
     }
-    public List<OrderNumDTO> shopperGetPaidOrder(int pay) {
+    public List<OrderNumDTO> shopperGetPaidOrder(String pay) {
         List<OrderNum> orderNumList = orderNumRepository.findAllByPay(pay);
         List<OrderNumDTO> orderNumDTOList = new ArrayList<>();
         for (OrderNum orderNum : orderNumList) {
             OrderNumDTO orderNumDTO = new OrderNumDTO(
                     orderNum.getOrderNum(), orderNum.getUserEmail(), orderNum.getShopper(),
-                    orderNum.getLongitude(), orderNum.getLatitud(),
                     orderNum.getDeliveryCost(), orderNum.getProductTot(),
                     orderNum.getPay()
             );
@@ -100,7 +97,6 @@ public class OrderNumService {
         for (OrderNum orderNum : orderNumList) {
             OrderNumDTO orderNumDTO = new OrderNumDTO(
                     orderNum.getOrderNum(), orderNum.getUserEmail(), orderNum.getShopper(),
-                    orderNum.getLongitude(), orderNum.getLatitud(),
                     orderNum.getDeliveryCost(), orderNum.getProductTot(),
                     orderNum.getPay()
             );
@@ -111,7 +107,7 @@ public class OrderNumService {
 
     public void updatePay(Long orderNum){
         OrderNum orderNum1 = orderNumRepository.findByOrderNum(orderNum);
-        orderNum1.setPay(1);
+        orderNum1.setPay("true");
         orderNumRepository.save(orderNum1);
     }
 
@@ -123,11 +119,19 @@ public class OrderNumService {
         OrderNum orderNum = orderNumRepository.findByOrderNum(orderNum1);
         OrderNumDTO orderNumDTO = new OrderNumDTO(
                 orderNum.getOrderNum(), orderNum.getUserEmail(), orderNum.getShopper(),
-                orderNum.getLongitude(), orderNum.getLatitud(),
                 orderNum.getDeliveryCost(), orderNum.getProductTot(),
-                orderNum.getPay()
+                orderNum.getPay(), orderNum.getAddress(), orderNum.getDetailAddress(),
+                orderNum.getAgree(), orderNum.getRequest()
         );
         return orderNumDTO;
     }
 
+    public void saveAddress(OrderExtraInfoDTO orderExtraInfoDTO) {
+        OrderNum orderNum1 = orderNumRepository.findByOrderNum(orderExtraInfoDTO.getOrderNum());
+        orderNum1.setAddress(orderExtraInfoDTO.getAddress());
+        orderNum1.setDetailAddress(orderExtraInfoDTO.getDetailAddress());
+        orderNum1.setAgree(orderExtraInfoDTO.getAgree());
+        orderNum1.setRequest(orderExtraInfoDTO.getRequest());
+        orderNumRepository.save(orderNum1);
+    }
 }

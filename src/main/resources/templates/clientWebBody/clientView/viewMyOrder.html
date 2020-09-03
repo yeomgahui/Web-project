@@ -38,14 +38,14 @@
 
                                     <!--for each-->
                                     <div class="card wish-list mb-3"
-                                    style="
-                                    background-repeat:no-repeat; background-position:center; background-size:cover; padding:10px;
-                                    background-image:url('https://previews.123rf.com/images/kurhan/kurhan1609/kurhan160900049/62711306-organic-vegetables-and-fruits-dieting-and-grocery-background-.jpg');"
+                                         style="
+                                            background-repeat:no-repeat; background-position:center; background-size:cover; pading:10px;
+                                            background-image:url('/img/backFruit.jpg');"
                                     >
                                         <br>
-                                        <strong align="center" class="mb-4 text-success"><strong>
-                                            </strong><span th:text="${orderSize}"></span>개의 품목을 주문하셨습니다!</strong></h5>
+                                        <br><br><br><br><br><br>
 
+                                        <br><br><br>
 
                                         <!--여기서부터 for each로 돌려서 장바구니 추가되게 해야함-->
                                         <div class="card-body" th:each="orderSheet : ${orderNumList}">
@@ -60,9 +60,6 @@
                                                             <div>
                                                                 <span th:text="${orderSheet.store}"/><br>
                                                                 <h5><span th:text="${orderSheet.productName}"/></h5>
-                                                                <!--                                                        <p class="mb-3 text-muted text-uppercase small">Shirt - blue</p>
-                                                                                                                        <p class="mb-2 text-muted text-uppercase small">Color: blue</p>
-                                                                                                                        <p class="mb-3 text-muted text-uppercase small">Size: M</p>-->
                                                             </div>
                                                         </div>
                                                         <div class="d-flex justify-content-between align-items-center">
@@ -96,17 +93,51 @@
 
                                                         <tbody>
                                                         <tr class="table-light" align="center">
-                                                            <td><span th:text="${productTot}"></span>원</td>
-                                                            <td><span th:text="${deliveryCost}"></span>원</td>
-                                                            <td><span th:text="${deliveryCost}+${productTot}"></span>원</td>
+                                                            <td><span th:text="${orderNumDTO.productTot}"></span>원</td>
+                                                            <td><span th:text="${orderNumDTO.deliveryCost}"></span>원</td>
+                                                            <td><span th:text="${orderNumDTO.deliveryCost}+${orderNumDTO.productTot}"></span>원</td>
                                                         </tr>
                                                         </tbody>
 
 
                                                     </table>
+
+
                                         </div>
+
+                                            <div class="inside-widget">
+                                                <label class="col-form-label col-4">주소</label>
+                                                <input type="text" class="form-control correctable"
+                                                       name="address" id="address"
+                                                       th:value="${session.user.address}"
+                                                       required="required" readonly ="true">
+                                                <label class="col-form-label col-4" >상세주소</label>
+                                                <input type="text"
+                                                       class="form-control correctable"
+                                                       name="address" id="detailAddress"
+                                                       th:value="${orderNumDTO.detailAddress}"
+                                                       required="required" readonly ="true">
+                                                <br>
+                                                <label class="col-form-label col-4">추가 요청사항</label>
+                                                <textarea name="request" id="request" readonly ="true"
+                                                          rows="5" cols="92" wrap="hard"
+                                                          placeholder="추가 요청사항을 기입하세요."
+                                                          th:text="${orderNumDTO.request}"></textarea>
+
+
+
+                                                <br>
+                                                <div align="center">
+
+
+                                            </div>
                                         </div>
                                         <!--주문 총 합계 테이블-->
+
+
+
+
+
 
                                     </div>
                                 </ul>
@@ -138,6 +169,7 @@
 
 
 <footer th:replace="clientWeb/footer :: footerFragment"></footer>
+
 
 
 </body>

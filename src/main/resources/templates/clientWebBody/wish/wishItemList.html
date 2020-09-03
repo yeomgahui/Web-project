@@ -30,6 +30,10 @@
 
                 <div class="blog__details__content">
                     <div class="row">
+                        <div class="list-group-item" th:each="wishList : ${wishItemDTOList}">
+                            <img th:src="@{${wishList.image}}" align="center" width="100px">
+
+                        </div>
 
                         <img src="img/myFavorites.jpg">
 

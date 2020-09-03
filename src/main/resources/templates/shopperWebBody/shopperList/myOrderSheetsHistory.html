@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 >
 <header th:replace="shopperWeb/header :: headerFragment"></header>
+<style>
+
+
+</style>
 
 <body>
 <div class="container-lg mt-5">
@@ -30,15 +33,15 @@
                                             <li class="list-group-item" th:each="orderNumList : ${orderNumList}">
                                                 <div class="todo-indicator bg-focus"></div>
                                                 <div class="widget-content p-0">
-                                                    <a class="widget-content-wrapper">
-                                                        <a th:href="@{'/viewOrderSheet/'+${orderNumList.orderNum}}"
-                                                        style="
-                                                        color: darkgreen;
-                                                        font-size: 1.5em;
-                                                        font-weight: bold;
-                                                        "
-                                                        >
+                                                    <div class="widget-content-wrapper">
                                                         <div class="widget-content-left">
+                                                            <a th:href="@{'/viewHistoryOrder/'+${orderNumList.orderNum}}"
+                                                               style="
+                                                                color: darkgreen;
+                                                                font-size: 1.5em;
+                                                                font-weight: bold;
+                                                                 "
+                                                            >
                                                             <div class="widget-heading orderTitle">
                                                                 <span id="orderNum"
                                                                       th:value="${orderNumList.orderNum}"
@@ -48,26 +51,17 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="widget-content-right">
-                                                            <!--수락버튼-->
-                                                            <button class="border-0 btn-transition btn btn-outline-success"
-                                                                    th:onclick="|javascript:acceptOrder('${orderNumList.orderNum}')|">
-                                                            <i class="fa fa-check"></i></button>
-
-                                                            <!--삭제버튼 ? 살릴지 고민
-                                                            <button class="border-0 btn-transition btn btn-outline-danger">
-                                                            <i class="fa fa-trash"></i> </button> </div>-->
                                                     </div>
                                                 </div>
                                             </li>
                                             <!--for each 여기까지 -->
+
                                         </ul>
                                     </div>
                                 </div>
                             </perfect-scrollbar>
                         </div>
-                        <div class="d-block text-right card-footer">
-                          </div>
+                        <div class="d-block text-right card-footer"></div>
                     </div>
 
             <!--여기까지 바디-->
@@ -81,7 +75,7 @@
 </div>
 <script type="text/javascript" th:inline="javascript">
 
-/*    //오더 상세정보보기
+    //오더 상세정보보기
     function viewOrder(orderNum) {
         alert(orderNum);
         $.ajax({
@@ -91,26 +85,30 @@
             dataType: "json",
             success: function (data) {
                 alert(JSON.stringify(data.list));
-/!*                $.each(data.list, function(index, items) {
 
-                });*!/
+                var idArray = new Array();
+                var nameArray = new Array();
+                var priceArray = new Array();
+
+                 $.each(data.list, function(index, items) {
+                     var productId = items.productId;
+                     var productName = items.productName;
+                     var productPrice = items.productPrice;
+
+                     idArray.push(productId);
+                     nameArray.push(productName);
+                     priceArray.push(productPrice);
+                    alert(productId);
+                 });
+
+
+
+
             }
         });
-    }//viewOrder*/
+    }//viewOrder
 
 
-    //주문 수락
-    function acceptOrder(orderNum) {
-
-        $.ajax({
-            url: "/acceptOrder",
-            data: {orderNum: orderNum},
-            type: "POST",
-            success: function () {
-                location.href="/orderSheetList"
-            }
-        });
-    };
 
 </script>
 

@@ -4,7 +4,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import sun.rmi.runtime.Log;
 
 import javax.persistence.*;
 
@@ -12,12 +11,15 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "orderNum")
-public class OrderNum {
+@Table(name = "orderNumHistory")
+public class OrderNumHistory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderNum;
+
+    @Column
+    private Long oriOrderNum;
 
     @Column
     private String userEmail;
@@ -49,8 +51,9 @@ public class OrderNum {
 
 
     @Builder
-    public OrderNum(String userEmail, String shopper ,
-                     int deliveryCost, int productTot ,String pay, String address, String detailAddress,String agree){
+    public OrderNumHistory(Long oriOrderNum,String userEmail, String shopper ,
+                           int deliveryCost, int productTot , String pay, String address, String detailAddress, String agree){
+        this.oriOrderNum = oriOrderNum;
         this.userEmail = userEmail;
         this.shopper = shopper ;
         this.deliveryCost = deliveryCost;
@@ -62,7 +65,7 @@ public class OrderNum {
     }
 
     @Builder
-    public OrderNum(Long orderNum, String userEmail, String shopper ){
+    public OrderNumHistory(Long orderNum, String userEmail, String shopper ){
         this.orderNum = orderNum;
         this.userEmail = userEmail;
         this.shopper = shopper ;

@@ -8,8 +8,8 @@ import java.util.List;
 
 public interface OrderNumRepository extends JpaRepository<OrderNum,Long> {
     List<OrderNum> findAllByUserEmail(String userEmail);
-    List<OrderNum> findAllByUserEmailAndPay(String userEmail, int pay);
-    List<OrderNum> findAllByPay(int pay);
+    List<OrderNum> findAllByUserEmailAndPay(String userEmail, String pay);
+    List<OrderNum> findAllByPay(String pay);
     List<OrderNum> findAllByShopper(String shopper);
 
     OrderNum findByOrderNum(Long orderNum);
