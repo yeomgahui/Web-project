@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
->
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <title>clientWebLayout</title>
+
+
+
 
     <header th:replace="clientWeb/header :: headerFragment"></header>
 
-    <style>
 
-    </style>
+
 
 </head>
 <body>
+
+
+
 
 <!-- 내 반경에 있는 마트들 -->
 <!-- Featured Section Begin -->
@@ -27,7 +32,7 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="section-title">
-                <span th:text="${session.user.address}"></span><br>
+                <span id = "address" th:text="${session.user.address}"></span><br>
                 <h2>근처에 있는 마트</h2>
             </div>
         </div>
@@ -42,6 +47,9 @@
                     <a th:href="@{/clientMart/homeplus}">
                         <div class="featured__item__pic set-bg borderCircle" data-setbg="img/mart/1homeplus.png"></div>
                         <h4 align="center" style="color: #555555"><strong>HOMEPLUS</strong></h4>
+<!--                        <span id = "minVal"></span>-->
+                        <h5 id = "홈플러스_minKey" align="center" style="color: #555555"></h5>
+                        <h6 id = "홈플러스_minVal" align="center" style="color: #555555"></h6>
                     </a>
                 </div>
             </div>
@@ -52,6 +60,8 @@
                     <a th:href="@{/clientMart/emart}">
                         <div class="featured__item__pic set-bg" data-setbg="img/mart/1emart.png"></div>
                         <h4 align="center" style="color: #555555"><strong>EMART</strong></h4>
+                        <h5 id = "이마트_minKey" align="center" style="color: #555555"></h5>
+                        <h6 id = "이마트_minVal" align="center" style="color: #555555"></h6>
                     </a>
                 </div>
 
@@ -63,6 +73,8 @@
                     <a th:href="@{/clientMart/lottemart}">
                     <div class="featured__item__pic set-bg" data-setbg="img/mart/1lottemart.png"></div>
                     <h4 align="center" style="color: #555555"><strong>LOTTE MART</strong></h4>
+                        <h5 id = "롯데마트_minKey" align="center" style="color: #555555"></h5>
+                        <h6 id = "롯데마트_minVal" align="center" style="color: #555555"></h6>
                     </a>
                 </div>
             </div>
@@ -73,6 +85,8 @@
                     <a th:href="@{/clientMart/cu}">
                     <div class="featured__item__pic set-bg" data-setbg="img/mart/1cu.png"></div>
                     <h4 align="center" style="color: #555555"><strong>CU</strong></h4>
+                        <h5 id = "CU_minKey" align="center" style="color: #555555"></h5>
+                        <h6 id = "CU_minVal" align="center" style="color: #555555"></h6>
                     </a>
                 </div>
             </div>
@@ -83,6 +97,8 @@
                     <a th:href="@{/clientMart/gs25}">
                     <div class="featured__item__pic set-bg" data-setbg="img/mart/1gs25.png"></div>
                     <h4 align="center" style="color: #555555"><strong>GS25</strong></h4>
+                        <h5 id = "GS25_minKey" align="center" style="color: #555555"></h5>
+                        <h6 id = "GS25_minVal" align="center" style="color: #555555"></h6>
                     </a>
                 </div>
             </div>
@@ -93,6 +109,8 @@
                     <a th:href="@{/clientMart/ministop}">
                     <div class="featured__item__pic set-bg" data-setbg="img/mart/1logo_ministop.png"></div>
                     <h4 align="center" style="color: #555555"><strong>MINISTOP</strong></h4>
+                        <h5 id = "MINISTOP_minKey" align="center" style="color: #555555"></h5>
+                        <h6 id = "MINISTOP_minVal" align="center" style="color: #555555"></h6>
                     </a>
                 </div>
             </div>
@@ -105,5 +123,17 @@
 <footer th:replace="clientWeb/footer :: footerFragment"></footer>
 
 
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWe9DHt-VVuUZrBa7JeYcKDH5X4nq9WOA&libraries=places"></script>
+<script src="/js/app/distanceApi.js"></script>
+
+
+
+
 </body>
+
+<div id="map"></div>
+
+
+
+
 </html>

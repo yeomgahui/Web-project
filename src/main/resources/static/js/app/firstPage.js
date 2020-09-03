@@ -1,4 +1,5 @@
 var placeSearch, autocomplete;
+
 function geolocate() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
@@ -28,6 +29,6 @@ $("#continueBtn").click(function (){
     if($("#autocomplete").val() ==''){
         $("#zipCodeDiv").text("주소를 입력해주세요.").css("color","gray").css("font-size","10t");
     }else{
-        document.zipcodeForm.submit();
+        document.zipcodeForm.submit();//form 의 url로 이동
     }
 });

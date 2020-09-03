@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Store</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWe9DHt-VVuUZrBa7JeYcKDH5X4nq9WOA&libraries=places">
+    </script>
+    <script src="/js/app/hashmap.js"></script>
+    <script>
+
+        var map;
+        var infowindow;
+
+        var request;
+        var service;
+        var markers = [];
+        var distance;
+        var hashmap = new HashMap();
+
+
+
+
+        function initialize() {
+      
+           
+
+
+            request2 = {
+                address: '강남역'
+
+            };
+
+
+
+            geocoder =  new google.maps.Geocoder();
+
+            /*service.textSearch(request, callback);*/
+            geocoder.geocode(request2, latlngFromAdress);
+
+           
+
+
+      
+        
+        }
+
+
+
+      function init2(latlng) {
+
+
+
+       
+            var center = new google.maps.LatLng(latlng.latitude,latlng.longitude);
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: center,
+                zoom: 13
+
+            });
+
+            request = { //center로 부터 ~radius 떨어짐
+                location: center,
+                radius: 1000,
+                /*types: ['supermarket']*/
+                /*rankby : google.maps.places.RankBy.DISTANCE,*/
+                query: ['이마트']
+               
+            
+            };
+
+            infowindow = new google.maps.InfoWindow();
+
+            service = new google.maps.places.PlacesService(map);
+
+
+            //latlng을 받아와야 하기 때문에 callback 함수를 내부함수로 생성
+            service.textSearch(request, function(results, status) {
+
+
+
+            if(status == google.maps.places.PlacesServiceStatus.OK){
+                for(var i = 0; i < results.length; i++){
+                    const regexr = [/24/,/조이마트/,/노브랜드/];//제외
+                    // const regexr2 = /조이마트/;
+                    // const martName = /이마트/; 
+
+                    if(regexr[0].test(results[i].name) || regexr[1].test(results[i].name) || regexr[2].test(results[i].name)){
+                        const idx = results.indexOf(results[i].name)
+                        results.splice(idx,1)
+
+
+
+                    }else{
+
+                        // if(!martName.test(results[i].name)){
+                        // const idx = results.indexOf(results[i].name)
+                        // results.splice(idx,1)
+
+
+                        // }else{
+
+
+
+
+                             markers.push(createMarker(results[i])); //지도에 표시
+
+
+
+
+                            distance = computeDistance(results[i].geometry.location,latlng);
+
+                            hashmap.put(results[i].name,distance);
+
+
+
+                            alert("startpoint로 부터" + results[i].name + "은   "+ distance.toFixed(1) + "km 만큼 떨어져있음!");
+
+                  
+
+
+
+
+
+
+
+                        // }// if
+  
+
+                    }//else
+           
+
+                }//for
+                // get object keys array
+  
+                // alert(Math.min.apply(null, hashmap.values())); //가장 가까운 값 반환
+                
+
+                var min;
+                var minVal;
+                var minKey;
+
+
+                min = hashmap.values()[1];
+
+
+                alert(hashmap.values()[0]);
+                
+
+
+                for (var j = 0; j < hashmap.size(); j++) {
+                    if (hashmap.values()[j] < min) {  //<---fix is here
+                    minVal = hashmap.values()[j];
+                    minKey = hashmap.keys()[j];
+
+                    
+                    }
+                    
+                }//for
+
+           
+
+                alert("제일 가까운 마트는 "+ minKey + "으로 " + minVal.toFixed(1) + "km 떨어져 있습니다!");
+            
+
+
+
+
+
+
+
+            }//if                
+
+
+
+            });
+
+   
+
+            //오른쪽 마우스 클릭하면 뜨게되는 부분
+            google.maps.event.addListener(map, 'rightclick', function(event){
+            	map.setCenter(event.latLng)
+            	clearResults(markers)
+
+            	var request = { //center로 부터 ~radius 떨어짐
+            		location: event.latLng,
+            		radius: 1000,
+            		query: ['이마트']
+            	
+            	};
+
+            	service.textSearch(request, callback);
+
+
+            });
+
+          
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+        function latlngFromAdress(results, status) {//변하지 않는 original 위치
+
+            if (status == google.maps.GeocoderStatus.OK)  //Geocoding이 성공적이라면,
+
+                {
+
+                alert(results.length + "개의 결과를 찾았습니다.");
+
+            var latlng = {
+
+                latitude : results[0].geometry.location.lat(),
+                longitude  : results[0].geometry.location.lng()
+            }
+
+        
+               init2(latlng); //매개변수로 전달!
+
+        
+
+
+            }
+          
+              
+
+        }
+
+
+
+
+        function createMarker(place) {
+        	var placeLoc = place.geometry.location;
+        	var marker = new google.maps.Marker({
+        		map: map,
+        		position: place.geometry.location
+        	});
+
+        	/*alert(place.name);*/
+
+
+        	google.maps.event.addListener(marker, 'click', function() { //클릭하면 표시
+        		infowindow.setContent(place.name);
+
+        		infowindow.open(map, this);
+
+
+        	});
+        	return marker;
+        }
+
+        function clearResults(markers) {
+        	for(var m in markers) {
+        		markers[m].setMap(null)
+        	}
+        	markers = []
+        }
+
+
+
+        function computeDistance(startCoords, destCoords) {
+        var startLatRads = degreesToRadians(startCoords.lat());
+        var startLongRads = degreesToRadians(startCoords.lng());
+        var destLatRads = degreesToRadians(destCoords.latitude);
+        var destLongRads = degreesToRadians(destCoords.longitude);
+
+        var Radius = 6371; //지구의 반경(km)
+        var distance = Math.acos(Math.sin(startLatRads) * Math.sin(destLatRads) + 
+                    Math.cos(startLatRads) * Math.cos(destLatRads) *
+                    Math.cos(startLongRads - destLongRads)) * Radius;
+
+
+        return distance;
+        }
+
+
+
+        function degreesToRadians(degrees) {
+        radians = (degrees * Math.PI)/180;
+        return radians;
+        }
+
+
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+
+    	</script>
+
+        <style>
+        html, body, #map {
+            height: 100%;
+            margin: 0px;
+            padding: 0px;
+        }
+        </style>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+    </body>
+
+</html>
