@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface WishItemRepository extends JpaRepository<WishItem, Long> {
     List<WishItem> findAllByEmail(String email);
+    WishItem findAllByProductIdAndEmail(Long productId, String email);
 
 }
