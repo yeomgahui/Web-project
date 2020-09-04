@@ -1,5 +1,6 @@
 package com.cartrapido.main.service;
 
+import com.cartrapido.main.domain.entity.Cart;
 import com.cartrapido.main.domain.entity.WishItem;
 import com.cartrapido.main.domain.repository.WishItemRepository;
 import com.cartrapido.main.web.dto.WishItemDTO;
@@ -41,5 +42,13 @@ public class WishItemService {
             wishItemDTOList.add(wishItemDTO);
         }
         return wishItemDTOList;
+    }
+
+    public boolean checkWishList(Long productId, String email) {
+        WishItem wishItem = wishItemRepository.findAllByProductIdAndEmail(productId, email);
+
+        if (wishItem==null) {
+            return true;
+        } else return false;
     }
 }
