@@ -2,7 +2,9 @@ package com.cartrapido.main.web;
 
 import com.cartrapido.main.config.auth.dto.SessionUser;
 import com.cartrapido.main.service.OrderNumService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
