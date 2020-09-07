@@ -112,8 +112,11 @@ ol {
 -----------------------*/
 
 .section-title {
+	margin-top: 50px;
 	margin-bottom: 50px;
 	text-align: center;
+	border-top: 1px solid #ebebeb;
+	padding-top: 50px;
 }
 
 .section-title h2 {
@@ -561,7 +564,7 @@ ol {
 -----------------------*/
 
 .hero {
-	padding-bottom: 50px;
+	/*padding-bottom: 50px;*/
 }
 
 .hero.hero-normal {
@@ -727,7 +730,8 @@ ol {
 }
 
 .hero__item {
-	height: 431px;
+	height: 500px;
+	/*height: 431px;*/
 	display: flex;
 	align-items: center;
 	padding-left: 75px;
@@ -758,7 +762,7 @@ ol {
 -----------------------*/
 
 .categories__item {
-	height: 270px;
+	height: 350px;
 	position: relative;
 }
 
@@ -1042,6 +1046,7 @@ ol {
 	display: flex;
 	align-items: center;
 	padding: 45px 0 40px;
+	background-size: cover;
 }
 
 .breadcrumb__text h2 {

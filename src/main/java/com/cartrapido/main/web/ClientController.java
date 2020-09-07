@@ -69,10 +69,10 @@ public class ClientController {
 //    }
 
     //페이징 적용
-    //마트별로(where store) 상품 보여줌 //
+    //마트별로(where store) 상품 보여줌
     @GetMapping("/clientMart/{mart}")
     public String mart(@PathVariable("mart") String mart, Model model,
-                       @PageableDefault(size=30, sort = "productId", direction = Sort.Direction.ASC)Pageable pageable) {
+                       @PageableDefault(size=16, sort = "productId", direction = Sort.Direction.ASC)Pageable pageable) {
         List<ProductDTO> productList = productService.getStoreProductList(mart, pageable);
         Page<Product> products = productService.pagingStoreProduct(mart, pageable);
         List<String> categoryList = productService.getCategoryList(mart);
@@ -94,7 +94,7 @@ public class ClientController {
     }
 
     //페이징 적용
-    //마트별로(where store), 카테고리별로(where category) 상품보여줌 //
+    //마트별로(where store), 카테고리별로(where category) 상품보여줌
     @GetMapping("/clientMart/{mart}/{category}")
     public String category( @PathVariable("mart") String mart, @PathVariable("category") String category, Model model,
                             @PageableDefault(size=30, direction = Sort.Direction.ASC)Pageable pageable) {
@@ -117,7 +117,7 @@ public class ClientController {
         model.addAttribute("mart",mart);
         model.addAttribute("products",products);
 
-        return "/clientWebBody/mart";
+        return "/clientWebBody/category";
     }
 
     @PostMapping("/clientMart/putInCart")
@@ -168,7 +168,7 @@ public class ClientController {
                           @RequestParam (value = "amountArr[]") List<Integer> amountArr,
                           @RequestParam int productTot,
                           @RequestParam int deliveryCost
-                          ) {
+    ) {
 
         CartDTO cartDTO = cartService.getCartIdInfo(checkArr.get(0));
         String userEmail = cartDTO.getUserEmail();
@@ -213,7 +213,7 @@ public class ClientController {
             return "/payment/noList";
         else
             model.addAttribute("orderNumList", orderNumDTOList);
-            return "/clientWebBody/myOrderList";
+        return "/clientWebBody/myOrderList";
 
     }
 

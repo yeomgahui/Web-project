@@ -4,13 +4,14 @@ import com.cartrapido.main.domain.entity.Product;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 public class ProductDTO {
-
 
     private Long productId;
     private String itemId;
@@ -23,6 +24,7 @@ public class ProductDTO {
     private String image;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
+    private static List<ProductDTO> list = new ArrayList<ProductDTO>();
 
     public Product toEntity(){
         Product product = Product.builder()
@@ -48,7 +50,8 @@ public class ProductDTO {
                       int productQty,
                       String store,
                       String category,
-                      String image){
+                      String image,
+                      List<ProductDTO> list){
         this.productId = productId;
         this.itemId = itemId;
         this.productName = productName;
@@ -58,7 +61,15 @@ public class ProductDTO {
         this.store = store;
         this.category = category;
         this.image = image;
+        this.list = list;
 
     }
+
+    public List<ProductDTO> getList() {
+        return list;
+    }
+//    public static void setList(List<ProductDTO> list) {
+//        ProductDTO.list = list;
+//    }
 
 }

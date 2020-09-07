@@ -10,8 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,6 +18,9 @@ public class LottemartCrawlingService {
 
     @Autowired
     private ProductRepository productRepository;
+
+//    private List<ProductDTO> lottemartProductList = new ArrayList<ProductDTO>();
+//    private int count;
 
     private String store = "lottemart";
 
@@ -53,25 +55,34 @@ public class LottemartCrawlingService {
     //@PostConstruct
     public void getLottermartDatas() {
 
-        List<LocalDateTime> list = productRepository.martDate(store);
+//        List<LocalDateTime> list = productRepository.martDate(store);
+//
+//        if (list.size() != 0) {
+//            LocalDate latest = LocalDate.from(list.get(0));
+//            LocalDate today = LocalDate.from(LocalDateTime.now());
+//
+//            if (today.isAfter(latest)) {
+//                productRepository.deleteByStore(store);
+//                crawling();
+//
+//            }
+//        }else {
+//            crawling();
+//        }
 
-        if (list.size() != 0) {
-            LocalDate latest = LocalDate.from(list.get(0));
-            LocalDate today = LocalDate.from(LocalDateTime.now());
 
-            if (today.isAfter(latest)) {
-                productRepository.deleteByStore(store);
-                crawling();
-
-            }
-        }else {
-            crawling();
-        }
+//        for(ProductDTO productDTO: lottemartProductList){
+//            System.out.println(productDTO.getStore());
+//            System.out.println(productDTO.getProductId());
+//            System.out.println(productDTO.getCategory());
+//            System.out.println(productDTO.getProductName());
+//            System.out.println(productDTO.getImage());
+//        }
     }
 
     public void crawling() {
-
         System.out.println(store);
+
         for (int j = 0; j < array_url.length; j++) {
 
             try {
@@ -114,6 +125,7 @@ public class LottemartCrawlingService {
 //                            System.out.println(productcontent);
 
                     ProductDTO productDTO = ProductDTO.builder()
+                            //.productId((long)count++)
                             .itemId(itemId)
                             .productName(productName)
                             .productPrice(Integer.parseInt(productPrice))
@@ -125,12 +137,12 @@ public class LottemartCrawlingService {
                             .build();
 
                     productRepository.save(productDTO.toEntity()).getProductId();
+                    //lottemartProductList.add(productDTO);
                 }
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-
     }
 }

@@ -4,7 +4,6 @@ import com.cartrapido.main.domain.repository.ProductRepository;
 import com.cartrapido.main.web.dto.ProductDTO;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +12,7 @@ import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,6 +20,9 @@ public class HomeplusCrawlingService {
 
     @Autowired
     private ProductRepository productRepository;
+
+//    private List<ProductDTO> homeplusProductList = new ArrayList<ProductDTO>();
+//    private static int count;
 
     private String store = "homeplus";
 
@@ -72,11 +75,21 @@ public class HomeplusCrawlingService {
         }else {
             crawling();
         }
+
+        crawling();
+
+//        for(ProductDTO productDTO: homeplusProductList){
+//            System.out.println(productDTO.getStore());
+//            System.out.println(productDTO.getProductId());
+//            System.out.println(productDTO.getCategory());
+//            System.out.println(productDTO.getProductName());
+//            System.out.println(productDTO.getImage());
+//        }
     }
 
     public void crawling() {
-
         System.out.println(store);
+
         for (int j = 0; j < array_url.length; j++) {
 
             try {
@@ -117,12 +130,13 @@ public class HomeplusCrawlingService {
                     //System.out.println(itemId);
 
                     String productcontent = "";
-                    String array_contentUrl = "http://www.homeplus.co.kr/app.product.GoodDetail.ghs?comm=usr.detail&good_id="+itemId;
-                    Document doc1 = Jsoup.connect(array_contentUrl).get();
-                    productcontent = doc1.select("table.tb-info").html();
+//                    String array_contentUrl = "http://www.homeplus.co.kr/app.product.GoodDetail.ghs?comm=usr.detail&good_id="+itemId;
+//                    Document doc1 = Jsoup.connect(array_contentUrl).get();
+//                    productcontent = doc1.select("table.tb-info").html();
                     //System.out.println(productcontent);
 
                     ProductDTO productDTO = ProductDTO.builder()
+                            //.productId((long)count++)
                             .itemId(itemId)
                             .productName(productName)
                             .productPrice(Integer.parseInt(productPrice))
@@ -134,6 +148,7 @@ public class HomeplusCrawlingService {
                             .build();
 
                     productRepository.save(productDTO.toEntity()).getProductId();
+                    //homeplusProductList.add(productDTO);
                 }
 
             } catch (IOException e) {

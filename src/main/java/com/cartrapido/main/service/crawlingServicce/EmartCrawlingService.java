@@ -13,6 +13,7 @@ import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,6 +21,9 @@ public class EmartCrawlingService {
 
     @Autowired
     private ProductRepository productRepository;
+
+//    private List<ProductDTO> emartProductList = new ArrayList<ProductDTO>();
+//    private static int count;
 
     private String store = "emart";
 
@@ -77,15 +81,21 @@ public class EmartCrawlingService {
         else {
             crawling();
         }
+
+//        for(ProductDTO productDTO: emartProductList){
+//            System.out.println(productDTO.getStore());
+//            System.out.println(productDTO.getProductId());
+//            System.out.println(productDTO.getCategory());
+//            System.out.println(productDTO.getProductName());
+//            System.out.println(productDTO.getImage());
+//        }
+
     }
 
     public void crawling() {
-
         System.out.println(store);
         for (int j = 0; j < array_url.length; j++) {
-
             try {
-
                 //크롤링 차단 막기
                 Document doc = Jsoup.connect(array_url[j])
                         .userAgent("Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36")
@@ -97,12 +107,10 @@ public class EmartCrawlingService {
                         .header("pragma", "no-cache")
                         .header("upgrade-insecure-requests", "1")
                         .get();
-
                 Elements elements = doc.select("div#ty_thmb_view ul");
 
                 for (Element element : elements) {
                     int i;
-
                     for (i = 0; i < elements.select("li.cunit_t232").size(); i++) {
 
                         String itemId = elements.select("input[name=attnTgtIdnfNo1]").get(i).attr("value");
@@ -131,6 +139,7 @@ public class EmartCrawlingService {
                         //}
 
                         ProductDTO productDTO = ProductDTO.builder()
+                                //.productId((long)count++)
                                 .itemId(itemId)
                                 .productName(productName)
                                 .productPrice(Integer.parseInt(productPrice))
@@ -142,6 +151,8 @@ public class EmartCrawlingService {
                                 .build();
 
                         productRepository.save(productDTO.toEntity()).getProductId();
+                        //emartProductList.add(productDTO);
+
                     }
                 }
 
@@ -149,6 +160,5 @@ public class EmartCrawlingService {
                 e.printStackTrace();
             }
         }
-
     }
 }
