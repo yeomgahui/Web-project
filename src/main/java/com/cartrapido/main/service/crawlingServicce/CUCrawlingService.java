@@ -14,12 +14,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class CUCrawlingService {
 
     @Autowired
     private ProductRepository productRepository;
+
+//    private List<ProductDTO> cuProductList = new ArrayList<ProductDTO>();
+//    private static int count;
 
     private String store = "cu";
 
@@ -39,7 +44,6 @@ public class CUCrawlingService {
             "IceCream",         //CU_IceCream_URL
             "Food",             //CU_Food_URL
             "Drink",            //CU_Drink_URL
-
     };
 
     //WebDriver
@@ -54,6 +58,8 @@ public class CUCrawlingService {
 
     //@PostConstruct
     public void getCUDatas() {
+
+        System.out.println(store);
 
         //System Property SetUp
         System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
@@ -71,14 +77,22 @@ public class CUCrawlingService {
         driver = new ChromeDriver(options);
         snackCrawling();
 
-//        driver = new ChromeDriver(options);
-//        iceCreamCrawling();
+        driver = new ChromeDriver(options);
+        iceCreamCrawling();
 
 //        driver = new ChromeDriver(options);
 //        foodCrawling();
 //
 //        driver = new ChromeDriver(options);
 //        drinkCrawling();
+
+//        for(ProductDTO productDTO: cuProductList){
+//            System.out.println(productDTO.getStore());
+//            System.out.println(productDTO.getProductId());
+//            System.out.println(productDTO.getCategory());
+//            System.out.println(productDTO.getProductName());
+//            System.out.println(productDTO.getImage());
+//        }
 
     }
 
@@ -101,10 +115,10 @@ public class CUCrawlingService {
             //System.out.println(elements);
             int i;
             for (i = 0; i < elements.select("div.photo").size(); i++) {
-                System.out.println(i);
+                //System.out.println(i);
 
                 String productName = elements.select("p.prodName span").get(i).text();
-                System.out.println(productName);
+                //System.out.println(productName);
 
                 String stringProductPrice = elements.select("p.prodPrice span").get(i).text();
                 String[] ProductPriceSplit = stringProductPrice.split(",");
@@ -112,17 +126,16 @@ public class CUCrawlingService {
                 for (String str : ProductPriceSplit) {
                     productPrice = productPrice + str;
                 }
-                System.out.println(productPrice);
+                //System.out.println(productPrice);
 
                 String image = elements.select("div.photo a img").get(i).attr("src");
-                System.out.println(image);
+                //System.out.println(image);
 
                 String itemId = "";
-
                 String productcontent = "";
 
                 ProductDTO productDTO = ProductDTO.builder()
-                        .itemId(itemId)
+                        //.productId((long)count++)
                         .productName(productName)
                         .productPrice(Integer.parseInt(productPrice))
                         .productQty(10)
@@ -131,11 +144,9 @@ public class CUCrawlingService {
                         .category("ConvenienceFood")
                         .image(image)
                         .build();
-
                 productRepository.save(productDTO.toEntity()).getProductId();
+                //cuProductList.add(productDTO);
             }
-
-
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -144,7 +155,7 @@ public class CUCrawlingService {
     }
     public void fastFoodCrawling() {
         try {
-            //get page (= 브라우저에서 url을 주소창에 넣은 후 request 한 것과 같다)
+
             driver.get("http://cu.bgfretail.com/product/product.do?category=product&depth2=4&depth3=2");
             element = driver.findElement(By.id("setD"));
             element.click();
@@ -161,10 +172,10 @@ public class CUCrawlingService {
             //System.out.println(elements);
             int i;
             for (i = 0; i < elements.select("div.photo").size(); i++) {
-                System.out.println(i);
+                //System.out.println(i);
 
                 String productName = elements.select("p.prodName span").get(i).text();
-                System.out.println(productName);
+                //System.out.println(productName);
 
                 String stringProductPrice = elements.select("p.prodPrice span").get(i).text();
                 String[] ProductPriceSplit = stringProductPrice.split(",");
@@ -172,17 +183,17 @@ public class CUCrawlingService {
                 for (String str : ProductPriceSplit) {
                     productPrice = productPrice + str;
                 }
-                System.out.println(productPrice);
+                //System.out.println(productPrice);
 
                 String image = elements.select("div.photo a img").get(i).attr("src");
-                System.out.println(image);
+                //System.out.println(image);
 
                 String itemId = "";
 
                 String productcontent = "";
 
                 ProductDTO productDTO = ProductDTO.builder()
-                        .itemId(itemId)
+                        //.productId((long)count++)
                         .productName(productName)
                         .productPrice(Integer.parseInt(productPrice))
                         .productQty(10)
@@ -193,9 +204,8 @@ public class CUCrawlingService {
                         .build();
 
                 productRepository.save(productDTO.toEntity()).getProductId();
+                //cuProductList.add(productDTO);
             }
-
-
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -223,10 +233,10 @@ public class CUCrawlingService {
             //System.out.println(elements);
             int i;
             for (i = 0; i < elements.select("div.photo").size(); i++) {
-                System.out.println(i);
+                //System.out.println(i);
 
                 String productName = elements.select("p.prodName span").get(i).text();
-                System.out.println(productName);
+                //System.out.println(productName);
 
                 String stringProductPrice = elements.select("p.prodPrice span").get(i).text();
                 String[] ProductPriceSplit = stringProductPrice.split(",");
@@ -234,10 +244,10 @@ public class CUCrawlingService {
                 for (String str : ProductPriceSplit) {
                     productPrice = productPrice + str;
                 }
-                System.out.println(productPrice);
+                //System.out.println(productPrice);
 
                 String image = elements.select("div.photo a img").get(i).attr("src");
-                System.out.println(image);
+                //System.out.println(image);
 
                 String itemId = "";
 
@@ -255,6 +265,7 @@ public class CUCrawlingService {
                         .build();
 
                 productRepository.save(productDTO.toEntity()).getProductId();
+                //cuProductList.add(productDTO);
             }
 
 
@@ -283,10 +294,10 @@ public class CUCrawlingService {
             //System.out.println(elements);
             int i;
             for (i = 0; i < elements.select("div.photo").size(); i++) {
-                System.out.println(i);
+                //System.out.println(i);
 
                 String productName = elements.select("p.prodName span").get(i).text();
-                System.out.println(productName);
+                //System.out.println(productName);
 
                 String stringProductPrice = elements.select("p.prodPrice span").get(i).text();
                 String[] ProductPriceSplit = stringProductPrice.split(",");
@@ -294,10 +305,10 @@ public class CUCrawlingService {
                 for (String str : ProductPriceSplit) {
                     productPrice = productPrice + str;
                 }
-                System.out.println(productPrice);
+                //System.out.println(productPrice);
 
                 String image = elements.select("div.photo a img").get(i).attr("src");
-                System.out.println(image);
+                //System.out.println(image);
 
                 String itemId = "";
 
@@ -315,6 +326,7 @@ public class CUCrawlingService {
                         .build();
 
                 productRepository.save(productDTO.toEntity()).getProductId();
+                //cuProductList.add(productDTO);
             }
 
 
@@ -343,10 +355,10 @@ public class CUCrawlingService {
             //System.out.println(elements);
             int i;
             for (i = 0; i < elements.select("div.photo").size(); i++) {
-                System.out.println(i);
+                //System.out.println(i);
 
                 String productName = elements.select("p.prodName span").get(i).text();
-                System.out.println(productName);
+                //System.out.println(productName);
 
                 String stringProductPrice = elements.select("p.prodPrice span").get(i).text();
                 String[] ProductPriceSplit = stringProductPrice.split(",");
@@ -354,10 +366,10 @@ public class CUCrawlingService {
                 for (String str : ProductPriceSplit) {
                     productPrice = productPrice + str;
                 }
-                System.out.println(productPrice);
+                //System.out.println(productPrice);
 
                 String image = elements.select("div.photo a img").get(i).attr("src");
-                System.out.println(image);
+                //System.out.println(image);
 
                 String itemId = "";
 
@@ -374,7 +386,8 @@ public class CUCrawlingService {
                         .image(image)
                         .build();
 
-                //productRepository.save(productDTO.toEntity()).getProductId();
+                productRepository.save(productDTO.toEntity()).getProductId();
+                //cuProductList.add(productDTO);
             }
 
 
@@ -403,10 +416,10 @@ public class CUCrawlingService {
             //System.out.println(elements);
             int i;
             for (i = 0; i < elements.select("div.photo").size(); i++) {
-                System.out.println(i);
+                //System.out.println(i);
 
                 String productName = elements.select("p.prodName span").get(i).text();
-                System.out.println(productName);
+                //System.out.println(productName);
 
                 String stringProductPrice = elements.select("p.prodPrice span").get(i).text();
                 String[] ProductPriceSplit = stringProductPrice.split(",");
@@ -414,10 +427,10 @@ public class CUCrawlingService {
                 for (String str : ProductPriceSplit) {
                     productPrice = productPrice + str;
                 }
-                System.out.println(productPrice);
+                //System.out.println(productPrice);
 
                 String image = elements.select("div.photo a img").get(i).attr("src");
-                System.out.println(image);
+                //System.out.println(image);
 
                 String itemId = "";
 
@@ -434,7 +447,8 @@ public class CUCrawlingService {
                         .image(image)
                         .build();
 
-                //productRepository.save(productDTO.toEntity()).getProductId();
+                productRepository.save(productDTO.toEntity()).getProductId();
+                //cuProductList.add(productDTO);
             }
 
 

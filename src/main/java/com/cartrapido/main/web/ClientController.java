@@ -3,7 +3,6 @@ package com.cartrapido.main.web;
 import com.cartrapido.main.config.auth.dto.SessionUser;
 import com.cartrapido.main.domain.entity.OrderNum;
 import com.cartrapido.main.domain.entity.Product;
-import com.cartrapido.main.domain.repository.WishItemRepository;
 import com.cartrapido.main.service.*;
 import com.cartrapido.main.web.dto.*;
 import lombok.AllArgsConstructor;
@@ -46,7 +45,7 @@ public class ClientController {
     //마트별로(where store) 상품 보여줌 //
     @GetMapping("/clientMart/{mart}")
     public String mart(@PathVariable("mart") String mart, Model model,
-                       @PageableDefault(size=30, sort = "productId", direction = Sort.Direction.ASC)Pageable pageable) {
+                       @PageableDefault(size=16, sort = "productId", direction = Sort.Direction.ASC)Pageable pageable) {
         List<ProductDTO> productList = productService.getStoreProductList(mart, pageable);
         Page<Product> products = productService.pagingStoreProduct(mart, pageable);
         List<String> categoryList = productService.getCategoryList(mart);
@@ -68,7 +67,7 @@ public class ClientController {
     }
 
     //페이징 적용
-    //마트별로(where store), 카테고리별로(where category) 상품보여줌 //
+    //마트별로(where store), 카테고리별로(where category) 상품보여줌
     @GetMapping("/clientMart/{mart}/{category}")
     public String category( @PathVariable("mart") String mart, @PathVariable("category") String category, Model model,
                             @PageableDefault(size=30, direction = Sort.Direction.ASC)Pageable pageable) {
@@ -91,7 +90,7 @@ public class ClientController {
         model.addAttribute("mart",mart);
         model.addAttribute("products",products);
 
-        return "/clientWebBody/mart";
+        return "/clientWebBody/category";
     }
 
     @PostMapping("/clientMart/putInCart")
@@ -157,6 +156,8 @@ public class ClientController {
                           @RequestParam int productTot,
                           @RequestParam int deliveryCost
                           ) {
+    ) {
+
         CartDTO cartDTO = cartService.getCartIdInfo(checkArr.get(0));
         String userEmail = cartDTO.getUserEmail();
         OrderNumDTO orderNumDTO = new OrderNumDTO(
@@ -192,6 +193,35 @@ public class ClientController {
         return "/clientWebBody/myPage";
     }
 
+    @GetMapping("/myOrderList")
+    public String myOrderList(Model model, HttpSession session) {
+        SessionUser user = (SessionUser) session.getAttribute("user");
+        String userEmail = user.getEmail();
+        List<OrderNumDTO> orderNumDTOList = orderNumService.getPaidOrder(userEmail, 1);
+
+        if(orderNumDTOList.size()==0)
+            return "/payment/noList";
+        else
+            model.addAttribute("orderNumList", orderNumDTOList);
+        return "/clientWebBody/myOrderList";
+
+    }
+
+    @GetMapping("/toPayList")
+    public String toPayList(Model model, HttpSession session) {
+        SessionUser user = (SessionUser) session.getAttribute("user");
+        String userEmail = user.getEmail();
+        List<OrderNumDTO> orderNumDTOList = orderNumService.getPaidOrder(userEmail, 0);
+
+        if(orderNumDTOList.size()==0)
+            return "/payment/noList";
+        else
+            model.addAttribute("orderNumList", orderNumDTOList);
+        return "/clientWebBody/toPayList";
+
+    }
+
+
     @GetMapping("/shoppingCart")
     public String shoppingCart(HttpSession session, Model model) {
         SessionUser user = (SessionUser) session.getAttribute("user");
@@ -217,44 +247,6 @@ public class ClientController {
         }
 
         return "/clientWebBody/shoppingCart";
-    }
-
-    @GetMapping("/clientWeb/payMyOrder/{orderNum}")
-    public String payMyOrder(@PathVariable("orderNum") Long orderNum, Model model){
-        OrderNumDTO orderNumDTO = orderNumService.getOrderNum(orderNum);
-        int productTot = orderNumDTO.getProductTot();
-        int deliveryCost = orderNumDTO.getDeliveryCost();
-
-        List<OrderSheetDTO> orderSheetList =
-                orderSheetService.getOrderSheetList(orderNum);
-
-        for(OrderSheetDTO dto:orderSheetList){
-            System.out.println("view 상품 = "+dto.getProductName());
-        }
-        System.out.println("======payMyOrder getRequest================= "+orderNumDTO.getRequest());
-
-        model.addAttribute("orderNumDTO", orderNumDTO);
-        model.addAttribute("orderNumList", orderSheetList);
-        model.addAttribute("orderSize", orderSheetList.size());
-
-        return "/clientWebBody/clientView/payMyOrder";
-    }
-
-    @GetMapping("/clientWeb/viewHistoryOrder/{orderNum}")
-    public String viewHistoryOrder(@PathVariable("orderNum") Long orderNum, Model model){
-        OrderNumHistoryDTO orderNumDTO = orderNumHistoryService.findByOriOrderNum(orderNum);
-
-        int productTot = orderNumDTO.getProductTot();
-        int deliveryCost = orderNumDTO.getDeliveryCost();
-
-        List<OrderSheetDTO> orderSheetList =
-                orderSheetService.getOrderSheetList(orderNum);
-
-        model.addAttribute("orderNumDTO", orderNumDTO);
-        model.addAttribute("orderNumList", orderSheetList);
-        model.addAttribute("orderSize", orderSheetList.size());
-
-        return "/clientWebBody/clientView/viewMyHistoryOrder";
     }
 
     @GetMapping("/clientWeb/viewOrderSheet/{orderNum}")
@@ -285,6 +277,10 @@ public class ClientController {
         return "/clientWebBody/clientChatting.html";
     }
 
+    @GetMapping("/payComplete")
+    public String payComplete() {
+        return "/payment/payComplete";
+    }
 
     @PostMapping("/saveAddress")
     @ResponseBody
@@ -302,7 +298,15 @@ public class ClientController {
         if(wishItemService.checkWishList(wishItemDTO.getProductId(), user.getEmail())==true)
             wishItemService.saveWishItem(wishItemDTO);
 
+        return "/payment/kakaoPay";
     }
+
+
+    @GetMapping("/myFavorites")
+    public String myFavorites() {
+        return "/clientWebBody/myFavorites";
+    }
+
 
 
 }

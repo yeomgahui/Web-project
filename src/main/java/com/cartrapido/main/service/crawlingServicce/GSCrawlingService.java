@@ -14,12 +14,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class GSCrawlingService {
 
     @Autowired
     private ProductRepository productRepository;
+
+//    private List<ProductDTO> gsProductList = new ArrayList<ProductDTO>();;
+//    private static int count;
 
     private String store = "gs25";
 
@@ -36,6 +41,8 @@ public class GSCrawlingService {
     //@PostConstruct
     public void getGSDatas() {
 
+        System.out.println(store);
+
         //System Property SetUp
         System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
 
@@ -43,23 +50,31 @@ public class GSCrawlingService {
         options.addArguments("headless");
 
         //Driver SetUp
-//        driver = new ChromeDriver(options);
-//        lunchBoxCrawling();
-//        driver = new ChromeDriver(options);
-//        gimbapCrawling(); //
-//        driver = new ChromeDriver(options);
-//        sandwichCrawling();
-//        driver = new ChromeDriver(options);
-//        convenienceFoodCrawling();
-//
-//        driver = new ChromeDriver(options);
-//        drinkCrawling();
-//        driver = new ChromeDriver(options);
-//        milkProductsCrawling();
-//        driver = new ChromeDriver(options);
-//        snackCrawling();
+        driver = new ChromeDriver(options);
+        lunchBoxCrawling();
+        driver = new ChromeDriver(options);
+        gimbapCrawling(); //
+        driver = new ChromeDriver(options);
+        sandwichCrawling();
+        driver = new ChromeDriver(options);
+        convenienceFoodCrawling();
+
+        driver = new ChromeDriver(options);
+        drinkCrawling();
+        driver = new ChromeDriver(options);
+        milkProductsCrawling();
+        driver = new ChromeDriver(options);
+        snackCrawling();
         driver = new ChromeDriver(options);
         instantNoodlesCrawling();
+
+//        for(ProductDTO productDTO: gsProductList){
+//            System.out.println(productDTO.getStore());
+//            System.out.println(productDTO.getProductId());
+//            System.out.println(productDTO.getCategory());
+//            System.out.println(productDTO.getProductName());
+//            System.out.println(productDTO.getImage());
+//        }
 
     }
 
@@ -81,10 +96,10 @@ public class GSCrawlingService {
 
             int i;
             for (i = 0; i < elements.select("li").size(); i++) {
-                System.out.println(i);
+                //System.out.println(i);
 
                 String productName = elements.select("p.tit").get(i).text();
-                System.out.println(productName);
+                //System.out.println(productName);
 
                 String stringProductPrice = elements.select("span.cost").get(i).text();
                 String[] productPriceSplit = stringProductPrice.split(",");
@@ -94,16 +109,17 @@ public class GSCrawlingService {
                 }
                 productPrice = productPrice.replaceAll("원", "");
 
-                System.out.println(productPrice);
+                //System.out.println(productPrice);
 
                 String image = elements.select("p.img img").get(i).attr("src");
-                System.out.println(image);
+                //System.out.println(image);
 
                 String itemId = "";
 
                 String productcontent = "";
 
                 ProductDTO productDTO = ProductDTO.builder()
+                        //.productId((long)count++)
                         .itemId(itemId)
                         .productName(productName)
                         .productPrice(Integer.parseInt(productPrice))
@@ -115,6 +131,7 @@ public class GSCrawlingService {
                         .build();
 
                 productRepository.save(productDTO.toEntity()).getProductId();
+                //gsProductList.add(productDTO);
             }
 
         } catch (Exception e) {
@@ -141,10 +158,10 @@ public class GSCrawlingService {
 
             int i;
             for (i = 0; i < elements.select("li").size(); i++) {
-                System.out.println(i);
+                //System.out.println(i);
 
                 String productName = elements.select("p.tit").get(i).text();
-                System.out.println(productName);
+                //System.out.println(productName);
 
                 String stringProductPrice = elements.select("span.cost").get(i).text();
                 String[] productPriceSplit = stringProductPrice.split(",");
@@ -154,16 +171,17 @@ public class GSCrawlingService {
                 }
                 productPrice = productPrice.replaceAll("원", "");
 
-                System.out.println(productPrice);
+                //System.out.println(productPrice);
 
                 String image = elements.select("p.img img").get(i).attr("src");
-                System.out.println(image);
+                //System.out.println(image);
 
                 String itemId = "";
 
                 String productcontent = "";
 
                 ProductDTO productDTO = ProductDTO.builder()
+                        //.productId((long)count++)
                         .itemId(itemId)
                         .productName(productName)
                         .productPrice(Integer.parseInt(productPrice))
@@ -174,7 +192,8 @@ public class GSCrawlingService {
                         .image(image)
                         .build();
 
-                //productRepository.save(productDTO.toEntity()).getProductId();
+                productRepository.save(productDTO.toEntity()).getProductId();
+                //gsProductList.add(productDTO);
             }
 
         } catch (Exception e) {
@@ -201,10 +220,10 @@ public class GSCrawlingService {
 
             int i;
             for (i = 0; i < elements.select("li").size(); i++) {
-                System.out.println(i);
+                //System.out.println(i);
 
                 String productName = elements.select("p.tit").get(i).text();
-                System.out.println(productName);
+                //System.out.println(productName);
 
                 String stringProductPrice = elements.select("span.cost").get(i).text();
                 String[] productPriceSplit = stringProductPrice.split(",");
@@ -214,16 +233,17 @@ public class GSCrawlingService {
                 }
                 productPrice = productPrice.replaceAll("원", "");
 
-                System.out.println(productPrice);
+                //System.out.println(productPrice);
 
                 String image = elements.select("p.img img").get(i).attr("src");
-                System.out.println(image);
+                //System.out.println(image);
 
                 String itemId = "";
 
                 String productcontent = "";
 
                 ProductDTO productDTO = ProductDTO.builder()
+                        //.productId((long)count++)
                         .itemId(itemId)
                         .productName(productName)
                         .productPrice(Integer.parseInt(productPrice))
@@ -235,6 +255,7 @@ public class GSCrawlingService {
                         .build();
 
                 productRepository.save(productDTO.toEntity()).getProductId();
+                //gsProductList.add(productDTO);
             }
 
         } catch (Exception e) {
@@ -261,10 +282,10 @@ public class GSCrawlingService {
 
             int i;
             for (i = 0; i < elements.select("li").size(); i++) {
-                System.out.println(i);
+                //System.out.println(i);
 
                 String productName = elements.select("p.tit").get(i).text();
-                System.out.println(productName);
+                //System.out.println(productName);
 
                 String stringProductPrice = elements.select("span.cost").get(i).text();
                 String[] productPriceSplit = stringProductPrice.split(",");
@@ -274,16 +295,17 @@ public class GSCrawlingService {
                 }
                 productPrice = productPrice.replaceAll("원", "");
 
-                System.out.println(productPrice);
+                //System.out.println(productPrice);
 
                 String image = elements.select("p.img img").get(i).attr("src");
-                System.out.println(image);
+                //System.out.println(image);
 
                 String itemId = "";
 
                 String productcontent = "";
 
                 ProductDTO productDTO = ProductDTO.builder()
+                        //.productId((long)count++)
                         .itemId(itemId)
                         .productName(productName)
                         .productPrice(Integer.parseInt(productPrice))
@@ -295,6 +317,7 @@ public class GSCrawlingService {
                         .build();
 
                 productRepository.save(productDTO.toEntity()).getProductId();
+                //gsProductList.add(productDTO);
             }
 
         } catch (Exception e) {
@@ -322,10 +345,10 @@ public class GSCrawlingService {
 
             int i;
             for (i = 0; i < elements.select("li").size(); i++) {
-                System.out.println(i);
+                //System.out.println(i);
 
                 String productName = elements.select("p.tit").get(i).text();
-                System.out.println(productName);
+                //System.out.println(productName);
 
                 String stringProductPrice = elements.select("span.cost").get(i).text();
                 String[] productPriceSplit = stringProductPrice.split(",");
@@ -335,16 +358,17 @@ public class GSCrawlingService {
                 }
                 productPrice = productPrice.replaceAll("원", "");
 
-                System.out.println(productPrice);
+                //System.out.println(productPrice);
 
                 String image = elements.select("p.img img").get(i).attr("src");
-                System.out.println(image);
+                //System.out.println(image);
 
                 String itemId = "";
 
                 String productcontent = "";
 
                 ProductDTO productDTO = ProductDTO.builder()
+                        //.productId((long)count++)
                         .itemId(itemId)
                         .productName(productName)
                         .productPrice(Integer.parseInt(productPrice))
@@ -356,6 +380,7 @@ public class GSCrawlingService {
                         .build();
 
                 productRepository.save(productDTO.toEntity()).getProductId();
+                //gsProductList.add(productDTO);
             }
 
         } catch (Exception e) {
@@ -382,10 +407,10 @@ public class GSCrawlingService {
 
             int i;
             for (i = 0; i < elements.select("li").size(); i++) {
-                System.out.println(i);
+                //System.out.println(i);
 
                 String productName = elements.select("p.tit").get(i).text();
-                System.out.println(productName);
+                //System.out.println(productName);
 
                 String stringProductPrice = elements.select("span.cost").get(i).text();
                 String[] productPriceSplit = stringProductPrice.split(",");
@@ -395,16 +420,17 @@ public class GSCrawlingService {
                 }
                 productPrice = productPrice.replaceAll("원", "");
 
-                System.out.println(productPrice);
+                //System.out.println(productPrice);
 
                 String image = elements.select("p.img img").get(i).attr("src");
-                System.out.println(image);
+                //System.out.println(image);
 
                 String itemId = "";
 
                 String productcontent = "";
 
                 ProductDTO productDTO = ProductDTO.builder()
+                        //.productId((long)count++)
                         .itemId(itemId)
                         .productName(productName)
                         .productPrice(Integer.parseInt(productPrice))
@@ -416,6 +442,7 @@ public class GSCrawlingService {
                         .build();
 
                 productRepository.save(productDTO.toEntity()).getProductId();
+                //gsProductList.add(productDTO);
             }
 
         } catch (Exception e) {
@@ -442,10 +469,10 @@ public class GSCrawlingService {
 
             int i;
             for (i = 0; i < elements.select("li").size(); i++) {
-                System.out.println(i);
+                //System.out.println(i);
 
                 String productName = elements.select("p.tit").get(i).text();
-                System.out.println(productName);
+                //System.out.println(productName);
 
                 String stringProductPrice = elements.select("span.cost").get(i).text();
                 String[] productPriceSplit = stringProductPrice.split(",");
@@ -455,16 +482,17 @@ public class GSCrawlingService {
                 }
                 productPrice = productPrice.replaceAll("원", "");
 
-                System.out.println(productPrice);
+                //System.out.println(productPrice);
 
                 String image = elements.select("p.img img").get(i).attr("src");
-                System.out.println(image);
+                //System.out.println(image);
 
                 String itemId = "";
 
                 String productcontent = "";
 
                 ProductDTO productDTO = ProductDTO.builder()
+                        //.productId((long)count++)
                         .itemId(itemId)
                         .productName(productName)
                         .productPrice(Integer.parseInt(productPrice))
@@ -476,6 +504,7 @@ public class GSCrawlingService {
                         .build();
 
                 productRepository.save(productDTO.toEntity()).getProductId();
+                //gsProductList.add(productDTO);
             }
 
         } catch (Exception e) {
@@ -502,10 +531,10 @@ public class GSCrawlingService {
 
             int i;
             for (i = 0; i < elements.select("li").size(); i++) {
-                System.out.println(i);
+                //System.out.println(i);
 
                 String productName = elements.select("p.tit").get(i).text();
-                System.out.println(productName);
+                //System.out.println(productName);
 
                 String stringProductPrice = elements.select("span.cost").get(i).text();
                 String[] productPriceSplit = stringProductPrice.split(",");
@@ -515,16 +544,17 @@ public class GSCrawlingService {
                 }
                 productPrice = productPrice.replaceAll("원", "");
 
-                System.out.println(productPrice);
+                //System.out.println(productPrice);
 
                 String image = elements.select("p.img img").get(i).attr("src");
-                System.out.println(image);
+                //System.out.println(image);
 
                 String itemId = "";
 
                 String productcontent = "";
 
                 ProductDTO productDTO = ProductDTO.builder()
+                        //.productId((long)count++)
                         .itemId(itemId)
                         .productName(productName)
                         .productPrice(Integer.parseInt(productPrice))
@@ -536,8 +566,8 @@ public class GSCrawlingService {
                         .build();
 
                 productRepository.save(productDTO.toEntity()).getProductId();
+                //gsProductList.add(productDTO);
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

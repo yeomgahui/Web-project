@@ -1,0 +1,173 @@
+
+    <div class="container" xmlns:th="http://www.w3.org/1999/xhtml">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h2>Best Categories</h2>
+                </div>
+            </div>
+            <div class="categories__slider owl-carousel" th:if="${mart} == 'lottemart'">
+                    <div class="col-lg-3">
+                        <div class="categories__item set-bg" data-setbg="https://images.unsplash.com/photo-1559181567-c3190ca9959b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80">
+                                <h5><a th:href="@{'/clientMart/'+${mart}+'/Fruit&Nuts'}">Fruit</a></h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="categories__item set-bg" data-setbg="https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80">
+                            <h5><a th:href="@{'/clientMart/'+${mart}+'/Vegetable'}">Vegetable</a></h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="categories__item set-bg" data-setbg="https://images.unsplash.com/photo-1551028150-64b9f398f678?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=600&q=60">
+                            <h5><a th:href="@{'/clientMart/'+${mart}+'/Meat'}">Meat</a></h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="categories__item set-bg" data-setbg="https://images.unsplash.com/photo-1588710929895-6ee7a0a4d155?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=600&q=60">
+                                <h5><a th:href="@{'/clientMart/'+${mart}+'/Milk&ConvenienceFood'}">Milk</a></h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="categories__item set-bg" data-setbg="https://images.unsplash.com/photo-1559814048-149b70765d47?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=600&q=60">
+                            <h5><a th:href="@{'/clientMart/'+${mart}+'/Seafood'}">Seafood</a></h5>
+                        </div>
+                    </div>
+            </div>
+            <div class="categories__slider owl-carousel" th:if="${mart} == 'emart'">
+                    <div class="col-lg-3">
+                        <div class="categories__item set-bg" data-setbg="https://images.unsplash.com/photo-1559181567-c3190ca9959b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80">
+                                <h5><a th:href="@{'/clientMart/'+${mart}+'/Fruit'}">Fruit</a></h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="categories__item set-bg" data-setbg="https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80">
+                            <h5><a th:href="@{'/clientMart/'+${mart}+'/Vegetable'}">Vegetable</a></h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="categories__item set-bg" data-setbg="https://images.unsplash.com/photo-1551028150-64b9f398f678?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=600&q=60">
+                            <h5><a th:href="@{'/clientMart/'+${mart}+'/Meat'}">Meat</a></h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="categories__item set-bg" data-setbg="https://images.unsplash.com/photo-1588710929895-6ee7a0a4d155?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=600&q=60">
+                                <h5><a th:href="@{'/clientMart/'+${mart}+'/Milk'}">Milk</a></h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="categories__item set-bg" data-setbg="https://images.unsplash.com/photo-1559814048-149b70765d47?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=600&q=60">
+                            <h5><a th:href="@{'/clientMart/'+${mart}+'/Seafood'}">Seafood</a></h5>
+                        </div>
+                    </div>
+            </div>
+            <div class="categories__slider owl-carousel" th:if="${mart} == 'homeplus'">
+                    <div class="col-lg-3">
+                        <div class="categories__item set-bg" data-setbg="https://images.unsplash.com/photo-1559181567-c3190ca9959b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80">
+                                <h5><a th:href="@{'/clientMart/'+${mart}+'/Fruit'}">Fruit</a></h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="categories__item set-bg" data-setbg="https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80">
+                            <h5><a th:href="@{'/clientMart/'+${mart}+'/Vegetable'}">Vegetable</a></h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="categories__item set-bg" data-setbg="https://images.unsplash.com/photo-1551028150-64b9f398f678?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=600&q=60">
+                            <h5><a th:href="@{'/clientMart/'+${mart}+'/Meat'}">Meat</a></h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="categories__item set-bg" data-setbg="https://images.unsplash.com/photo-1588710929895-6ee7a0a4d155?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=600&q=60">
+                                <h5><a th:href="@{'/clientMart/'+${mart}+'/Milk'}">Milk</a></h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="categories__item set-bg" data-setbg="https://images.unsplash.com/photo-1559814048-149b70765d47?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=600&q=60">
+                            <h5><a th:href="@{'/clientMart/'+${mart}+'/Seafood'}">Seafood</a></h5>
+                        </div>
+                    </div>
+            </div>
+            <div class="categories__slider owl-carousel" th:if="${mart} == 'cu'">
+                    <!--
+                    convenienceFoodCrawling();
+                    fastFoodCrawling();
+                    snackCrawling();
+                    iceCreamCrawling();-->
+                    <div class="col-lg-3">
+                        <div class="categories__item set-bg" data-setbg="https://danoshop.net/mall/upload/2019/01/07/meal_hover.png">
+                            <h5><a th:href="@{'/clientMart/'+${mart}+'/ConvenienceFood'}">convenienceFood</a></h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="categories__item set-bg" data-setbg="https://image.edaily.co.kr/images/Photo/files/NP/S/2020/03/PS20031000174.jpg">
+                            <h5><a th:href="@{'/clientMart/'+${mart}+'/FastFood'}">FastFood</a></h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="categories__item set-bg" data-setbg="https://images.unsplash.com/photo-1557310717-d6bea9f36682?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80">
+                            <h5><a th:href="@{'/clientMart/'+${mart}+'/Snack'}">Snack</a></h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="categories__item set-bg" data-setbg="https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80">
+                            <h5><a th:href="@{'/clientMart/'+${mart}+'/IceCream'}">Icecream</a></h5>
+                        </div>
+                    </div>
+            </div>
+            <div class="categories__slider owl-carousel" th:if="${mart} == 'gs25'">
+                   <!--
+                    lunchBoxCrawling();
+                    gimbapCrawling();
+                    sandwichCrawling();
+                    convenienceFoodCrawling();
+
+                    drinkCrawling();
+                    milkProductsCrawling();
+                    snackCrawling();
+                    instantNoodlesCrawling();
+                    -->
+                    <div class="col-lg-3">
+                        <div class="categories__item set-bg" data-setbg="https://danoshop.net/mall/upload/2019/01/07/meal_hover.png">
+                            <h5><a th:href="@{'/clientMart/'+${mart}+'/LunchBox'}">LunchBox</a></h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="categories__item set-bg" data-setbg="https://file.mk.co.kr/meet/neds/2015/09/image_readtop_2015_912919_14428839982136959.jpg">
+                            <h5><a th:href="@{'/clientMart/'+${mart}+'/Gimbaph'}">gimbap</a></h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="categories__item set-bg" data-setbg="https://images.unsplash.com/photo-1553909489-cd47e0907980?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1525&q=80">
+                            <h5><a th:href="@{'/clientMart/'+${mart}+'/Sandwich'}">Sandwich</a></h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="categories__item set-bg" data-setbg="https://images.unsplash.com/photo-1556881286-fc6915169721?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2468&q=80">
+                            <h5><a th:href="@{'/clientMart/'+${mart}+'/Drink'}">Drink</a></h5>
+                        </div>
+                    </div>
+            </div>
+            <div class="categories__slider owl-carousel" th:if="${mart} == 'ministop'">
+                    <div class="col-lg-3">
+                        <div class="categories__item set-bg" data-setbg="https://danoshop.net/mall/upload/2019/01/07/meal_hover.png">
+                            <h5><a th:href="@{'/clientMart/'+${mart}+'/LunchBox'}">LunchBox</a></h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="categories__item set-bg" data-setbg="https://img.medicalreport.kr/resources/2018/11/22/wrs97sejWubmsNbT.jpg">
+                            <h5><a th:href="@{'/clientMart/'+${mart}+'/Riceballs'}">Riceballs</a></h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="categories__item set-bg" data-setbg="https://file.mk.co.kr/meet/neds/2015/09/image_readtop_2015_912919_14428839982136959.jpg">
+                            <h5><a th:href="@{'/clientMart/'+${mart}+'/Gimbaph'}">gimbap</a></h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="categories__item set-bg" data-setbg="https://images.unsplash.com/photo-1547584370-2cc98b8b8dc8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1651&q=80">
+                            <h5><a th:href="@{'/clientMart/'+${mart}+'/hamburger'}">Hamberger</a></h5>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
