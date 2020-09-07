@@ -59,14 +59,14 @@ public class ShopperController {
     public String orderSheetList(Model model) {
 
         List<OrderNumDTO> orderNumDTOList = orderNumService.shopperGetPaidOrder("true");
+        List<OrderNumDTO> orderNumDTOListReturn = new ArrayList<>();
         for(int i = 0 ; i<orderNumDTOList.size();i++){
-            if(orderNumDTOList.get(i).getShopper()!=null){
-                orderNumDTOList.remove(i);
+            if(orderNumDTOList.get(i).getShopper()==null){
+                orderNumDTOListReturn.add(orderNumDTOList.get(i));
             }
         }
-
         if(orderNumDTOList.size()!=0){
-            model.addAttribute("orderNumList", orderNumDTOList);
+            model.addAttribute("orderNumList", orderNumDTOListReturn);
         }
         return "/shopperWebBody/shopperList/orderSheetList";
     }
