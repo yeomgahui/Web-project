@@ -28,18 +28,18 @@ public class HomeplusCrawlingService {
 
     private String[] array_url = {
             "http://www.homeplus.co.kr/app.exhibition.category.Category.ghs?comm=category.list&cid=60002", //Homeplus_Fruit_url
-            "http://www.homeplus.co.kr/app.exhibition.category.Category.ghs?comm=category.list&cid=60037", //Homeplus_Vegetable_url
-            "http://www.homeplus.co.kr/app.exhibition.category.Category.ghs?comm=category.list&cid=60098", //Homeplus_Rice_url
-            "http://www.homeplus.co.kr/app.exhibition.category.Category.ghs?comm=category.list&cid=60113", //Homeplus_Nuts_url
-            "http://www.homeplus.co.kr/app.exhibition.category.Category.ghs?comm=category.list&cid=60126", //Homeplus_Meat&Eggs_url
-            "http://www.homeplus.co.kr/app.exhibition.category.Category.ghs?comm=category.list&cid=60161", //Homeplus_Seafood_url
-            "http://www.homeplus.co.kr/app.exhibition.category.Category.ghs?comm=category.list&cid=60199", //Homeplus_Milk_url
-            "http://www.homeplus.co.kr/app.exhibition.category.Category.ghs?comm=category.list&cid=60236", //Homeplus_SideDish&FrozenFood_url
-            "http://www.homeplus.co.kr/app.exhibition.category.Category.ghs?comm=category.list&cid=60316", //Homeplus_ConvenienceFood_url
-            "http://www.homeplus.co.kr/app.exhibition.category.Category.ghs?comm=category.list&cid=60320", //Homeplus_Noodles&InstantRice_url
-            "http://www.homeplus.co.kr/app.exhibition.category.Category.ghs?comm=category.list&cid=60342", //Homeplus_snack&cereal_url
-            "http://www.homeplus.co.kr/app.exhibition.category.Category.ghs?comm=category.list&cid=60385", //Homeplus_Drink_url
-            "http://www.homeplus.co.kr/app.exhibition.category.Category.ghs?comm=category.list&cid=60447", //Homeplus_Sauce&Can_url
+//            "http://www.homeplus.co.kr/app.exhibition.category.Category.ghs?comm=category.list&cid=60037", //Homeplus_Vegetable_url
+//            "http://www.homeplus.co.kr/app.exhibition.category.Category.ghs?comm=category.list&cid=60098", //Homeplus_Rice_url
+//            "http://www.homeplus.co.kr/app.exhibition.category.Category.ghs?comm=category.list&cid=60113", //Homeplus_Nuts_url
+//            "http://www.homeplus.co.kr/app.exhibition.category.Category.ghs?comm=category.list&cid=60126", //Homeplus_Meat&Eggs_url
+//            "http://www.homeplus.co.kr/app.exhibition.category.Category.ghs?comm=category.list&cid=60161", //Homeplus_Seafood_url
+//            "http://www.homeplus.co.kr/app.exhibition.category.Category.ghs?comm=category.list&cid=60199", //Homeplus_Milk_url
+//            "http://www.homeplus.co.kr/app.exhibition.category.Category.ghs?comm=category.list&cid=60236", //Homeplus_SideDish&FrozenFood_url
+//            "http://www.homeplus.co.kr/app.exhibition.category.Category.ghs?comm=category.list&cid=60316", //Homeplus_ConvenienceFood_url
+//            "http://www.homeplus.co.kr/app.exhibition.category.Category.ghs?comm=category.list&cid=60320", //Homeplus_Noodles&InstantRice_url
+//            "http://www.homeplus.co.kr/app.exhibition.category.Category.ghs?comm=category.list&cid=60342", //Homeplus_snack&cereal_url
+//            "http://www.homeplus.co.kr/app.exhibition.category.Category.ghs?comm=category.list&cid=60385", //Homeplus_Drink_url
+//            "http://www.homeplus.co.kr/app.exhibition.category.Category.ghs?comm=category.list&cid=60447", //Homeplus_Sauce&Can_url
 
     };
 
@@ -59,7 +59,7 @@ public class HomeplusCrawlingService {
             "Sauce&Can"
     };
 
-    //@PostConstruct
+    @PostConstruct
     public void getHomeplusDatas() {
 
         List<LocalDateTime> list = productRepository.martDate(store);

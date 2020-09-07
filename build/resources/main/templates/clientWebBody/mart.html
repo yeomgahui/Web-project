@@ -15,198 +15,148 @@
 <!-- Product Section Begin -->
 <!--<section class="product spad" style="padding-top: 0px" >-->
 
-    <!-- Breadcrumb Section Begin -->
-    <section class="breadcrumb-section set-bg" data-setbg="https://images.unsplash.com/photo-1463123081488-789f998ac9c4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80" >
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center" >
-                    <div class="breadcrumb__text">
-                        <h2>
-                            <!--/*@thymesVar id="mart" type="java.lang.String"*/-->
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-section set-bg" data-setbg="https://images.unsplash.com/photo-1463123081488-789f998ac9c4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center" >
+                <div class="breadcrumb__text">
+                    <h2>
+                        <!--/*@thymesVar id="mart" type="java.lang.String"*/-->
                         <span th:text="${mart}"/></h2>
-                        <!--..---------------------------.............-->
+                    <!--..---------------------------.............-->
 
-                        <!--....................-->
-                        <div class="breadcrumb__option">
-                            <a href="./index">Home</a>
-                            <span>Shop</span>
-                        </div>
+                    <!--....................-->
+                    <div class="breadcrumb__option">
+                        <a href="./index">Home</a>
+                        <span>Shop</span>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    <!-- Breadcrumb Section End -->
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
 
-    <!-- Hero Section Begin -->
-    <section class="hero">
-        <div class="container">
-            <div class="row" style="padding-top: 50px">
+<!-- Hero Section Begin -->
+<section class="hero">
+    <div class="container">
+        <div class="row" style="padding-top: 50px">
 
-                <th:block th:include="clientWeb/martSidebar.html"  ></th:block>
+            <th:block th:include="clientWeb/martSidebar.html"  ></th:block>
 
-                <div class="col-lg-9 text-center">
-                    <!--/*@thymesVar id="mart" type="java.lang.String"*/-->
-                    <div th:if="${mart} == 'emart'">
-                        <div class="hero__item set-bg" style="background-size: cover;" data-setbg="https://i.pinimg.com/originals/cc/fe/d7/ccfed7ee78c8e41df04effe79034fe50.png">
-                        </div>
+            <div class="col-lg-9 text-center">
+                <!--/*@thymesVar id="mart" type="java.lang.String"*/-->
+                <div th:if="${mart} == 'emart'">
+                    <div class="hero__item set-bg" style="background-size: cover;" data-setbg="https://i.pinimg.com/originals/cc/fe/d7/ccfed7ee78c8e41df04effe79034fe50.png">
                     </div>
-                    <div th:if="${mart} == 'homeplus'">
-                        <div class="hero__item set-bg" style="background-size: contain; height: 350px;" data-setbg="https://scontent-ssn1-1.xx.fbcdn.net/v/t1.0-9/77028384_2577105979051212_5013480174608449536_o.png?_nc_cat=105&_nc_sid=6e5ad9&_nc_ohc=t46mXFFK020AX_HFMGT&_nc_ht=scontent-ssn1-1.xx&oh=e24d28024cc1aa7262689dc89531dd4f&oe=5F758237">
-                        </div>
+                </div>
+                <div th:if="${mart} == 'homeplus'">
+                    <div class="hero__item set-bg" style="background-size: contain; height: 350px;" data-setbg="https://scontent-ssn1-1.xx.fbcdn.net/v/t1.0-9/77028384_2577105979051212_5013480174608449536_o.png?_nc_cat=105&_nc_sid=6e5ad9&_nc_ohc=t46mXFFK020AX_HFMGT&_nc_ht=scontent-ssn1-1.xx&oh=e24d28024cc1aa7262689dc89531dd4f&oe=5F758237">
                     </div>
-                    <div th:if="${mart} == 'lottemart'">
-                        <div class="hero__item set-bg" style="background-size: contain; height: 350px;" data-setbg="https://scontent-ssn1-1.xx.fbcdn.net/v/t1.0-9/87172689_2214025955367201_6000044431766454272_n.png?_nc_cat=105&_nc_sid=6e5ad9&_nc_ohc=LUvw4r5AtYUAX__95HW&_nc_ht=scontent-ssn1-1.xx&oh=2993a1673dbf5c5e36b4b7df2a4a211b&oe=5F750BE8">
-                        </div>
+                </div>
+                <div th:if="${mart} == 'lottemart'">
+                    <div class="hero__item set-bg" style="background-size: contain; height: 350px;" data-setbg="https://scontent-ssn1-1.xx.fbcdn.net/v/t1.0-9/87172689_2214025955367201_6000044431766454272_n.png?_nc_cat=105&_nc_sid=6e5ad9&_nc_ohc=LUvw4r5AtYUAX__95HW&_nc_ht=scontent-ssn1-1.xx&oh=2993a1673dbf5c5e36b4b7df2a4a211b&oe=5F750BE8">
                     </div>
-                    <div th:if="${mart} == 'cu'">
-                        <div class="hero__item set-bg" style="background-size: contain" data-setbg="https://media-exp1.licdn.com/dms/image/C561BAQEmzUOXdMoJMQ/company-background_10000/0?e=2159024400&v=beta&t=Cvhy4yVJg02ThYLgXAt_MsveI7ZqMho6G3Jrh9RvThA">
-                        </div>
+                </div>
+                <div th:if="${mart} == 'cu'">
+                    <div class="hero__item set-bg" style="background-size: contain" data-setbg="https://media-exp1.licdn.com/dms/image/C561BAQEmzUOXdMoJMQ/company-background_10000/0?e=2159024400&v=beta&t=Cvhy4yVJg02ThYLgXAt_MsveI7ZqMho6G3Jrh9RvThA">
                     </div>
-                    <div th:if="${mart} == 'gs25'">
-                        <div class="hero__item set-bg" style="background-size: contain; height: 350px;" data-setbg="https://scontent-ssn1-1.xx.fbcdn.net/v/t1.0-9/118254676_3366196343438310_4367492279228325768_n.jpg?_nc_cat=106&_nc_sid=6e5ad9&_nc_ohc=e8cbRUPK9RoAX8-0Q3Q&_nc_ht=scontent-ssn1-1.xx&oh=2aabd1044ef0a274c21a42e07f7961cb&oe=5F76AA39">
-                        </div>
+                </div>
+                <div th:if="${mart} == 'gs25'">
+                    <div class="hero__item set-bg" style="background-size: contain; height: 350px;" data-setbg="https://scontent-ssn1-1.xx.fbcdn.net/v/t1.0-9/118254676_3366196343438310_4367492279228325768_n.jpg?_nc_cat=106&_nc_sid=6e5ad9&_nc_ohc=e8cbRUPK9RoAX8-0Q3Q&_nc_ht=scontent-ssn1-1.xx&oh=2aabd1044ef0a274c21a42e07f7961cb&oe=5F76AA39">
                     </div>
-                    <div th:if="${mart} == 'ministop'">
-                        <div class="hero__item set-bg" style="background-color: #fabd02; background-size: contain;" data-setbg="https://zin.co.kr/portfolio/images/project/portfolio25_top.png">
-                        </div>
+                </div>
+                <div th:if="${mart} == 'ministop'">
+                    <div class="hero__item set-bg" style="background-color: #fabd02; background-size: contain;" data-setbg="https://zin.co.kr/portfolio/images/project/portfolio25_top.png">
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    <!-- Hero Section End -->
+    </div>
+</section>
+<!-- Hero Section End -->
 
-    <!-- Categories Section Begin -->
+<!-- Categories Section Begin -->
 <section class="categories">
     <th:block th:include="clientWeb/categoryMart.html"></th:block>
 </section>
-    <!-- Categories Section End -->
+<!-- Categories Section End -->
 
-                <!-- 제품 데이터 시작-->
-                <div class="row">
-                    <div class="col-lg-4 col-md-6 col-sm-6" th:each="product : ${productList}">
-                        <div class="product__item">
-                            <div class="product__item__pic set-bg">
-                                <a href="#" data-toggle="modal" data-target="#myModal" class="modaldata"
-                                   th:data-id="${product.productId}"
-                                   th:data-name="${product.productName}"
-                                   th:data-price="${product.productPrice}"
-                                   th:data-image="${product.image}"
-                                   th:data-content="${product.productContent}"
-                                >
-                                    <img th:src="@{${product.image}}"></a>
-                                <ul class="product__item__pic__hover">
-                                    <li class="putInWishList"
-                                        th:data-id="${product.productId}"
-                                        th:data-name="${product.productName}"
-                                        th:data-price="${product.productPrice}"
-                                        th:data-image="${product.image}"
-                                        th:data-content="${product.productContent}"
-                                        th:data-store="${mart}"
-                                    ><a href="#"><i class="fa fa-heart"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                    <li th:onclick="|javascript:putInCart('${product.productId}')|">
-                                        <a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                </ul>
-                            </div>
-                            <div class="product__item__text">
-                                <h6><span th:text="${product.productName}" data-toggle="modal" data-target="#myModal"/></h6>
-                                <h5> <span th:text="${product.productPrice}"/>원</h5>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <!--모달-->
-                    <th:block th:include="clientWeb/productModal.html" ></th:block>
-
-                    <!-- 제품 데이터 끝-->
+<section class="featured spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h2>Featured Product</h2>
                 </div>
-
-                <!--페이징-->
-                <div th:if="${category} == 'ALL'">
-                    <div th:style="${productList.isEmpty() ? 'display:none':'display:flex'}"
-                         class="product__pagination pagination justify-content-center">
-                        <div><a th:href="@{'/clientMart/'+${mart}+'?page=0'}"><i class="fa fa-long-arrow-left"></i></a></div>
-                        <div th:each="i : ${#numbers.sequence(startPage, endPage)}"><a th:href="@{'/clientMart/'+${mart}+'?page='+${i}}"><i th:text="${i}+1" ></i></a></div>
-                        <div><a th:href="@{'/clientMart/'+${mart}+'?page='+${endEndPage}}"><i class="fa fa-long-arrow-right" ></i></a></div>
-                    </div>
-                </div>
-                <div th:unless="${category} == 'ALL'">
-                    <div th:style="${productList.isEmpty() ? 'display:none':'display:flex'}"
-                         class="product__pagination pagination justify-content-center">
-                        <div><a th:href="@{'/clientMart/'+${mart}+'/'+${category}+'?page=0'}"><i class="fa fa-long-arrow-left"></i></a></div>
-                        <div th:each="i : ${#numbers.sequence(startPage, endPage)}"><a th:href="@{'/clientMart/'+${mart}+'/'+${category}+'?page='+${i}}"><i th:text="${i}+1" ></i></a></div>
-                        <div><a th:href="@{'/clientMart/'+${mart}+'/'+${category}+'?page='+${endEndPage}}"><i class="fa fa-long-arrow-right" ></i></a></div>
-                    </div>
-    <section class="featured spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section-title">
-                        <h2>Featured Product</h2>
-                    </div>
-                    <!--<div class="featured__controls">
-                        <ul>
-                            <li class="active" data-filter="*">All</li>
-                            <li data-filter=".oranges">Oranges</li>
-                            <li data-filter=".fresh-meat">Fresh Meat</li>
-                            <li data-filter=".vegetables">Vegetables</li>
-                            <li data-filter=".fastfood">Fastfood</li>
+                <!--<div class="featured__controls">
+                    <ul>
+                        <li class="active" data-filter="*">All</li>
+                        <li data-filter=".oranges">Oranges</li>
+                        <li data-filter=".fresh-meat">Fresh Meat</li>
+                        <li data-filter=".vegetables">Vegetables</li>
+                        <li data-filter=".fastfood">Fastfood</li>
+                    </ul>
+                </div>-->
+            </div>
+        </div>
+        <div class="row featured__filter">
+            <!--/*@thymesVar id="productList" type="java.util.List"*/-->
+            <div class="col-lg-3 col-md-6 col-sm-6" th:each="product : ${productList}">
+                <div class="product__item">
+                    <div class="product__item__pic set-bg">
+                        <a href="#" data-toggle="modal" data-target="#myModal" class="modaldata"
+                           th:data-id="${product.productId}"
+                           th:data-name="${product.productName}"
+                           th:data-price="${product.productPrice}"
+                           th:data-image="${product.image}"
+                           th:data-content="${product.productContent}"
+                        >
+                            <img th:src="@{${product.image}}" th:width="262.5px"></a>
+                        <ul class="product__item__pic__hover">
+                            <li class="putInWishList"
+                                th:data-id="${product.productId}"
+                                th:data-name="${product.productName}"
+                                th:data-price="${product.productPrice}"
+                                th:data-image="${product.image}"
+                                th:data-content="${product.productContent}"
+                                th:data-store="${mart}"
+                            ><a href="#"><i class="fa fa-heart"></i>/a></li>
+                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                            <li th:onclick="|javascript:putInCart('${product.productId}')|">
+                                <a href="#"><i class="fa fa-shopping-cart"></i></a></li>
                         </ul>
-                    </div>-->
-                </div>
-            </div>
-            <div class="row featured__filter">
-                <!--/*@thymesVar id="productList" type="java.util.List"*/-->
-                <div class="col-lg-3 col-md-6 col-sm-6" th:each="product : ${productList}">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg">
-                            <a href="#" data-toggle="modal" data-target="#myModal" class="modaldata"
-                               th:data-id="${product.productId}"
-                               th:data-name="${product.productName}"
-                               th:data-price="${product.productPrice}"
-                               th:data-image="${product.image}"
-                               th:data-content="${product.productContent}"
-                            >
-                                <img th:src="@{${product.image}}" th:width="262.5px"></a>
-                            <ul class="product__item__pic__hover">
-                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                <li th:onclick="|javascript:putInCart('${product.productId}')|">
-                                    <a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="product__item__text">
-                            <h6><span th:text="${product.productName}" data-toggle="modal" data-target="#myModal"/></h6>
-                            <h5> <span th:text="${product.productPrice}"/>원</h5>
-                        </div>
-                        <th:block th:include="clientWeb/productModal.html" ></th:block>
                     </div>
-                </div>
-            </div>
-            <!--페이징-->
-            <!--/*@thymesVar id="category" type="java.lang.String"*/-->
-            <div th:if="${category} == 'ALL'">
-                <div th:style="${productList.isEmpty() ? 'display:none':'display:flex'}"
-                     class="product__pagination pagination justify-content-center">
-                    <div><a th:href="@{'/clientMart/'+${mart}+'?page=0'}"><i class="fa fa-long-arrow-left"></i></a></div>
-                    <div th:each="i : ${#numbers.sequence(startPage, endPage)}"><a th:href="@{'/clientMart/'+${mart}+'?page='+${i}}"><i th:text="${i}+1" ></i></a></div>
-                    <div><a th:href="@{'/clientMart/'+${mart}+'?page='+${endEndPage}}"><i class="fa fa-long-arrow-right" ></i></a></div>
-                </div>
-            </div>
-            <div th:unless="${category} == 'ALL'">
-                <div th:style="${productList.isEmpty() ? 'display:none':'display:flex'}"
-                     class="product__pagination pagination justify-content-center">
-                    <div><a th:href="@{'/clientMart/'+${mart}+'/'+${category}+'?page=0'}"><i class="fa fa-long-arrow-left"></i></a></div>
-                    <div th:each="i : ${#numbers.sequence(startPage, endPage)}"><a th:href="@{'/clientMart/'+${mart}+'/'+${category}+'?page='+${i}}"><i th:text="${i}+1" ></i></a></div>
-                    <div><a th:href="@{'/clientMart/'+${mart}+'/'+${category}+'?page='+${endEndPage}}"><i class="fa fa-long-arrow-right" ></i></a></div>
+                    <div class="product__item__text">
+                        <h6><span th:text="${product.productName}" data-toggle="modal" data-target="#myModal"/></h6>
+                        <h5> <span th:text="${product.productPrice}"/>원</h5>
+                    </div>
+                    <th:block th:include="clientWeb/productModal.html" ></th:block>
                 </div>
             </div>
         </div>
-    </section>
-    <!-- Featured Section End -->
+        <!--페이징-->
+        <!--/*@thymesVar id="category" type="java.lang.String"*/-->
+        <div th:if="${category} == 'ALL'">
+            <div th:style="${productList.isEmpty() ? 'display:none':'display:flex'}"
+                 class="product__pagination pagination justify-content-center">
+                <div><a th:href="@{'/clientMart/'+${mart}+'?page=0'}"><i class="fa fa-long-arrow-left"></i></a></div>
+                <div th:each="i : ${#numbers.sequence(startPage, endPage)}"><a th:href="@{'/clientMart/'+${mart}+'?page='+${i}}"><i th:text="${i}+1" ></i></a></div>
+                <div><a th:href="@{'/clientMart/'+${mart}+'?page='+${endEndPage}}"><i class="fa fa-long-arrow-right" ></i></a></div>
+            </div>
+        </div>
+        <div th:unless="${category} == 'ALL'">
+            <div th:style="${productList.isEmpty() ? 'display:none':'display:flex'}"
+                 class="product__pagination pagination justify-content-center">
+                <div><a th:href="@{'/clientMart/'+${mart}+'/'+${category}+'?page=0'}"><i class="fa fa-long-arrow-left"></i></a></div>
+                <div th:each="i : ${#numbers.sequence(startPage, endPage)}"><a th:href="@{'/clientMart/'+${mart}+'/'+${category}+'?page='+${i}}"><i th:text="${i}+1" ></i></a></div>
+                <div><a th:href="@{'/clientMart/'+${mart}+'/'+${category}+'?page='+${endEndPage}}"><i class="fa fa-long-arrow-right" ></i></a></div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Featured Section End -->
 <!--</section>-->
 <!-- Product Section End -->
 
@@ -215,7 +165,26 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script type="text/javascript">
 
+    function putInCart(productId) {
+        alert(productId);
+        Swal.fire({
+            icon: 'success',
+            title: '상품을 장바구니에 보관합니다',
+            showConfirmButton: false,
+            timer: 1500
+        })
 
+        $.ajax({
+            url: "/clientMart/putInCart",
+            data: {productId:productId},
+            type: "POST"
+        }).done(function(json) {
+        }).error(function(xhr, status, errorThrown) {
+            alert(xhr.status);
+            alert(errorThrown);
+        });
+
+    }
 
 
     $(document).ready(function () {
@@ -247,29 +216,9 @@
                 alert(xhr.status);
                 alert(errorThrown);
             });
-    function putInCart(productId) {
-        alert(productId);
-        Swal.fire({
-            icon: 'success',
-            title: '상품을 장바구니에 보관합니다',
-            showConfirmButton: false,
-            timer: 1500
-        })
 
-        $.ajax({
-            url: "/clientMart/putInCart",
-            data: {productId:productId},
-            type: "POST"
-        }).done(function(json) {
-        }).error(function(xhr, status, errorThrown) {
-            alert(xhr.status);
-            alert(errorThrown);
         });
 
-    }
-
-
-    $(document).ready(function () {
         $('.modaldata').click(function () {
             //$.ajax()
             $('.modalPId').text($(this).data('id'));
@@ -299,33 +248,10 @@
                 alert(xhr.status);
                 alert(errorThrown);
             });
+
         });
 
     });
-
-
-
-    function putInCart(productId) {
-        Swal.fire({
-            icon: 'success',
-            title: '상품을 장바구니에 보관합니다',
-            showConfirmButton: false,
-            timer: 1500
-        })
-
-        $.ajax({
-            url: "/clientMart/putInCart",
-            data: {
-                productId:productId
-            },
-            type: "POST"
-        }).done(function(json) {
-        }).error(function(xhr, status, errorThrown) {
-            alert(xhr.status);
-            alert(errorThrown);
-        });
-
-    }
 
 </script>
 
