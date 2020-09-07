@@ -8,6 +8,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -20,5 +21,5 @@ public abstract class TimeEntity {
     private LocalDateTime createdDate;
 
     @LastModifiedDate //조회한 Entity를 변경할 때 시간이 자동 저장
-    private LocalDateTime modifiedDate;
+    private LocalDate modifiedDate;
 }

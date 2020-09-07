@@ -4,17 +4,15 @@ package com.cartrapido.main.service;
 import com.cartrapido.main.config.auth.dto.SessionUser;
 import com.cartrapido.main.domain.entity.Member;
 import com.cartrapido.main.domain.repository.MemberRepository;
-import com.cartrapido.main.domain.Role;
 import com.cartrapido.main.exception.ValidCustomException;
+import com.cartrapido.main.web.dto.MemberListDTO;
 import com.cartrapido.main.web.dto.MemberRequestDTO;
 import com.cartrapido.main.web.dto.MemberUpdateRequestDTO;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,19 +20,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class MemberService implements UserDetailsService {
     private MemberRepository memberRepository;
     private HttpSession httpSession;
-
-    private HttpServletRequest httpServletRequest;
-
 
     @Transactional
     public String joinUser(MemberRequestDTO memberRequestDTO) {
@@ -63,6 +58,33 @@ public class MemberService implements UserDetailsService {
         //회원가입 성공시 바로 로그인 처리
         //authWithHttpServletRequest(httpServletRequest, memberRequestDTO.getEmail(), tempPwd);
         return "redirect:/clientMain";
+    }
+
+    /*@Transactional
+    public List<MemberListDTO> findMember(String user, String searchOption){
+        List<MemberListDTO> memberList = null;
+        if(searchOption.equals("emailSearch")){
+            memberList = memberRepository.findByEmailContaining(user).stream().map(MemberListDTO::new).collect(Collectors.toList());
+        }else{
+            memberList=  memberRepository.findByNameContaining(user).stream().map(MemberListDTO::new).collect(Collectors.toList());
+        }
+
+        System.out.println(memberList.size());
+
+        return memberList;
+    }*/
+
+    //페이징 처리 method
+    public Page<Member> getMemberList(Pageable pageable,String user, String searchOption){
+
+        Page<Member> memberList = null;
+        if(searchOption.equals("emailSearch")){
+            memberList = memberRepository.findByEmailContaining(user,pageable);
+        }else{
+            memberList=  memberRepository.findByNameContaining(user, pageable);
+        }
+
+        return memberList;
     }
 
     //아이디 중복확인 메서드
@@ -122,8 +144,6 @@ public class MemberService implements UserDetailsService {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String pwd = passwordEncoder.encode(requestDTO.getPassword());
 
-        System.out.println("바꿀 주소 ="+requestDTO.getAddress());
-        System.out.println("바꿀 이름 ="+requestDTO.getName());
 
 
         Member userEntity =  member.update(requestDTO.getName(), requestDTO.getAddress(), pwd);
@@ -136,29 +156,22 @@ public class MemberService implements UserDetailsService {
         memberRepository.delete(member);
     }
 
+    @Transactional
+    public void enableSet(String useremail, Boolean check){
+        Member member = memberRepository.findByEmail(useremail).orElseThrow(() -> new IllegalArgumentException("해당 아이디가 없습니다."));
+        member.enableSet(check);
+    }
+
 
 
 
     @Override
-    public UserDetails loadUserByUsername(String userEmail) throws UsernameNotFoundException {
+    public Member loadUserByUsername(String userEmail) throws UsernameNotFoundException {
         System.out.println("loadUserByUserName 진입");
-        Optional<Member> userEntityWrapper = memberRepository.findByEmail(userEmail);
-        Member userEntity = userEntityWrapper.get();
-
-        List<GrantedAuthority> authorities = new ArrayList<>();
+        Member userEntity = memberRepository.findByEmail(userEmail).orElseThrow(() -> new UsernameNotFoundException(userEmail));
         httpSession.setAttribute("user", new SessionUser(userEntity));
 
-        if (("admin@example.com").equals(userEmail)) {
-            authorities.add(new SimpleGrantedAuthority(Role.ADMIN.getKey()));
-        } else  if(userEntity.getRole() == Role.USER){
-            authorities.add(new SimpleGrantedAuthority(Role.USER.getKey()));
-        }else if(userEntity.getRole() ==Role.SHOPPER){
-            authorities.add(new SimpleGrantedAuthority(Role.SHOPPER.getKey()));
-        }
-
-        UserDetails details = new User(userEntity.getEmail(), userEntity.getPassword(), authorities);
-
-        return details;
+        return userEntity;
     }
 
 }

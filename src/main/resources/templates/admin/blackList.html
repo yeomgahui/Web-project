@@ -1,0 +1,54 @@
+<br>
+<h1 style="text-align: center">회원 신고 내역</h1>
+<br><br>
+<form>
+<table class="table table-striped" >
+    <thead>
+    <tr>
+        <th style=" width: 70px">신고 번호</th>
+        <th style="width: 200px">신고자</th>
+        <th style="width: 200px">신고당한 회원</th>
+        <th style="width: 400px">내용</th>
+        <th style="width: 200px">날짜</th>
+        <th style="width: 70px">신고 처리 버튼</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr th:each="blackList : ${blackList}">
+        <td th:text="${blackList.id}"></td>
+        <td th:text="${blackList.useremail}"></td>
+        <td th:text="${blackList.shopper}"></td>
+        <td th:text="${blackList.content}"></td>
+        <td th:text="${blackList.modifiedDate}"></td>
+        <td><input type="button"  class="cancleBtn btn btn-secondary" th:data-id="${blackList.id}" value="반려">
+            <input type="button" class="blackBtn btn btn-primary" data-toggle="modal" data-target="#checkModal" th:data-shopper="${blackList.shopper}" th:data-id="${blackList.id}" value="처리"></td>
+    </tr>
+    </tbody>
+
+</table>
+</form>
+<!--모달-->
+<div class="modal fade" id="checkModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel">회원 정지</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="shopper">
+                <input type="hidden" id="id">
+                해당 회원을 정지시키겠습니까?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="cofirmBtn" th:onclick="insertBlack();">정지시키기</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">취소하기</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+

@@ -20,7 +20,6 @@ public class MailController {
 
     @PostMapping("/mail")
     public @ResponseBody String execMail(@RequestParam(name="email") String email) {
-        System.out.println("execMail 진입");
         String tempPwd = memberService.verifyEmail(email);
         if(tempPwd != null){
             mailService.mailSend(email,tempPwd);

@@ -1,0 +1,100 @@
+package com.cartrapido.main.web;
+
+import com.cartrapido.main.domain.entity.Member;
+import com.cartrapido.main.memberControl.dto.BlackListResponseDTO;
+import com.cartrapido.main.memberControl.service.BlackListService;
+import com.cartrapido.main.service.MemberService;
+import com.cartrapido.main.web.dto.MemberListDTO;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@RequiredArgsConstructor
+@Controller
+public class AdminController {
+    private final BlackListService blackListService;
+    private final MemberService memberService;
+
+    //어드민 페이지 테스트
+    @GetMapping("/adminTest")
+    public String dispAdmin(Model model){
+        // /admin/blackList.html 붙이기
+        model.addAttribute("template","/admin/adminMain.html");
+        return "/admin/adminSidebar.html";
+    }
+    //회원관리
+    @GetMapping("/adminTest/blackList")
+    public String blackList(Model model){
+        List<BlackListResponseDTO> blackList = blackListService.findAllDesc();
+
+        model.addAttribute("blackList",blackList);
+
+        // /admin/blackList.html 붙이기
+        model.addAttribute("js","/js/admin/blackList.js");
+        model.addAttribute("template","/admin/blackList.html");
+        return "/admin/adminSidebar.html";
+    }
+    //블랙리스트 삭제
+    @PostMapping("/adminTest/deleteBlackList")
+    public @ResponseBody void deleteBlackList(@RequestParam(name="id") Long id){
+        blackListService.delete(id);
+    }
+
+    //회원 정지 시키기
+    @PostMapping("/adminTest/blackMember")
+    public @ResponseBody void blackMember(@RequestParam(name="id") Long id, @RequestParam(name="shopper") String shopper){
+        //회원 로그인 못하게 막기
+        memberService.enableSet(shopper,false);
+        //리스트에서 삭제
+        blackListService.delete(id);
+
+    }
+
+    //회원 검색 페이지
+    @GetMapping("/adminTest/findMemberPage")
+    public String findMemberPage(Model model){
+        model.addAttribute("js","/js/admin/findMemberPage.js");
+        model.addAttribute("template","/admin/findMemberPage.html");
+        return "/admin/adminSidebar.html";
+    }
+
+    //회원 검색 처리
+    /*@PostMapping("/adminTest/findMember")
+    public @ResponseBody ModelAndView findMember(@RequestParam(name="user") String user, @RequestParam(name="searchOption") String searchOption){
+
+        //회원 조회
+        List<MemberListDTO> searchMembers = memberService.findMember(user, searchOption);
+        System.out.println(searchMembers.size());
+        ModelAndView mv = new ModelAndView("jsonView");
+        mv.addObject("list",searchMembers);
+
+        return mv;
+    }*/
+
+    @PostMapping("/adminTest/findMember/{page}")
+    public @ResponseBody ModelAndView findMember(@PathVariable int page, @RequestParam(name="user") String user, @RequestParam(name="searchOption") String searchOption){
+
+        //회원 조회
+       Page<Member> memberList=  memberService.getMemberList(PageRequest.of(page-1,2),user,searchOption);
+
+       List<MemberListDTO> searchMembers = memberList.stream().map(MemberListDTO::new).collect(Collectors.toList());
+       ModelAndView mv = new ModelAndView("jsonView");
+        mv.addObject("list",searchMembers);
+        mv.addObject("pageNum",memberList.getTotalPages());
+
+        return mv;
+    }
+    @PostMapping("/adminTest/deblock")
+    public  @ResponseBody void deblock(@RequestParam(name="user") String user){
+        memberService.enableSet(user,true);
+
+    }
+
+}

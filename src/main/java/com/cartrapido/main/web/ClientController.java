@@ -1,5 +1,7 @@
 package com.cartrapido.main.web;
 
+import com.cartrapido.main.memberControl.dto.BlackListSaveDTO;
+import com.cartrapido.main.memberControl.service.BlackListService;
 import com.cartrapido.main.config.auth.dto.SessionUser;
 import com.cartrapido.main.domain.entity.OrderNum;
 import com.cartrapido.main.domain.entity.Product;
@@ -37,6 +39,13 @@ public class ClientController {
     @Autowired
     private OrderNumService orderNumService;
 
+    private BlackListService blackListService;
+
+/*    @GetMapping("/clientMain")
+    public String clientWeb() {
+
+        return "/clientWebBody/clientMain";
+    }*/
     @Autowired
     private OrderNumHistoryService orderNumHistoryService;
 
@@ -303,6 +312,12 @@ public class ClientController {
         if(wishItemService.checkWishList(wishItemDTO.getProductId(), user.getEmail())==true)
             wishItemService.saveWishItem(wishItemDTO);
 
+    }
+
+    //회원 신고하기
+    @PostMapping("/blackListSave")
+    public @ResponseBody void blackListSave(@RequestBody BlackListSaveDTO blackListSaveDTO){
+        blackListService.save(blackListSaveDTO);
     }
 
 

@@ -59,7 +59,7 @@ public class HomeplusCrawlingService {
             "Sauce&Can"
     };
 
-    @PostConstruct
+//    @PostConstruct
     public void getHomeplusDatas() {
 
         List<LocalDateTime> list = productRepository.martDate(store);
