@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
+@Controller
+@AllArgsConstructor
 public class PayController {
 
     @Autowired
