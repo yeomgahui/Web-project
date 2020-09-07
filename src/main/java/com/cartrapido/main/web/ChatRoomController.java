@@ -34,27 +34,6 @@ public class ChatRoomController {
     private final HttpServletRequest request;
 
 
-    //채팅방 생성
-    @PostMapping("/creatchatRoom")
-    public @ResponseBody String creatRoom(@RequestBody MemberRequestDTO orderDTO, Model model){
-        //주문서 가져온거 에서 shopper/client, 주문번호를 채팅방 이름으로 설정
-
-        //shopperId, clientId 임시값 넣어줌
-        String shopperId = "ykh4933@naver.com";
-        String clientId = "ymh1202@naver.com";
-        String roomName = "2345";
-        ChatRoomSaveRequestDTO requestDTO = ChatRoomSaveRequestDTO.builder()
-                                            .roomname(roomName)
-                                            .shopperId(shopperId)
-                                            .clientId(clientId).build();
-
-
-        //채팅방 생성
-        chatRoomService.save(requestDTO);
-
-        return "생성 완료";
-    }
-
     //채팅ROOM lIST화면
     @GetMapping("/shopperChatting")
     public String rooms(Model model,HttpSession session){
@@ -69,7 +48,6 @@ public class ChatRoomController {
 
     @GetMapping("/clientChatting")
     public String chatRoomUser(Model model,HttpSession session){
-        System.out.println("rooms User 입장");
         SessionUser user = (SessionUser) session.getAttribute("user");
         String email = user.getEmail();
 
@@ -99,10 +77,8 @@ public class ChatRoomController {
 
     @GetMapping("/findHistory")
     public @ResponseBody ModelAndView histories(Model model,@RequestParam String roomId){
-        System.out.println("room입장");
-        System.out.println(roomId);
+
         List<MessageListDTO> history = chatMessageService.findByRoomId(roomId);
-        System.out.println(history.size());
 
         ModelAndView mv = new ModelAndView("jsonView");
         mv.addObject("list",history);

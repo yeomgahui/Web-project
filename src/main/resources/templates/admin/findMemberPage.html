@@ -1,0 +1,38 @@
+<br>
+<h1 style="text-align: center">회원 조회</h1>
+<br>
+<form method="post" class="form-horizontal" style="text-align: center">
+    <div class="form-inline form-group" >
+        <div class="col-sm-10">
+            <span for="searchMember" class="col-sm-2">회원 검색:</span>
+            <input type="text" class="form-control" id="searchMember" name="searchMember">
+            <input type="button" style="display: inline" class="btn btn-success" id="searchBtn" value="검색">
+            <select class="custom-select" name="findUser" id="findUser">
+                <option value="emailSearch">이메일</option>
+                <option value="nameSearch">이름</option>
+            </select>
+        </div>
+    </div>
+</form>
+<div id="tableContainer " class="hidden">
+    <table class="table table-striped" style="width: 100%">
+        <thead>
+        <tr>
+            <th>Email</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Role</th>
+            <th>Enable</th>
+            <th>Setting</th>
+        </tr>
+        </thead>
+        <tbody id="userInfo">
+
+        </tbody>
+
+
+    </table>
+        <ul class="pagination justify-content-center" style="align-content: center">
+
+        </ul>
+</div>
