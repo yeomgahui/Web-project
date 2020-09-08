@@ -120,6 +120,12 @@ public class ClientController {
         if(cartService.checkCart(productId, userEmail)==true) cartService.saveCart(cartDTO);
     }
 
+    @PostMapping("/deleteWishItem")
+    @ResponseBody
+    public void deleteWishItem(@RequestParam Long wiSequence) {
+        wishItemService.deleteWishItem(wiSequence);
+    }
+
     @PostMapping("/deleteInCart")
     @ResponseBody
     public void deleteInCart(@RequestParam Long cartId) {
@@ -134,8 +140,9 @@ public class ClientController {
 
     @PostMapping("/finishOrder")
     @ResponseBody
-    public void finishOrder(@RequestParam Long orderNum) {
-        System.out.println("===============finishOrderfinishOrderfinishOrderfinishOrderfinishOrder=========");
+    public void finishOrder(@RequestParam Long orderNum, @RequestParam int score) {
+        System.out.println("===============finishOrder=========");
+        System.out.println(score);
         OrderNumDTO orderNumDTO = orderNumService.getOrderNum(orderNum);
         OrderNumHistoryDTO orderNumHistoryDTO = new OrderNumHistoryDTO(
                 orderNum, orderNum, orderNumDTO.getUserEmail(), orderNumDTO.getShopper(),

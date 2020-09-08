@@ -51,4 +51,9 @@ public class WishItemService {
             return true;
         } else return false;
     }
+
+    public void deleteWishItem(Long wiSequence) {
+        wishItemRepository.deleteById(wiSequence);
+    }
+
 }
