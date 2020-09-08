@@ -101,9 +101,7 @@
 <!--                                                            &nbsp;<span class="btn-outline-success" onclick="location.href='/clientChatting'">-->
 <!--                                                                채팅하러 가기</span>-->
                                                             &emsp;&emsp;
-                                                            <span class="btn-success"
-                                                                  th:onclick="|javascript:finishOrder('${orderNumList.orderNum}')|">
-                                                                거래 종료</span>
+
 
                                                             <div class="dropdown">
                                                                 <button onclick="myFunction()" class="dropbtn"
@@ -113,9 +111,13 @@
                                                                 </div>
                                                             </div>
 
+
                                                             <br>
-                                                            &nbsp;<a class="btn-outline-success" href='/chat/clientChatting'>
+                                                            &nbsp;<a class="btn btn-outline-success btn-sm" href='/chat/clientChatting'>
                                                                 채팅하러 가기</a>
+                                                            &nbsp;&nbsp;&nbsp;<span align="center" class='btn btn-success btn-sm'
+                                                                  th:onclick="|javascript:finishOrder('${orderNumList.orderNum}')|">
+                                                                거래 종료</span>
                                                         </span>
                                                         <span th:if="${orderNumList.shopper == null}">
                                                         아직 shopper와 매칭되지 않았습니다!
@@ -277,17 +279,74 @@
             cancelButtonText: '아직이요.'
         }).then((result) => {
             if (result.value) {
+                let wrap = document.createElement('div');
+                wrap.setAttribute('class', 'text-muted');
+                wrap.innerHTML =
+                    //sad
+                    '<button onclick="reply(\'sad\')" type="button" value="sad" class="btn feel">' +
+                    '<i class="fa fa-frown-o fa-3x"></i></button>' +
+                    //일반
+                    '<button onclick="reply(\'neutral\')" type="button" value="neutral" class="btn feel">' +
+                    '<i class="fa fa-meh-o fa-3x"></i></button>' +
+                    //기쁨
+                    '<button onclick="reply(\'happy\')" type="button" value="happy" class="btn feel">' +
+                    '<i class="fa fa-smile-o fa-3x"></i></button><hr>'
 
-                $.ajax({
-                    url: "/finishOrder",
-                    data: {orderNum: orderNum},
-                    type: "POST",
-                    success: function () {
-                        alert('거래 종료');
-                        location.href = '/myOrderList';
-
+                swal({
+                    title: "",
+                    text: "쇼퍼님의 서비스는 어떠셨나요?",
+                    icon: "info",
+                    className: '',
+                    closeOnClickOutside: false,
+                    content: {
+                        element: wrap
+                    },
+                    buttons: {
+                        confirm: {
+                            text: "제출하기",
+                            value: '',
+                            visible: true,
+                            className: "btn btn-default",
+                            closeModal: true,
+                        }
+                    },
+                }).then((value) => {
+                    let score;
+                    if (value === 'sad') {
+                        score=1;
+                        swal("다음엔 더 좋은 서비스를 제공할게요!", {
+                            icon: "success",
+                            buttons: false
+                        });
+                    } else if (value === 'neutral') {
+                        score=3;
+                        swal("더 노력하겠습니다!", {
+                            icon: "success",
+                            buttons: false
+                        });
+                    } else if (value === 'happy') {
+                        score=5;
+                        swal("앞으로도 많이 이용해주세요!", {
+                            icon: "success",
+                            buttons: false
+                        });
                     }
+
+                    $.ajax({
+                        url: "/finishOrder",
+                        data: {
+                            orderNum: orderNum,
+                            score : score
+                        },
+                        type: "POST",
+                        success: function () {
+                            location.href = '/myOrderList';
+
+                        }
+                    });
+
                 });
+
 
             }
         })
@@ -295,7 +354,61 @@
 
     };
 
+    function ask() {
+        let wrap = document.createElement('div');
+        wrap.setAttribute('class', 'text-muted');
+        wrap.innerHTML =
+            //sad
+            '<button onclick="reply(\'sad\')" type="button" value="sad" class="btn feel">' +
+            '<i class="fa fa-frown-o fa-3x"></i></button>' +
+            //일반
+            '<button onclick="reply(\'neutral\')" type="button" value="neutral" class="btn feel">' +
+            '<i class="fa fa-meh-o fa-3x"></i></button>' +
+            //기쁨
+            '<button onclick="reply(\'happy\')" type="button" value="happy" class="btn feel">' +
+            '<i class="fa fa-smile-o fa-3x"></i></button><hr>'
 
+        swal({
+            title: "",
+            text: "How do you like the new features?",
+            icon: "info",
+            className: '',
+            closeOnClickOutside: false,
+            content: {
+                element: wrap
+            },
+            buttons: {
+                confirm: {
+                    text: "Close",
+                    value: '',
+                    visible: true,
+                    className: "btn btn-default",
+                    closeModal: true,
+                }
+            },
+        }).then((value) => {
+            if (value === 'sad') {
+                swal("Sorry!", {
+                    icon: "error",
+                    buttons: false
+                });
+            } else if (value === 'neutral') {
+                swal("Okay!", {
+                    icon: "warning",
+                    buttons: false
+                });
+            } else if (value === 'happy') {
+                swal("Hooray!", {
+                    icon: "success",
+                    buttons: false
+                });
+            }
+        });
+    }
+
+    function reply(feel){
+        swal.setActionValue(feel);
+    }
 </script>
 </body>
 </html>
