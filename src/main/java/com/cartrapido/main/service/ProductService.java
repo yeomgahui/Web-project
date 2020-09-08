@@ -45,6 +45,11 @@ public class ProductService {
 
         return productDTOList;
     }
+    @Transactional
+    public Long getTotalNumProduct(){
+
+        return productRepository.count();
+    }
 
     @Transactional
     public List<ProductDTO> getStoreProductList(String store){

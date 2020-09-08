@@ -134,4 +134,9 @@ public class OrderNumService {
         orderNum1.setRequest(orderExtraInfoDTO.getRequest());
         orderNumRepository.save(orderNum1);
     }
+
+    public Long getTotalNumOrder(){
+        return orderNumRepository.count();
+    }
+
 }

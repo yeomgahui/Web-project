@@ -101,9 +101,6 @@
 <!--                                                            &nbsp;<span class="btn-outline-success" onclick="location.href='/clientChatting'">-->
 <!--                                                                채팅하러 가기</span>-->
                                                             &emsp;&emsp;
-                                                            <span class="btn-success"
-                                                                  th:onclick="|javascript:finishOrder('${orderNumList.orderNum}')|">
-                                                                거래 종료</span>
 
                                                             <div class="dropdown">
                                                                 <button onclick="myFunction()" class="dropbtn"
@@ -116,6 +113,9 @@
                                                             <br>
                                                             &nbsp;<a class="btn-outline-success" href='/chat/clientChatting'>
                                                                 채팅하러 가기</a>
+                                                            <a class="btn-success" style="cursor:pointer;"
+                                                                  th:onclick="|javascript:finishOrder('${orderNumList.orderNum}')|">
+                                                                거래 종료</a>
                                                         </span>
                                                         <span th:if="${orderNumList.shopper == null}">
                                                         아직 shopper와 매칭되지 않았습니다!

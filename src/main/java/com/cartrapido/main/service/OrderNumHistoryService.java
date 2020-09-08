@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,5 +92,15 @@ public class OrderNumHistoryService {
                 orderNum.getAgree(), orderNum.getRequest()
         );
         return orderNumDTO;
+    }
+    public Long getTotalNumHistory(){
+        return orderNumHistoryRepository.count();
+    }
+    //중계 수수료 계산
+    public String getTotalRevenue(){
+       Long revenue= orderNumHistoryRepository.selectTotals();
+       Long revenueBrut = Math.round((double)revenue*0.1);
+        DecimalFormat df = new DecimalFormat("#,###");
+        return df.format(revenueBrut);
     }
 }
