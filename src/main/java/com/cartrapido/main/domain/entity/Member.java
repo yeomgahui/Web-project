@@ -1,7 +1,6 @@
 package com.cartrapido.main.domain.entity;
 
 import com.cartrapido.main.domain.Role;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,8 +9,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -38,6 +35,8 @@ public class Member implements UserDetails {
         @Column(columnDefinition = "boolean default true")
         private Boolean enable;
 
+        private int point;
+
         @Enumerated(EnumType.STRING)
         @Column(nullable = false)
         private Role role;
@@ -49,6 +48,7 @@ public class Member implements UserDetails {
             this.address = address;
             this.password = password;
             this.enable = true;
+            this.point = 3000;
             this.role = role;
         }
 
@@ -64,7 +64,6 @@ public class Member implements UserDetails {
             return this;
         }
         public Member update(String name,String address, String pwd){
-            System.out.println("update들어옴");
             this.name = name;
             this.address = address;
             this.password = pwd;

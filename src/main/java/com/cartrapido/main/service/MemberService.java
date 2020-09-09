@@ -109,7 +109,7 @@ public class MemberService implements UserDetailsService {
             String tempPwd = sb.toString();
             System.out.println("임시 비밀번호 생성"+ tempPwd);
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            member.update(passwordEncoder.encode(tempPwd));
+            member.updatePwd(passwordEncoder.encode(tempPwd));
 
             return tempPwd;
         }
@@ -162,6 +162,13 @@ public class MemberService implements UserDetailsService {
         member.enableSet(check);
     }
 
+    @Transactional
+    public Long getTotalMember(){
+        return memberRepository.count();
+    }
+
+
+
 
 
 
@@ -173,5 +180,6 @@ public class MemberService implements UserDetailsService {
 
         return userEntity;
     }
+
 
 }

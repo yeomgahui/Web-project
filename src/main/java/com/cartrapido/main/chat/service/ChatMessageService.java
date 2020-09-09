@@ -1,6 +1,7 @@
 package com.cartrapido.main.chat.service;
 
 
+import com.cartrapido.main.chat.dao.ChatMessage;
 import com.cartrapido.main.chat.dao.ChatMessageRepository;
 import com.cartrapido.main.chat.dto.ChatMessageDTO;
 import com.cartrapido.main.chat.dto.ChatRoomResponseDTO;
@@ -30,6 +31,12 @@ public class ChatMessageService {
 
         return chatMessageRepository.findByRoomId(roomId).stream().map(MessageListDTO::new)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void deleteMessages(String roomId){
+
+        chatMessageRepository.deleteByRoomId(roomId);
     }
 
 

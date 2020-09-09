@@ -4,6 +4,9 @@ import com.cartrapido.main.domain.entity.Member;
 import com.cartrapido.main.memberControl.dto.BlackListResponseDTO;
 import com.cartrapido.main.memberControl.service.BlackListService;
 import com.cartrapido.main.service.MemberService;
+import com.cartrapido.main.service.OrderNumHistoryService;
+import com.cartrapido.main.service.OrderNumService;
+import com.cartrapido.main.service.ProductService;
 import com.cartrapido.main.web.dto.MemberListDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -21,6 +24,9 @@ import java.util.stream.Collectors;
 public class AdminController {
     private final BlackListService blackListService;
     private final MemberService memberService;
+    private final ProductService productService;
+    private final OrderNumHistoryService orderNumHistoryService;
+    private final OrderNumService orderNumService;
 
     //어드민 페이지 테스트
     @GetMapping("/adminTest")
@@ -56,6 +62,25 @@ public class AdminController {
         blackListService.delete(id);
 
     }
+    //차트
+    @GetMapping("/adminTest/dashboard")
+    public String dashboard(Model model){
+        //총 상품 갯수
+        model.addAttribute("productCount",productService.getTotalNumProduct());
+        Long numHistory = orderNumHistoryService.getTotalNumHistory();
+        Long numOrderRun = orderNumService.getTotalNumOrder();
+        //총 판매량
+        model.addAttribute("salesCount",numHistory+numOrderRun);
+        //총 수익
+        model.addAttribute("revenueSum",orderNumHistoryService.getTotalRevenue());
+        //총인원 수
+        model.addAttribute("totalMember",memberService.getTotalMember());
+
+        model.addAttribute("js","/js/admin/dashboard.js");
+        model.addAttribute("template","/admin/dashboard.html");
+        return "/admin/adminSidebar.html";
+    }
+
 
     //회원 검색 페이지
     @GetMapping("/adminTest/findMemberPage")
@@ -64,19 +89,6 @@ public class AdminController {
         model.addAttribute("template","/admin/findMemberPage.html");
         return "/admin/adminSidebar.html";
     }
-
-    //회원 검색 처리
-    /*@PostMapping("/adminTest/findMember")
-    public @ResponseBody ModelAndView findMember(@RequestParam(name="user") String user, @RequestParam(name="searchOption") String searchOption){
-
-        //회원 조회
-        List<MemberListDTO> searchMembers = memberService.findMember(user, searchOption);
-        System.out.println(searchMembers.size());
-        ModelAndView mv = new ModelAndView("jsonView");
-        mv.addObject("list",searchMembers);
-
-        return mv;
-    }*/
 
     @PostMapping("/adminTest/findMember/{page}")
     public @ResponseBody ModelAndView findMember(@PathVariable int page, @RequestParam(name="user") String user, @RequestParam(name="searchOption") String searchOption){

@@ -46,5 +46,13 @@ public class ChatRoomService {
         return chatRoomRepository.findByRoomId(roomId).stream().map(ChatRoomResponseDTO::new)
                 .collect(Collectors.toList());
     }
+    @Transactional
+    public String deleteChatRoom(Long roomName){
+        String roomName1 = Long.toString(roomName);
+        List<ChatRoom> chatRoom = chatRoomRepository.findByRoomName(roomName1);
+        chatRoomRepository.delete(chatRoom.get(0));
+        return chatRoom.get(0).getRoomId();
+
+    }
 
 }

@@ -1,5 +1,7 @@
 package com.cartrapido.main.web;
 
+import com.cartrapido.main.chat.service.ChatMessageService;
+import com.cartrapido.main.chat.service.ChatRoomService;
 import com.cartrapido.main.memberControl.dto.BlackListSaveDTO;
 import com.cartrapido.main.memberControl.service.BlackListService;
 import com.cartrapido.main.config.auth.dto.SessionUser;
@@ -40,6 +42,9 @@ public class ClientController {
     private OrderNumService orderNumService;
 
     private BlackListService blackListService;
+
+    private ChatRoomService chatRoomService;
+    private ChatMessageService chatMessageService;
 
 /*    @GetMapping("/clientMain")
     public String clientWeb() {
@@ -152,6 +157,10 @@ public class ClientController {
 
         orderNumHistoryService.saveOrderNum(orderNumHistoryDTO);
         orderNumService.deleteOrder(orderNum);
+        //채팅방 지우기 0908 추가 gahui
+        String roomId = chatRoomService.deleteChatRoom(orderNum);
+        chatMessageService.deleteMessages(roomId);
+
     }
 
     @PostMapping("/amountPlus")
@@ -318,7 +327,6 @@ public class ClientController {
         //위시리스트 중복체크
         if(wishItemService.checkWishList(wishItemDTO.getProductId(), user.getEmail())==true)
             wishItemService.saveWishItem(wishItemDTO);
-
     }
 
     //회원 신고하기
