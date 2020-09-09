@@ -1,12 +1,17 @@
 package com.cartrapido.main.web;
 
 import com.cartrapido.main.config.auth.dto.SessionUser;
+import com.cartrapido.main.domain.entity.OrderNumHistory;
 import com.cartrapido.main.service.*;
 import com.cartrapido.main.web.dto.OrderNumDTO;
 import com.cartrapido.main.web.dto.OrderNumHistoryDTO;
 import com.cartrapido.main.web.dto.WishItemDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,16 +36,27 @@ public class ClientListController {
     private WishItemService wishItemService;
 
     @GetMapping("/listHistory")
-    public String listHistory(Model model, HttpSession session) {
+    public String listHistory(Model model, HttpSession session,
+                              @PageableDefault(size=3, direction = Sort.Direction.ASC) Pageable pageable) {
         SessionUser user = (SessionUser) session.getAttribute("user");
         String userEmail = user.getEmail();
-        List<OrderNumHistoryDTO> orderNumHistoryDTOList = orderNumHistoryService.getOrderNumHistoryList();
+        Page<OrderNumHistory> orderNumHistories = orderNumHistoryService.getMyOrderNumListPage(userEmail,pageable);
 
-        if(orderNumHistoryDTOList.size()==0)
+        int startPage = Math.max(0, orderNumHistories.getPageable().getPageNumber()-2);
+        int endPage = Math.min(orderNumHistories.getPageable().getPageNumber()+2, orderNumHistories.getTotalPages()-1);
+        int endEndPage = orderNumHistories.getTotalPages();
+        System.out.println(endEndPage+"endEndPage-------------------------------------------");
+
+
+        if(orderNumHistories==null)
             return "/clientWebBody/clientList/noList";
-        else
-            model.addAttribute("orderNumList", orderNumHistoryDTOList);
-        return "/clientWebBody/clientList/listHistory";
+        else {
+            model.addAttribute("orderNumList", orderNumHistories);
+            model.addAttribute("startPage",startPage);
+            model.addAttribute("endPage",endPage);
+            model.addAttribute("endEndPage",endEndPage);
+            return "/clientWebBody/clientList/listHistory";
+        }
 
     }
 
