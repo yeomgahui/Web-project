@@ -30,6 +30,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     void deleteByStore(String store);
 
+    //Page<Member> findByEmailContaining(String user, Pageable pageable);
+
     /*Optional<Member> findByEmail(String email);*/
     /*@Query("SELECT p FROM member p ORDER BY p.id DESC")
     List<Member> findAllMember();*/

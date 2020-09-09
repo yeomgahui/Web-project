@@ -62,7 +62,9 @@ public class ClientController {
     @GetMapping("/clientMart/{mart}")
     public String mart(@PathVariable("mart") String mart, Model model,
                        @PageableDefault(size=16, sort = "productId", direction = Sort.Direction.ASC)Pageable pageable) {
+
         List<ProductDTO> productList = productService.getStoreProductList(mart, pageable);
+
         Page<Product> products = productService.pagingStoreProduct(mart, pageable);
         List<String> categoryList = productService.getCategoryList(mart);
 
