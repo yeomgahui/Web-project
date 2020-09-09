@@ -43,6 +43,8 @@ public class ClientController {
 
     private BlackListService blackListService;
 
+    private MemberService memberService;
+
     private ChatRoomService chatRoomService;
     private ChatMessageService chatMessageService;
 
@@ -147,9 +149,11 @@ public class ClientController {
 
     @PostMapping("/finishOrder")
     @ResponseBody
-    public void finishOrder(@RequestParam Long orderNum, @RequestParam int score) {
+    public void finishOrder(@RequestParam Long orderNum, @RequestParam int score, HttpSession session) {
         System.out.println("===============finishOrder=========");
-        System.out.println(score);
+        SessionUser user = (SessionUser) session.getAttribute("user");
+        String userEmail = user.getEmail();
+
         OrderNumDTO orderNumDTO = orderNumService.getOrderNum(orderNum);
         OrderNumHistoryDTO orderNumHistoryDTO = new OrderNumHistoryDTO(
                 orderNum, orderNum, orderNumDTO.getUserEmail(), orderNumDTO.getShopper(),
@@ -157,13 +161,19 @@ public class ClientController {
                 orderNumDTO.getAddress(), orderNumDTO.getDetailAddress(),
                 orderNumDTO.getAgree(), orderNumDTO.getRequest());
 
+
         orderNumHistoryService.saveOrderNum(orderNumHistoryDTO);
         orderNumService.deleteOrder(orderNum);
         //채팅방 지우기 0908 추가 gahui
         String roomId = chatRoomService.deleteChatRoom(orderNum);
         chatMessageService.deleteMessages(roomId);
-
-
+        memberService.updateScore(userEmail,score);
+        //결제액의 1퍼센트 포인트 적립
+        int savePoint = (orderNumDTO.getProductTot()+orderNumDTO.getDeliveryCost())/100;
+        memberService.updatePoint(userEmail,savePoint);
+        
+        user.setPoint(user.getPoint()+savePoint);
+        session.setAttribute("user",user);
 
     }
 

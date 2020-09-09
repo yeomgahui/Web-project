@@ -4,6 +4,7 @@ import com.cartrapido.main.domain.Role;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +17,7 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor
 @Entity
+@Setter
 public class Member implements UserDetails {
 
         @Id
@@ -36,6 +38,8 @@ public class Member implements UserDetails {
         private Boolean enable;
 
         private int point;
+
+        private int score;
 
         @Enumerated(EnumType.STRING)
         @Column(nullable = false)
@@ -73,6 +77,14 @@ public class Member implements UserDetails {
             this.password = pwd;
             return this;
         }
+        public Member updatePoint(int score){
+            this.score = score;
+            return this;
+        }
+        public Member updateScore(int point){
+            this.point = point;
+          return this;
+    }
         public Member enableSet(boolean enable){
             this.enable = enable;
             return this;
