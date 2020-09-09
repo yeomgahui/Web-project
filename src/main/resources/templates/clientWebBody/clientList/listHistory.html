@@ -76,45 +76,25 @@
 
                                                     </div>
                                                 </div>
-                                                <div class="widget-content-right">
-                                                    <!--상세주소를 입력했을때만 카카오페이 버튼이 뜨게한다.-->
-                                                    <span th:if="${orderNumList.detailAddress!=null}">
-                                                    <button id="kakaoPayBtn"
-                                                            th:onclick="|javascript:kakaoPay('${orderNumList.orderNum}','${orderNumList.deliveryCost}','${orderNumList.productTot}')|"
-                                                            class="border-0 btn-transition btn btn-outline-warning"
-                                                    ><i class="fa fa-credit-card"></i></button>
-                                                    </span>
-                                                    <button id="deleteOrder"
-                                                            th:onclick="|javascript:deleteOrder('${orderNumList.orderNum}')|"
-                                                            class="border-0 btn-transition btn btn-outline-danger"
-                                                            value="주문서 삭제하기">
-                                                    </button>
-                                                </div>
                                             </div>
                                         </li>
                                 <!--for each 여기까지 -->
 
                                 </ul>
 
+
                                 </div></div>
                         </perfect-scrollbar>
                     </div>
                 </div>
-
-
-            <!--for each 여기까지 -->
-
+            </div>
         </div>
     </div>
-    </perfect-scrollbar>
-    </div>
-
-    </div>
-
-    </div>
-    </div>
-    </div>
-    </div>
+    <div th:style="${orderNumList.isEmpty() ? 'display:none':'display:flex'}"
+         class="product__pagination pagination justify-content-center">
+        <div><a th:href="@{'/listHistory?page=1'}"><i class="fa fa-long-arrow-left"></i></a></div>
+        <div th:each="i : ${#numbers.sequence(startPage, endEndPage)}"><a th:href="@{'/listHistory?page='+${i+1}}"><i th:text="${i}+1" ></i></a></div>
+        <div><a th:href="@{'/listHistory?page='+${endEndPage}}"><i class="fa fa-long-arrow-right" ></i></a></div>
     </div>
 
 </section>
