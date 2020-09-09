@@ -302,7 +302,7 @@
         });
 
         payTot = parseInt(deliveryCost)+parseInt(productCost)
-        location.href="/payment/kakaoPay/"+orderNum+"/"+$('#totPay').text();
+        location.href="/payment/kakaoPay/"+orderNum+"/"+$('#totPay').text()+"/"+$("#pointAmount").val();
     };
 
     function cardPay(orderNum, deliveryCost, productCost ) {
@@ -326,7 +326,7 @@
         });
 
         payTot = parseInt(deliveryCost)+parseInt(productCost)
-        location.href="/payment/cardPay/"+orderNum+"/"+$('#totPay').text();
+        location.href="/payment/cardPay/"+orderNum+"/"+$('#totPay').text()+"/"+$("#pointAmount").val();
     };
 
     function deleteOrder(orderNum) {

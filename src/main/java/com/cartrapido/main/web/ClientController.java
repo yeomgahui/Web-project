@@ -167,7 +167,8 @@ public class ClientController {
         //채팅방 지우기 0908 추가 gahui
         String roomId = chatRoomService.deleteChatRoom(orderNum);
         chatMessageService.deleteMessages(roomId);
-        memberService.updateScore(userEmail,score);
+        //쇼퍼에게 점수주기
+        memberService.updateScore(orderNumDTO.getShopper(),score);
         //결제액의 1퍼센트 포인트 적립
         int savePoint = (orderNumDTO.getProductTot()+orderNumDTO.getDeliveryCost())/100;
         memberService.updatePoint(userEmail,savePoint);

@@ -195,4 +195,12 @@ public class MemberService implements UserDetailsService {
         member.setPoint(newPoint);
         memberRepository.save(member);
     }
+
+    public void usePoint(String email, int point) {
+        Member member = memberRepository.findByEmail(email).get();
+        int newPoint = member.getPoint()-point;
+        member.setPoint(newPoint);
+        memberRepository.save(member);
+
+    }
 }
