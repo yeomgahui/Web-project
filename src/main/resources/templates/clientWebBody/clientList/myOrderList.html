@@ -59,7 +59,7 @@
 
                 <!--            여기서부터 바디부분-->
                 <div>
-                   <h2>My Order List</h2>
+                    <h2>My Order List</h2>
                 </div>
                 <br>
 
@@ -94,12 +94,12 @@
                                                         <span th:if="${orderNumList.shopper != null}">
                                                         &emsp;<img src="img/matching.png" style="width:10%">
                                                         &emsp;&emsp;
-<!--                                                            <strong ><span-->
-<!--                                                                    style="font-size: 20px;"-->
-<!--                                                                    th:text="${orderNumList.shopper}"></span></strong>-->
-<!--                                                            님과 매칭되셨어요!<br>-->
-<!--                                                            &nbsp;<span class="btn-outline-success" onclick="location.href='/clientChatting'">-->
-<!--                                                                채팅하러 가기</span>-->
+                                                            <!--                                                            <strong ><span-->
+                                                            <!--                                                                    style="font-size: 20px;"-->
+                                                            <!--                                                                    th:text="${orderNumList.shopper}"></span></strong>-->
+                                                            <!--                                                            님과 매칭되셨어요!<br>-->
+                                                            <!--                                                            &nbsp;<span class="btn-outline-success" onclick="location.href='/clientChatting'">-->
+                                                            <!--                                                                채팅하러 가기</span>-->
                                                             &emsp;&emsp;
 
 
@@ -115,11 +115,8 @@
                                                             <br>
                                                             &nbsp;<a class="btn btn-outline-success btn-sm" href='/chat/clientChatting'>
                                                                 채팅하러 가기</a>
-                                                            <a class="btn-success" style="cursor:pointer;"
-                                                                  th:onclick="|javascript:finishOrder('${orderNumList.orderNum}')|">
-                                                                거래 종료</a>
                                                             &nbsp;&nbsp;&nbsp;<span align="center" class='btn btn-success btn-sm'
-                                                                  th:onclick="|javascript:finishOrder('${orderNumList.orderNum}')|">
+                                                                                    th:onclick="|javascript:finishOrder('${orderNumList.orderNum}')|">
                                                                 거래 종료</span>
                                                         </span>
                                                         <span th:if="${orderNumList.shopper == null}">
@@ -130,21 +127,21 @@
 
 
                                                     <div class="widget-content-right">
-<!--                                                    <span th:if="${orderNumList.shopper == null}">
-                                                        <button class="border-0 btn-transition btn btn-outline-success"><i
-                                                                class="fa fa-check"></i></button>
-                                                        <button class="border-0 btn-transition btn btn-outline-danger"><i
-                                                                class="fa fa-trash"></i></button>
-                                                    </span>-->
+                                                        <!--                                                    <span th:if="${orderNumList.shopper == null}">
+                                                                                                                <button class="border-0 btn-transition btn btn-outline-success"><i
+                                                                                                                        class="fa fa-check"></i></button>
+                                                                                                                <button class="border-0 btn-transition btn btn-outline-danger"><i
+                                                                                                                        class="fa fa-trash"></i></button>
+                                                                                                            </span>-->
                                                     </div>
                                                 </div>
 
                                             </div>
                                         </li>
                                     </nav>
-                                <!--for each 여기까지 -->
+                                    <!--for each 여기까지 -->
 
-                                </ul>
+                                    </ul>
 
                                 </div></div>
                         </perfect-scrollbar>
@@ -190,11 +187,11 @@
                 </div>
 
 
-            <!--for each 여기까지 -->
+                <!--for each 여기까지 -->
 
+            </div>
         </div>
-    </div>
-    </perfect-scrollbar>
+        </perfect-scrollbar>
     </div>
 
     </div>
@@ -357,7 +354,61 @@
 
     };
 
+    function ask() {
+        let wrap = document.createElement('div');
+        wrap.setAttribute('class', 'text-muted');
+        wrap.innerHTML =
+            //sad
+            '<button onclick="reply(\'sad\')" type="button" value="sad" class="btn feel">' +
+            '<i class="fa fa-frown-o fa-3x"></i></button>' +
+            //일반
+            '<button onclick="reply(\'neutral\')" type="button" value="neutral" class="btn feel">' +
+            '<i class="fa fa-meh-o fa-3x"></i></button>' +
+            //기쁨
+            '<button onclick="reply(\'happy\')" type="button" value="happy" class="btn feel">' +
+            '<i class="fa fa-smile-o fa-3x"></i></button><hr>'
 
+        swal({
+            title: "",
+            text: "How do you like the new features?",
+            icon: "info",
+            className: '',
+            closeOnClickOutside: false,
+            content: {
+                element: wrap
+            },
+            buttons: {
+                confirm: {
+                    text: "Close",
+                    value: '',
+                    visible: true,
+                    className: "btn btn-default",
+                    closeModal: true,
+                }
+            },
+        }).then((value) => {
+            if (value === 'sad') {
+                swal("Sorry!", {
+                    icon: "error",
+                    buttons: false
+                });
+            } else if (value === 'neutral') {
+                swal("Okay!", {
+                    icon: "warning",
+                    buttons: false
+                });
+            } else if (value === 'happy') {
+                swal("Hooray!", {
+                    icon: "success",
+                    buttons: false
+                });
+            }
+        });
+    }
+
+    function reply(feel){
+        swal.setActionValue(feel);
+    }
 </script>
 </body>
 </html>
