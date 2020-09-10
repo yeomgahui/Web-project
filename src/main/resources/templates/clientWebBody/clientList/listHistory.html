@@ -57,11 +57,12 @@
                                                                 <span id="orderNum"
                                                                       th:value="${orderNumList.oriOrderNum}"
                                                                       th:text="${orderNumList.oriOrderNum}"/>번 주문서
-                                                        <span th:text="${orderNumList.createdDate}"/>주문날짜
+
                                                     </a>
                                                     <div class="widget-subheading">
                                                         <br>
                                                         <div>
+                                                            주문일 : <span th:text="${orderNumList.createdDate}"/><br>
                                                             product cost - <span id="productTot"
                                                                       th:value="${orderNumList.productTot}"
                                                                       th:text="${orderNumList.productTot}"/>won
@@ -94,7 +95,7 @@
     <div th:style="${orderNumList.isEmpty() ? 'display:none':'display:flex'}"
          class="product__pagination pagination justify-content-center">
         <div><a th:href="@{'/listHistory?page=1'}"><i class="fa fa-long-arrow-left"></i></a></div>
-        <div th:each="i : ${#numbers.sequence(startPage, endEndPage)}"><a th:href="@{'/listHistory?page='+${i+1}}"><i th:text="${i}+1" ></i></a></div>
+        <div th:each="i : ${#numbers.sequence(startPage, endEndPage-1)}"><a th:href="@{'/listHistory?page='+${i+1}}"><i th:text="${i}+1" ></i></a></div>
         <div><a th:href="@{'/listHistory?page='+${endEndPage}}"><i class="fa fa-long-arrow-right" ></i></a></div>
     </div>
 
