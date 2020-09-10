@@ -167,6 +167,15 @@ public class MemberService implements UserDetailsService {
         return memberRepository.count();
     }
 
+    @Transactional
+    public Long getChaqueMember(){
+        long shopper = memberRepository.countShopper();
+        long user = memberRepository.countUser();
+        Double shopperPercent = (double) shopper/(shopper+user)*100;
+
+        return Math.round(shopperPercent);
+    }
+
 
 
 

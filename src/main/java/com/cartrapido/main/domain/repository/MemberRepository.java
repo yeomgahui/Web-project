@@ -17,4 +17,8 @@ public interface MemberRepository extends JpaRepository<Member,Long> {
     Page<Member> findByNameContaining(String user,Pageable pageable);
     Page<Member> findByEmailContaining(String user, Pageable pageable);
 
+    @Query(value="select count(role) from member where role like 'shopper' ",nativeQuery = true)
+    long countShopper();
+    @Query(value="select count(role) from member where role like 'user' ",nativeQuery = true)
+    long countUser();
 }
