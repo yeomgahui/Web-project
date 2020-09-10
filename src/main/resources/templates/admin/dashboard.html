@@ -49,7 +49,7 @@
 
     <!-- /. ROW  -->
     <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-7">
+        <!--<div class="col-xs-12 col-sm-12 col-md-7">
             <div class="cirStats">
                 <div class="row">
                     <div class="col-xs-12 col-sm-6 col-md-6">
@@ -82,17 +82,20 @@
                     </div>
                 </div>
             </div>
-        </div><!--/.row-->
+        </div>&lt;!&ndash;/.row&ndash;&gt;-->
+        <div class="col-md-5">
+            <div class="card">
+                <canvas id="lineChart"></canvas>
+            </div>
+
+        </div>
+
         <div class="col-xs-12 col-sm-12 col-md-5">
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="card">
-                        <div class="card-image donutpad">
-                            <div id="morris-donut-chart"><svg height="342" version="1.1" width="642" xmlns="http://www.w3.org/2000/svg" style="overflow: hidden; position: relative; left: -0.90625px;"><desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphaël 2.1.0</desc><defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs><path fill="none" stroke="#a6a6a6" d="M321,281.6666666666667A108.66666666666667,108.66666666666667,0,0,0,423.6094295288992,208.77358545349213" stroke-width="2" opacity="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></path><path fill="#a6a6a6" stroke="#ffffff" d="M321,284.6666666666667A111.66666666666667,111.66666666666667,0,0,0,426.44220519074,209.7611997758278L470.19285152361425,225.01435430967874A158,158,0,0,1,321,331Z" stroke-width="3" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><path fill="none" stroke="#414e63" d="M423.6094295288992,208.77358545349213A108.66666666666667,108.66666666666667,0,0,0,223.5199297679771,124.97833455611595" stroke-width="2" opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 1;"></path><path fill="#414e63" stroke="#ffffff" d="M426.44220519074,209.7611997758278A111.66666666666667,111.66666666666667,0,0,0,220.82876218488445,123.65258305613142L174.77989465196566,100.96750183417392A163,163,0,0,1,474.91414429334884,226.66037818023818Z" stroke-width="3" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><path fill="none" stroke="#e96562" d="M223.5199297679771,124.97833455611595A108.66666666666667,108.66666666666667,0,0,0,320.9658613603926,281.6666613041817" stroke-width="2" opacity="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></path><path fill="#e96562" stroke="#ffffff" d="M220.82876218488445,123.65258305613142A111.66666666666667,111.66666666666667,0,0,0,320.964918882612,284.6666611561376L320.9503628368898,330.9999922030126A158,158,0,0,1,179.26517395712008,103.17708766748147Z" stroke-width="3" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="321" y="163" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 800 15px Arial;" font-size="15px" font-weight="800" transform="matrix(2.4697,0,0,2.4697,-471.7727,-255.7273)" stroke-width="0.4049079754601227"><tspan dy="6" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Users</tspan></text><text x="321" y="183" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font: 14px Arial;" font-size="14px" transform="matrix(2.2639,0,0,2.2639,-405.8367,-221.1806)" stroke-width="0.44171779141104295"><tspan dy="5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">30</tspan></text></svg></div>
-                        </div>
-                        <div class="card-action">
-                            <b>Donut Chart Example</b>
-                        </div>
+                    <div class="card" style="width: 400px; height: 400px">
+                        <canvas  id="docutChart" style="width: 80px; height: 80px" th:data-shopper="${NumOfCS}"></canvas>
+
                     </div>
                 </div>
             </div>

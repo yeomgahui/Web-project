@@ -75,6 +75,8 @@ public class AdminController {
         model.addAttribute("revenueSum",orderNumHistoryService.getTotalRevenue());
         //총인원 수
         model.addAttribute("totalMember",memberService.getTotalMember());
+        //shopper와 client수
+        model.addAttribute("NumOfCS",memberService.getChaqueMember());
 
         model.addAttribute("js","/js/admin/dashboard.js");
         model.addAttribute("template","/admin/dashboard.html");
