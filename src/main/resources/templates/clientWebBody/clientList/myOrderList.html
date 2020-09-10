@@ -9,6 +9,16 @@
 
     <header th:replace="clientWeb/header :: headerFragment"></header>
     <style>
+        .fa-star{
+            color:#eebe4a;
+        }
+        .fa-star-o{
+            color:#eebe4a;
+        }
+        .fa-star-half-full{
+            color:#eebe4a;
+        }
+
         .dropbtn{
             background-color: #f9f9f9;
             font-size: 20px;
@@ -93,21 +103,15 @@
                                                     <div class="widget-subheading">
                                                         <span th:if="${orderNumList.shopper != null}">
                                                         &emsp;<img src="img/matching.png" style="width:10%">
-                                                        &emsp;&emsp;
-                                                            <!--                                                            <strong ><span-->
-                                                            <!--                                                                    style="font-size: 20px;"-->
-                                                            <!--                                                                    th:text="${orderNumList.shopper}"></span></strong>-->
-                                                            <!--                                                            님과 매칭되셨어요!<br>-->
-                                                            <!--                                                            &nbsp;<span class="btn-outline-success" onclick="location.href='/clientChatting'">-->
-                                                            <!--                                                                채팅하러 가기</span>-->
-                                                            &emsp;&emsp;
-
 
                                                             <div class="dropdown">
-                                                                <button onclick="myFunction()" class="dropbtn"
-                                                                        th:text="${orderNumList.shopper}"></button>님과 매칭 되셨어요!
+                                                                <button id="accuse" onclick="myFunction()" class="dropbtn"
+                                                                        th:text="${orderNumList.shopper}"
+                                                                        th:data-useremail="${orderNumList.userEmail}" th:data-shopper="${orderNumList.shopper}"
+                                                                >
+                                                                </button>님과 매칭 되셨어요!
                                                                 <div id="myDropdown" class="dropdown-content">
-                                                                    <a id="accuse" data-target="#myModal" data-toggle="modal" href="#myModal" th:data-useremail="${orderNumList.userEmail}" th:data-shopper="${orderNumList.shopper}">신고하기</a>
+                                                                    <a  data-target="#myModal" data-toggle="modal" href="#myModal" th:data-useremail="${orderNumList.userEmail}" th:data-shopper="${orderNumList.shopper}">신고하기</a>
                                                                 </div>
                                                             </div>
 
@@ -230,7 +234,65 @@
     });
 
     function myFunction() {
-        document.getElementById("myDropdown").classList.toggle("show");
+        //shopper score 가져오기
+        let shopper = $('#shopper').val();
+        let stars ='';
+        $.ajax({
+                type: 'POST',
+                url: '/getShopperScore',
+                data: {shopper:shopper},
+                datatype: 'json',
+                success : function (data) {
+                  let intScore = parseInt(data);
+                  let doubleScore = parseFloat(data)-intScore;
+                  for(let i=0; i<intScore ;i++){
+                      stars += '<i class="fa fa-star fa-3x"></i>';
+                  }
+                  if(doubleScore>=0.5){
+                      stars +='<i class="fa fa-star-half-full fa-3x"></i>';
+                  }
+                    const { value: text } = Swal.fire({
+                        title: shopper,
+                        html: stars,
+                        input:'textarea',
+                        inputPlaceholder: '신고 내용을 입력하세요',
+                        showCancelButton: true,
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonColor: '#d33',
+                        confirmButtonText: '신고하기!',
+                        cancelButtonText: '확인',
+                        inputValidator: (value) => {
+                            //신고하기를 눌렀을때 일어나는 이벤트
+                            if (value) {
+                                var data ={
+                                    useremail: $('#useremail').val(),
+                                    shopper: $('#shopper').val(),
+                                    content: value
+                                }
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/blackListSave',
+                                    data: JSON.stringify(data),
+                                    contentType: 'application/json; charset=utf-8',
+                                }).done(function () {
+                                    alert('해당 회원을 신고하였습니다.');
+                                    $("#myModal").modal("hide");
+
+                                }).fail(function (error) {
+                                    alert(JSON.stringify(error));
+                                });
+                            }
+                        }
+                    })
+
+                },
+                error: function (error) {
+                 alert('data error');
+              }
+        })
+
+
+
     }
 
     // Close the dropdown menu if the user clicks outside of it
@@ -266,6 +328,7 @@
             alert(JSON.stringify(error));
         });
     });
+
     //주문 제거
     function finishOrder(orderNum) {
         Swal.fire({

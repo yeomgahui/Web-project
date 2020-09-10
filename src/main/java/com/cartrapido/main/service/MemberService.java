@@ -189,6 +189,7 @@ public class MemberService implements UserDetailsService {
         member.setScore(saveScore);
         member.setScoreCount(saveScorePoint);
         memberRepository.save(member);
+
     }
 
     public void updatePoint(String email, int savePoint) {
@@ -204,5 +205,13 @@ public class MemberService implements UserDetailsService {
         member.setPoint(newPoint);
         memberRepository.save(member);
 
+    }
+
+    public double getShopperScore(String shopper) {
+        Member member = memberRepository.findByEmail(shopper).get();
+        int score = member.getScore();
+        int scoreCount = member.getScoreCount();
+        double scoreAverage = score/scoreCount;
+        return scoreAverage;
     }
 }

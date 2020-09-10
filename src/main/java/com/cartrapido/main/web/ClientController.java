@@ -350,5 +350,20 @@ public class ClientController {
         blackListService.save(blackListSaveDTO);
     }
 
+    //회원 신고하기
+    @PostMapping("/getShopperScore")
+    @ResponseBody
+    public double getShopperScore(@RequestParam Object shopper){
+        double score = memberService.getShopperScore(shopper+"");
+        int intScore = (int)Math.floor(score);
+        double leftScore = score-intScore;
+        if(leftScore>=0.5){
+
+        }else{
+
+        }
+        return score;
+    }
+
 
 }
