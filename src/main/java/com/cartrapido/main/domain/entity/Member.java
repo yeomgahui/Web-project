@@ -40,6 +40,7 @@ public class Member implements UserDetails {
         private int point;
 
         private int score;
+        private int scoreCount;
 
         @Enumerated(EnumType.STRING)
         @Column(nullable = false)
@@ -77,8 +78,9 @@ public class Member implements UserDetails {
             this.password = pwd;
             return this;
         }
-        public Member updatePoint(int score){
+        public Member updatePoint(int score, int scoreCount){
             this.score = score;
+            this.scoreCount=scoreCount;
             return this;
         }
         public Member updateScore(int point){
