@@ -5,6 +5,8 @@ import com.cartrapido.main.domain.entity.OrderNumHistory;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.LocalDate;
+
 @Getter
 public class OrderNumHistoryDTO {
     private Long orderNum;
@@ -18,7 +20,27 @@ public class OrderNumHistoryDTO {
     private String detailAddress;
     private String request;
     private String agree;
+    private LocalDate createdDate;
 
+    @Builder
+    public OrderNumHistoryDTO(Long orderNum, Long oriOrderNum,
+                              String userEmail, String shopper,
+                              int deliveryCost, int productTot,
+                              String pay, String address, String detailAddress,
+                              String agree, String request, LocalDate createdDate) {
+        this.orderNum = orderNum;
+        this.oriOrderNum = oriOrderNum;
+        this.userEmail = userEmail;
+        this.shopper = shopper ;
+        this.deliveryCost = deliveryCost;
+        this.productTot = productTot;
+        this.pay = pay;
+        this.agree =agree;
+        this.request =request;
+        this.address = address;
+        this.detailAddress = detailAddress;
+        this.createdDate = createdDate;
+    }
 
     public OrderNumHistory toEntitiy(){
         OrderNumHistory orderNumHistory = OrderNumHistory.builder()
@@ -30,6 +52,9 @@ public class OrderNumHistoryDTO {
                 .pay(pay)
                 .address(address)
                 .detailAddress(detailAddress)
+                .request(request)
+                .createdDate(createdDate)
+                .agree(agree)
                 .build();
         return orderNumHistory;
     }
@@ -46,38 +71,11 @@ public class OrderNumHistoryDTO {
         this.pay = pay;
     }
 
-    public OrderNumHistoryDTO(String userEmail, String shopper,
-                              int deliveryCost, int productTot, String pay
-                    ){
-        this.orderNum = orderNum;
-        this.userEmail = userEmail;
-        this.shopper = shopper ;
-        this.deliveryCost = deliveryCost;
-        this.productTot = productTot;
-        this.pay = pay;
-    }
-
-    public OrderNumHistoryDTO(Long orderNum,Long oriOrderNum, String userEmail, String shopper,
-                              int deliveryCost, int productTot, String pay,
-                              String address , String detailAddress,
-                              String agree, String request){
-        this.oriOrderNum = oriOrderNum;
-        this.orderNum = orderNum;
-        this.userEmail = userEmail;
-        this.shopper = shopper ;
-        this.deliveryCost = deliveryCost;
-        this.productTot = productTot;
-        this.pay = pay;
-        this.agree =agree;
-        this.request =request;
-        this.address = address;
-        this.detailAddress = detailAddress;
-    }
 
     public OrderNumHistoryDTO(Long orderNum, String userEmail, String shopper,
                               int deliveryCost, int productTot, String pay,
                               String address , String detailAddress,
-                              String agree, String request){
+                              String agree, String request, LocalDate createdDate){
         this.orderNum = orderNum;
         this.userEmail = userEmail;
         this.shopper = shopper ;
@@ -88,25 +86,8 @@ public class OrderNumHistoryDTO {
         this.request =request;
         this.address = address;
         this.detailAddress = detailAddress;
+        this.createdDate = createdDate;
     }
-
-    @Builder
-    public OrderNumHistoryDTO(String userEmail, String shopper,
-                              int deliveryCost, int productTot,
-                              String address, String detailAddress){
-        this.userEmail = userEmail;
-        this.shopper = shopper ;
-        this.deliveryCost = deliveryCost;
-        this.productTot = productTot;
-    }
-
-    @Builder
-    public OrderNumHistoryDTO(Long orderNum, String userEmail, String shopper){
-        this.orderNum = orderNum;
-        this.userEmail = userEmail;
-        this.shopper = shopper ;
-    }
-
 
 
 

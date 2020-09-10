@@ -4,8 +4,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -48,11 +50,14 @@ public class OrderNumHistory {
     @Column
     private String agree;
 
+    @Column(updatable = false)
+    private LocalDate createdDate;
 
 
     @Builder
     public OrderNumHistory(Long oriOrderNum,String userEmail, String shopper ,
-                           int deliveryCost, int productTot , String pay, String address, String detailAddress, String agree){
+                           int deliveryCost, int productTot , String pay, String address, String detailAddress, String agree,
+                            LocalDate createdDate, String request){
         this.oriOrderNum = oriOrderNum;
         this.userEmail = userEmail;
         this.shopper = shopper ;
@@ -62,6 +67,8 @@ public class OrderNumHistory {
         this.address = address;
         this.detailAddress = detailAddress;
         this.agree = agree;
+        this.createdDate = createdDate;
+        this.request = request;
     }
 
     @Builder
@@ -70,6 +77,7 @@ public class OrderNumHistory {
         this.userEmail = userEmail;
         this.shopper = shopper ;
     }
+
 
 
 

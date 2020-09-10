@@ -53,10 +53,11 @@
                                                         font-size: 1.5em;
                                                         font-weight: bold;
                                                         "
-                                                       th:href="@{'/clientWeb/viewHistoryOrder/'+${orderNumList.orderNum}}">
+                                                       th:href="@{'/clientWeb/viewHistoryOrder/'+${orderNumList.oriOrderNum}}">
                                                                 <span id="orderNum"
-                                                                      th:value="${orderNumList.orderNum}"
-                                                                      th:text="${orderNumList.orderNum}"/>번 주문서
+                                                                      th:value="${orderNumList.oriOrderNum}"
+                                                                      th:text="${orderNumList.oriOrderNum}"/>번 주문서
+                                                        <span th:text="${orderNumList.createdDate}"/>주문날짜
                                                     </a>
                                                     <div class="widget-subheading">
                                                         <br>
