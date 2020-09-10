@@ -1,22 +1,25 @@
 package com.cartrapido.main.web;
 
 import com.cartrapido.main.config.auth.dto.SessionUser;
-import com.cartrapido.main.service.*;
-import com.cartrapido.main.web.dto.OrderNumDTO;
-import com.cartrapido.main.web.dto.OrderNumHistoryDTO;
+import com.cartrapido.main.domain.entity.QnA;
+import com.cartrapido.main.service.QnAService;
 import com.cartrapido.main.web.dto.QnADTO;
-import com.cartrapido.main.web.dto.WishItemDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @AllArgsConstructor
@@ -34,25 +37,47 @@ public class QnAController {
         qnaService.qnaWrite(qnaDTO);
     }
 
-/*    @PostMapping("/qnaList")
-    @ResponseBody
-    public ModelAndView qnaList() {
-
-        List<QnADTO> qnaList = qnaService.getQnAList();
-
-        for(QnADTO qnaDTO: qnaList){
-            System.out.println(qnaDTO.getTitle());
-        }
-
-        ModelAndView mav = new ModelAndView();
-        mav.addObject("qnaList", qnaList);
-        mav.setViewName("jsonView");
-        return mav;
-    }*/
-
     @GetMapping("/qnaList")
-    public String qnaList() {
+    public String qnaList(Model model,
+                          @PageableDefault(size=5, sort = "seq", direction = Sort.Direction.DESC)Pageable pageable) {
+
+        List<QnADTO> qnaList = qnaService.getQnAList(pageable);
+        Page<QnA> pageQnA = qnaService.pagingQnAList(pageable);
+
+        int startPage = Math.max(0, pageQnA.getPageable().getPageNumber()-2);
+        int endPage = Math.min(pageQnA.getPageable().getPageNumber()+2, pageQnA.getTotalPages()-1);
+        int endEndPage = pageQnA.getTotalPages()-1;
+
+        model.addAttribute("qnaList",qnaList);
+        model.addAttribute("startPage",startPage);
+        model.addAttribute("endPage",endPage);
+        model.addAttribute("endEndPage",endEndPage);
+
         return "/clientWebBody/qnaList";
     }
 
+    @GetMapping("/qnaMyList")
+    public String qnaList(Model model, HttpSession session,
+                          @PageableDefault(size=5, sort = "seq", direction = Sort.Direction.DESC)Pageable pageable) {
+
+        SessionUser user = (SessionUser) session.getAttribute("user");
+        String userEmail = user.getEmail();
+        System.out.println(userEmail);
+
+        List<QnADTO> qnaMyList = qnaService.getMyQnAList(userEmail, pageable);
+        Page<QnA> pageMyQnA = qnaService.pagingMyQnAList(userEmail, pageable);
+
+        int startPage = Math.max(0, pageMyQnA.getPageable().getPageNumber()-2);
+        int endPage = Math.min(pageMyQnA.getPageable().getPageNumber()+2, pageMyQnA.getTotalPages()-1);
+        int endEndPage = pageMyQnA.getTotalPages()-1;
+
+        model.addAttribute("qnaMyList",qnaMyList);
+        model.addAttribute("startPage",startPage);
+        model.addAttribute("endPage",endPage);
+        model.addAttribute("endEndPage",endEndPage);
+
+        return "/clientWebBody/qnaMyList";
+    }
+    @GetMapping("/qnaView")
+    public String qnaView() { return "/clientWebBody/qnaView";  }
 }
