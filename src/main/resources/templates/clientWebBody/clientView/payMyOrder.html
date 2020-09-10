@@ -363,12 +363,17 @@
     function tempBtn(orderNum) {
         $.ajax({
             url: "/updatePay",
-            data: {orderNum: orderNum},
+            data: {
+                orderNum: orderNum,
+                point: $("#pointAmount").val()
+            },
             type: "POST",
+            success: function () {
+                location.href = '/payComplete';
+            }
         });
-
-        location.href='/payComplete';
     }
+
 </script>
 
 
