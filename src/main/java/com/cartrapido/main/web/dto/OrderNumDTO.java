@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 
 import javax.persistence.Column;
+import java.time.LocalDate;
+
 @Getter
 public class OrderNumDTO {
     private Long orderNum;
@@ -18,7 +20,22 @@ public class OrderNumDTO {
     private String detailAddress;
     private String request;
     private String agree;
+    private LocalDate createdDate;
 
+    @Builder
+    public OrderNumDTO(Long orderNum, String userEmail, String shopper, int deliveryCost, int productTot, String pay, String address, String detailAddress, String agree, String request, LocalDate createdDate) {
+        this.orderNum = orderNum;
+        this.userEmail = userEmail;
+        this.shopper = shopper ;
+        this.deliveryCost = deliveryCost;
+        this.productTot = productTot;
+        this.pay = pay;
+        this.agree =agree;
+        this.request =request;
+        this.address = address;
+        this.detailAddress = detailAddress;
+        this.createdDate = createdDate;
+    }
 
 
     public OrderNum toEntitiy(){
@@ -37,13 +54,14 @@ public class OrderNumDTO {
 
 
     public OrderNumDTO(Long orderNum, String userEmail, String shopper,
-                       int deliveryCost, int productTot, String pay){
+                       int deliveryCost, int productTot, String pay, LocalDate createdDate){
         this.orderNum = orderNum;
         this.userEmail = userEmail;
         this.shopper = shopper ;
         this.deliveryCost = deliveryCost;
         this.productTot = productTot;
         this.pay = pay;
+        this.createdDate = createdDate;
     }
 
     public OrderNumDTO(String userEmail, String shopper,
@@ -55,39 +73,6 @@ public class OrderNumDTO {
         this.deliveryCost = deliveryCost;
         this.productTot = productTot;
         this.pay = pay;
-    }
-
-    public OrderNumDTO(Long orderNum, String userEmail, String shopper,
-                       int deliveryCost, int productTot, String pay,
-                       String address , String detailAddress,
-                       String agree, String request){
-        this.orderNum = orderNum;
-        this.userEmail = userEmail;
-        this.shopper = shopper ;
-        this.deliveryCost = deliveryCost;
-        this.productTot = productTot;
-        this.pay = pay;
-        this.agree =agree;
-        this.request =request;
-        this.address = address;
-        this.detailAddress = detailAddress;
-    }
-
-    @Builder
-    public OrderNumDTO(String userEmail, String shopper,
-                       int deliveryCost, int productTot,
-                       String address, String detailAddress){
-        this.userEmail = userEmail;
-        this.shopper = shopper ;
-        this.deliveryCost = deliveryCost;
-        this.productTot = productTot;
-    }
-
-    @Builder
-    public OrderNumDTO(Long orderNum, String userEmail, String shopper){
-        this.orderNum = orderNum;
-        this.userEmail = userEmail;
-        this.shopper = shopper ;
     }
 
 

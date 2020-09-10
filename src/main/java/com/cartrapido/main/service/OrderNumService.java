@@ -33,7 +33,7 @@ public class OrderNumService {
             OrderNumDTO orderNumDTO = new OrderNumDTO(
                     orderNum.getOrderNum(), orderNum.getUserEmail(), orderNum.getShopper(),
                     orderNum.getDeliveryCost(), orderNum.getProductTot(),
-                    orderNum.getPay()
+                    orderNum.getPay(), orderNum.getCreatedDate()
             );
 
             orderNumDTOList.add(orderNumDTO);
@@ -48,7 +48,7 @@ public class OrderNumService {
             OrderNumDTO orderNumDTO = new OrderNumDTO(
                     orderNum.getOrderNum(), orderNum.getUserEmail(), orderNum.getShopper(),
                     orderNum.getDeliveryCost(), orderNum.getProductTot(),
-                    orderNum.getPay()
+                    orderNum.getPay(), orderNum.getCreatedDate()
             );
             orderNumDTOList.add(orderNumDTO);
         }
@@ -62,7 +62,7 @@ public class OrderNumService {
             OrderNumDTO orderNumDTO = new OrderNumDTO(
                     orderNum.getOrderNum(), orderNum.getUserEmail(), orderNum.getShopper(),
                     orderNum.getDeliveryCost(), orderNum.getProductTot(),
-                    orderNum.getPay()
+                    orderNum.getPay(), orderNum.getCreatedDate()
             );
             orderNumDTOList.add(orderNumDTO);
         }
@@ -75,7 +75,7 @@ public class OrderNumService {
             OrderNumDTO orderNumDTO = new OrderNumDTO(
                     orderNum.getOrderNum(), orderNum.getUserEmail(), orderNum.getShopper(),
                     orderNum.getDeliveryCost(), orderNum.getProductTot(),
-                    orderNum.getPay()
+                    orderNum.getPay(), orderNum.getCreatedDate()
             );
             orderNumDTOList.add(orderNumDTO);
         }
@@ -98,7 +98,7 @@ public class OrderNumService {
             OrderNumDTO orderNumDTO = new OrderNumDTO(
                     orderNum.getOrderNum(), orderNum.getUserEmail(), orderNum.getShopper(),
                     orderNum.getDeliveryCost(), orderNum.getProductTot(),
-                    orderNum.getPay()
+                    orderNum.getPay(), orderNum.getCreatedDate()
             );
             orderNumDTOList.add(orderNumDTO);
         }
@@ -117,11 +117,11 @@ public class OrderNumService {
 
     public OrderNumDTO getOrderNum(Long orderNum1){
         OrderNum orderNum = orderNumRepository.findByOrderNum(orderNum1);
-        OrderNumDTO orderNumDTO = new OrderNumDTO(
+        OrderNumDTO orderNumDTO = new OrderNumDTO (
                 orderNum.getOrderNum(), orderNum.getUserEmail(), orderNum.getShopper(),
                 orderNum.getDeliveryCost(), orderNum.getProductTot(),
                 orderNum.getPay(), orderNum.getAddress(), orderNum.getDetailAddress(),
-                orderNum.getAgree(), orderNum.getRequest()
+                orderNum.getAgree(), orderNum.getRequest(),orderNum.getCreatedDate()
         );
         return orderNumDTO;
     }

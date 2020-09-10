@@ -155,11 +155,12 @@ public class ClientController {
         String userEmail = user.getEmail();
 
         OrderNumDTO orderNumDTO = orderNumService.getOrderNum(orderNum);
-        OrderNumHistoryDTO orderNumHistoryDTO = new OrderNumHistoryDTO(
+        OrderNumHistoryDTO orderNumHistoryDTO =
+                new OrderNumHistoryDTO(
                 orderNum, orderNum, orderNumDTO.getUserEmail(), orderNumDTO.getShopper(),
                 orderNumDTO.getDeliveryCost(), orderNumDTO.getProductTot(), orderNumDTO.getPay(),
                 orderNumDTO.getAddress(), orderNumDTO.getDetailAddress(),
-                orderNumDTO.getAgree(), orderNumDTO.getRequest());
+                orderNumDTO.getAgree(), orderNumDTO.getRequest(),orderNumDTO.getCreatedDate());
 
 
         orderNumHistoryService.saveOrderNum(orderNumHistoryDTO);

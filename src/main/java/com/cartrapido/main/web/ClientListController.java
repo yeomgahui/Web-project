@@ -37,7 +37,7 @@ public class ClientListController {
 
     @GetMapping("/listHistory")
     public String listHistory(Model model, HttpSession session,
-                              @PageableDefault(size=3, direction = Sort.Direction.ASC) Pageable pageable) {
+                              @PageableDefault(size=3, direction = Sort.Direction.DESC) Pageable pageable) {
         SessionUser user = (SessionUser) session.getAttribute("user");
         String userEmail = user.getEmail();
         Page<OrderNumHistory> orderNumHistories = orderNumHistoryService.getMyOrderNumListPage(userEmail,pageable);

@@ -48,6 +48,7 @@ public class OrderNumHistoryService {
     public Page<OrderNumHistory> getMyOrderNumListPage(String userEmail, Pageable pageable){
         int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1); // page는 index 처럼 0부터 시작
         pageable = PageRequest.of(page, 3);
+        System.out.println();
         return orderNumHistoryRepository.findAllByUserEmail(userEmail,pageable);
     }
 
@@ -90,7 +91,7 @@ public class OrderNumHistoryService {
                 orderNum.getOrderNum(), orderNum.getUserEmail(), orderNum.getShopper(),
                 orderNum.getDeliveryCost(), orderNum.getProductTot(),
                 orderNum.getPay(), orderNum.getAddress(), orderNum.getDetailAddress(),
-                orderNum.getAgree(), orderNum.getRequest()
+                orderNum.getAgree(), orderNum.getRequest(), orderNum.getCreatedDate()
         );
         return orderNumDTO;
     }
@@ -101,7 +102,7 @@ public class OrderNumHistoryService {
                 orderNum.getOrderNum(), orderNum.getUserEmail(), orderNum.getShopper(),
                 orderNum.getDeliveryCost(), orderNum.getProductTot(),
                 orderNum.getPay(), orderNum.getAddress(), orderNum.getDetailAddress(),
-                orderNum.getAgree(), orderNum.getRequest()
+                orderNum.getAgree(), orderNum.getRequest(), orderNum.getCreatedDate()
         );
         return orderNumDTO;
     }
