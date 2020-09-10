@@ -182,4 +182,25 @@ public class MemberService implements UserDetailsService {
     }
 
 
+    public void updateScore(String email, int score) {
+        Member member = memberRepository.findByEmail(email).get();
+        int saveScore = member.getScore()+score;
+        member.setScore(saveScore);
+        memberRepository.save(member);
+    }
+
+    public void updatePoint(String email, int savePoint) {
+        Member member = memberRepository.findByEmail(email).get();
+        int newPoint = member.getPoint()+savePoint;
+        member.setPoint(newPoint);
+        memberRepository.save(member);
+    }
+
+    public void usePoint(String email, int point) {
+        Member member = memberRepository.findByEmail(email).get();
+        int newPoint = member.getPoint()-point;
+        member.setPoint(newPoint);
+        memberRepository.save(member);
+
+    }
 }

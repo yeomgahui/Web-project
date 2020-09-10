@@ -187,7 +187,7 @@
                     <div class="col-lg-6 col-md-6">
                         <div class="header__top__right">
                             <div class="header__top__right__social">
-                                <a href="/clientMypage"><i class="fa fa-user"></i> My page</a>
+                                <span th:text="${session.user.point}"></span>points
                             </div>
 
                             <div class="header__top__right__auth">
@@ -220,6 +220,17 @@
                                     <li><a href="/clientMart/ministop">ministop</a></li>
                                 </ul>
                             </li>
+                            <li><a href="#">My Page</a>
+                                <ul class="header__menu__dropdown">
+                                    <li><a href="/clientMypage">계정 관리</a></li>
+                                    <li><a href="/shoppingCart">장바구니</a></li>
+                                    <li><a href="/myOrderList">주문 내역</a></li>
+                                    <li><a href="/toPayList">결제대기 주문서</a></li>
+                                    <li><a href="/listHistory">과거 주문서</a></li>
+                                    <li><a href="/chat/clientChatting">채팅</a></li>
+                                    <li><a href="/wishItems">위시리스트</a></li>
+                                </ul>
+                            </li>
                             <li><a href="#">Contact</a>
                                 <ul class="header__menu__dropdown">
                                     <li><a href="/qnaList">Q&A</a></li>
@@ -227,6 +238,7 @@
                                     <li><a href="/qnaMyList">나의 Q&A</a></li>
                                 </ul>
                             </li>
+
                         </ul>
                     </nav>
                 </div>

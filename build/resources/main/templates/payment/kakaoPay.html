@@ -13,6 +13,7 @@
     let payTot = [[${payTot}]];
     let userEmail = [[${userEmail}]];
     let userName = [[${userName}]];
+    let point = [[${point}]];
 
     $(function () {
         var IMP = window.IMP; // 생략가능
@@ -36,7 +37,10 @@
                 alert(msg);
                 $.ajax({
                     url: "/updatePay",
-                    data: {orderNum: orderNum},
+                    data: {
+                        orderNum: orderNum,
+                        point:point
+                    },
                     type: "POST",
                 });
 

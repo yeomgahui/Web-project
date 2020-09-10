@@ -76,6 +76,20 @@
                                         </div>
                                         <!--for each 여기까지 -->
 
+                                        <!--포인트 사용여부-->
+                                        <div class="card-body">
+                                        <div class="row mb-4">
+                                            <div align="center" class="col-xl-9">
+                                                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                                            <input type="checkbox" id="usePoint" name="usePoint"> 포인트 사용
+                                            <input type="text" class="correctable" id="pointAmount" value="0" disabled>
+                                            <input type="button" class="btn btn-outline-success" id="usePointBtn" size="2" value="적용">
+                                                <br>
+                                                &emsp;&emsp;&emsp;
+                                            <span id="myPoint" th:text="${session.user.point}"></span> points
+                                            </div>
+                                        </div>
+                                        </div>
 
                                         <!--주문 총 합계 테이블-->
                                         <div class="card-body">
@@ -96,7 +110,7 @@
                                                         <tr class="table-light" align="center">
                                                             <td><span th:text="${orderNumDTO.productTot}"></span>원</td>
                                                             <td><span th:text="${orderNumDTO.deliveryCost}"></span>원</td>
-                                                            <td><span th:text="${orderNumDTO.productTot}+${orderNumDTO.deliveryCost}"></span>원</td>
+                                                            <td><span id="totPay" th:text="${orderNumDTO.productTot}+${orderNumDTO.deliveryCost}"></span>원</td>
                                                         </tr>
                                                         </tbody>
 
@@ -151,6 +165,11 @@
                                                            th:onclick="|javascript:cardPay('${orderNumDTO.orderNum}','${orderNumDTO.deliveryCost}','${orderNumDTO.productTot}')|"
                                                            class="border-0 btn-transition btn btn-info"
                                                            value="신용카드 결제하기"/>
+                                                    <!--나중에 지울것-->
+                                                    <input align="center" type="button" style="width: 200px;"
+                                                           th:onclick="|javascript:tempBtn('${orderNumDTO.orderNum}')|"
+                                                           class="border-0 btn-transition btn btn-primary"
+                                                           value="임시 결제버튼"/>
                                             </div>
                                             </form>
 
@@ -195,12 +214,42 @@
 <footer th:replace="clientWeb/footer :: footerFragment"></footer>
 <script type="text/javascript" th:inline="javascript">
     var orderNumDTO = [[${orderNumDTO}]];
+    var payTot= orderNumDTO.productTot+orderNumDTO.deliveryCost;
+    var myPoint = parseInt($('#myPoint').text());
 
     $(document).ready(function () {
+
         let agree = orderNumDTO.agree;
         if(agree=='true'){
             $("input:checkbox[id='agree']").prop("checked", true);
         }
+
+    });
+
+    $('#usePoint').click(function () {
+        var usePoint=$('input:checkbox[id="usePoint"]').is(":checked");
+        if(usePoint){
+            $("#pointAmount").removeAttr("disabled");
+        }else{
+            $("#pointAmount").val("0");
+            $("#pointAmount").attr("disabled", true);
+            $('#totPay').text(payTot);
+        }
+    });
+
+    $('#usePointBtn').click(function () {
+        var pointAmount = parseInt($('#pointAmount').val());
+        var finalPay = payTot-pointAmount;
+        if(pointAmount>myPoint){
+            Swal.fire({
+                icon: 'warning',
+                title: '보유 포인트를 초과하여 입력할 수 없습니다!',
+                showConfirmButton: false,
+                timer: 1500
+            })
+            return;
+        }
+        $('#totPay').text(finalPay);
     });
 
     $('#saveBtn').click(function () {
@@ -253,7 +302,7 @@
         });
 
         payTot = parseInt(deliveryCost)+parseInt(productCost)
-        location.href="/payment/kakaoPay/"+orderNum+"/"+payTot;
+        location.href="/payment/kakaoPay/"+orderNum+"/"+$('#totPay').text()+"/"+$("#pointAmount").val();
     };
 
     function cardPay(orderNum, deliveryCost, productCost ) {
@@ -277,7 +326,7 @@
         });
 
         payTot = parseInt(deliveryCost)+parseInt(productCost)
-        location.href="/payment/cardPay/"+orderNum+"/"+payTot;
+        location.href="/payment/cardPay/"+orderNum+"/"+$('#totPay').text()+"/"+$("#pointAmount").val();
     };
 
     function deleteOrder(orderNum) {
@@ -309,6 +358,16 @@
                 });
             }
         })
+    }
+
+    function tempBtn(orderNum) {
+        $.ajax({
+            url: "/updatePay",
+            data: {orderNum: orderNum},
+            type: "POST",
+        });
+
+        location.href='/payComplete';
     }
 </script>
 
