@@ -185,7 +185,9 @@ public class MemberService implements UserDetailsService {
     public void updateScore(String email, int score) {
         Member member = memberRepository.findByEmail(email).get();
         int saveScore = member.getScore()+score;
+        int saveScorePoint = member.getScoreCount()+1;
         member.setScore(saveScore);
+        member.setScoreCount(saveScorePoint);
         memberRepository.save(member);
     }
 
