@@ -1,6 +1,5 @@
 package com.cartrapido.main.domain.repository;
 
-import com.cartrapido.main.domain.entity.OrderNum;
 import com.cartrapido.main.domain.entity.OrderNumHistory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,5 +18,8 @@ public interface OrderNumHistoryRepository extends JpaRepository<OrderNumHistory
     //중계 수수료 계산
     @Query(value="select sum(m.delivery_cost) FROM order_num_history m",nativeQuery = true)
     Long selectTotals();
+
+    @Query(value = "SELECT DATE_FORMAT(created_date, '%m') as month, COUNT(created_date) as salesMonth FROM order_num_history GROUP BY DATE_FORMAT(created_date, '%m');",nativeQuery = true)
+    List<Object[]> salesOfMonth();
 
 }
