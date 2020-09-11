@@ -67,17 +67,9 @@ public class LottemartCrawlingService {
 //
 //            }
 //        }else {
-//            crawling();
+            crawling();
 //        }
 
-
-//        for(ProductDTO productDTO: lottemartProductList){
-//            System.out.println(productDTO.getStore());
-//            System.out.println(productDTO.getProductId());
-//            System.out.println(productDTO.getCategory());
-//            System.out.println(productDTO.getProductName());
-//            System.out.println(productDTO.getImage());
-//        }
     }
 
     public void crawling() {
@@ -125,7 +117,6 @@ public class LottemartCrawlingService {
 //                            System.out.println(productcontent);
 
                     ProductDTO productDTO = ProductDTO.builder()
-                            //.productId((long)count++)
                             .itemId(itemId)
                             .productName(productName)
                             .productPrice(Integer.parseInt(productPrice))

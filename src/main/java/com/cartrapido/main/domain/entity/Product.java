@@ -19,7 +19,7 @@ public class Product extends TimeEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productId;
 
-    @Column(length = 100, nullable = false)
+    @Column(length = 100)
     private String itemId;
 
     @Column(length = 100, nullable = false)
