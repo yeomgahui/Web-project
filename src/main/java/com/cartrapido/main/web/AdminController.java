@@ -3,11 +3,9 @@ package com.cartrapido.main.web;
 import com.cartrapido.main.domain.entity.Member;
 import com.cartrapido.main.memberControl.dto.BlackListResponseDTO;
 import com.cartrapido.main.memberControl.service.BlackListService;
-import com.cartrapido.main.service.MemberService;
-import com.cartrapido.main.service.OrderNumHistoryService;
-import com.cartrapido.main.service.OrderNumService;
-import com.cartrapido.main.service.ProductService;
+import com.cartrapido.main.service.*;
 import com.cartrapido.main.web.dto.MemberListDTO;
+import com.cartrapido.main.web.dto.OrderSheetDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,7 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -27,6 +25,7 @@ public class AdminController {
     private final ProductService productService;
     private final OrderNumHistoryService orderNumHistoryService;
     private final OrderNumService orderNumService;
+    private final OrderSheetService orderSheetService;
 
     //어드민 페이지 테스트
     @GetMapping("/adminTest")
@@ -111,6 +110,40 @@ public class AdminController {
     public  @ResponseBody void deblock(@RequestParam(name="user") String user){
         memberService.enableSet(user,true);
 
+    }
+
+    @PostMapping("/adminTest/storeRank")
+    @ResponseBody
+    public ModelAndView storeRank(Model model){
+        System.out.println("============storeRank========================");
+        String[] storeList = {"emart","lottemart","homeplus","cu","gs25","ministop"};
+
+        List<OrderSheetDTO> orderSheetDTOS= new ArrayList<>();
+
+        ModelAndView mv = new ModelAndView("jsonView");
+
+        for(String data : storeList){
+            OrderSheetDTO orderSheetDTO = new OrderSheetDTO();
+            orderSheetDTO.setStore(data);
+            orderSheetDTO.setAmount(orderSheetService.storeRank(data));
+            orderSheetDTOS.add(orderSheetDTO);
+        }
+
+        Collections.sort(orderSheetDTOS, new Comparator<OrderSheetDTO>() {
+            @Override
+            public int compare(OrderSheetDTO s1, OrderSheetDTO s2) {
+                if (s1.getAmount() < s2.getAmount()) {
+                    return 1;
+                } else if (s1.getAmount() > s2.getAmount()) {
+                    return -1;
+                }
+                return 0;
+            }
+        });
+
+        model.addAttribute("list", orderSheetDTOS);
+        mv.addObject("list",orderSheetDTOS);
+        return mv;
     }
 
 }

@@ -44,7 +44,7 @@ public class CartService {
 
     @Transactional
     public List<CartDTO> getCartList(String userEmail) {
-        List<Cart> cartslist = cartRepository.findAllByUserEmailOrderByStore(userEmail);
+        List<Cart> cartslist = cartRepository.findAllByUserEmail(userEmail);
         List<CartDTO> cartDTOList = new ArrayList<>();
 
         for (Cart cart : cartslist) {

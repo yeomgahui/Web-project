@@ -39,5 +39,23 @@ $(document).ready(function () {
             responsive: true
         }
     });
+
+
+    //스토어별 판매량
+
+        $.ajax({
+            url: '/adminTest/storeRank',
+            type: 'POST',
+            dataType: 'json'
+        }).done(function (data) {
+            $.each(data.list, function (index, items) {
+                var html ='';
+                html+=(index+1)+'.&emsp;<span>'+items.store+'</span>&emsp;<span>'+items.amount+'</span><br>';
+                $('#storeRank').append(html);
+
+            });
+        })
+
+
 });
 

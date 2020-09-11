@@ -201,12 +201,15 @@
                 success : function (data) {
                   let intScore = parseInt(data);
                   let doubleScore = parseFloat(data)-intScore;
-                  for(let i=0; i<intScore ;i++){
-                      stars += '<i class="fa fa-star fa-3x"></i>';
-                  }
-                  if(doubleScore>=0.5){
-                      stars +='<i class="fa fa-star-half-full fa-3x"></i>';
-                  }
+
+                      for(let i=0; i<intScore ;i++){
+                          stars += '<i class="fa fa-star fa-3x"></i>';
+                      }
+                      if(doubleScore>=0.5){
+                          stars +='<i class="fa fa-star-half-full fa-3x"></i>';
+                      }
+
+
                     const { value: text } = Swal.fire({
                         title: shopper,
                         html: stars,

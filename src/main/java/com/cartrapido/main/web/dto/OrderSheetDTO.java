@@ -21,6 +21,10 @@ public class OrderSheetDTO {
     private String store;
     private String image;
 
+    public OrderSheetDTO() {
+
+    }
+
     public OrderSheet toEntitiy(){
         OrderSheet orderSheet = OrderSheet.builder()
                 .orderNum(orderNum)
