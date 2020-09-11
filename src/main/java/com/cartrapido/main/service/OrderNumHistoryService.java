@@ -126,7 +126,7 @@ public class OrderNumHistoryService {
         List<SalesOfMonthDTO> sales = new ArrayList<SalesOfMonthDTO>();
         for(Object[] obj : result){
             SalesOfMonthDTO smDTO = new SalesOfMonthDTO();
-            smDTO.setMonth((String) obj[0]);
+            smDTO.setMonth(obj[0]);
             smDTO.setSalesMonth(obj[1]);
             sales.add(smDTO);
         }

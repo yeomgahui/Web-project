@@ -19,7 +19,7 @@ public interface OrderNumHistoryRepository extends JpaRepository<OrderNumHistory
     @Query(value="select sum(m.delivery_cost) FROM order_num_history m",nativeQuery = true)
     Long selectTotals();
 
-    @Query(value = "SELECT DATE_FORMAT(created_date, '%m') as month, COUNT(created_date) as salesMonth FROM order_num_history GROUP BY DATE_FORMAT(created_date, '%m');",nativeQuery = true)
+    @Query(value = "SELECT DATE_FORMAT(created_date, '%m') as month, COUNT(created_date) as salesMonth FROM order_num_history GROUP BY DATE_FORMAT(created_date, '%m') Order by month asc",nativeQuery = true)
     List<Object[]> salesOfMonth();
 
 }

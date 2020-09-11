@@ -6,6 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SalesOfMonthDTO {
-    private String month;
+    private Object month;
     private Object salesMonth;
 }
