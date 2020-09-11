@@ -132,4 +132,9 @@ public class OrderNumHistoryService {
         }
         return sales;
     }
+
+    @Transactional
+    public Long getTodaySales(){
+        return orderNumHistoryRepository.getTodaySales();
+    }
 }

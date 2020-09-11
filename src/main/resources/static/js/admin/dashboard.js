@@ -68,10 +68,24 @@ $(document).ready(function () {
         }).done(function (data) {
             $.each(data.list, function (index, items) {
                 var html ='';
-                html+=(index+1)+'.&emsp;<span>'+items.store+'</span>&emsp;<span>'+items.amount+'</span><br>';
+                if(index ==0){
+                    html+='<li><span style="font-size: 28pt; font-weight: bold;">'+items.store+'</span><span style="font-size: 11pt; color:gray;">&emsp;'+items.amount+'</span></li>'
+
+                }else{
+                    html+='<li><span style="font-size: 20pt; font-weight: bold;">'+items.store+'</span><span style="font-size: 11pt; color:gray;">&emsp;'+items.amount+'</span></li>'
+
+                }
+
+/*
+                html+=(<span>'+items.store+'</span>&emsp;<span>'+items.amount+'</span><br>';
+*/
+
                 $('#storeRank').append(html);
 
             });
+            $('#storeRank').children().first().css('font-size',28);
+
+
         })
 
 
