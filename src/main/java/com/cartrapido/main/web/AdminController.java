@@ -1,21 +1,30 @@
 package com.cartrapido.main.web;
 
+import com.cartrapido.main.config.auth.dto.SessionUser;
 import com.cartrapido.main.domain.entity.Member;
+import com.cartrapido.main.domain.entity.QnA;
 import com.cartrapido.main.memberControl.dto.BlackListResponseDTO;
 import com.cartrapido.main.memberControl.service.BlackListService;
-import com.cartrapido.main.service.MemberService;
-import com.cartrapido.main.service.OrderNumHistoryService;
-import com.cartrapido.main.service.OrderNumService;
-import com.cartrapido.main.service.ProductService;
+import com.cartrapido.main.service.*;
 import com.cartrapido.main.web.dto.MemberListDTO;
+import com.cartrapido.main.web.dto.QnADTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.SortDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,6 +36,9 @@ public class AdminController {
     private final ProductService productService;
     private final OrderNumHistoryService orderNumHistoryService;
     private final OrderNumService orderNumService;
+
+    @Autowired
+    private QnAService qnaService;
 
     //어드민 페이지 테스트
     @GetMapping("/adminTest")
@@ -109,6 +121,77 @@ public class AdminController {
     public  @ResponseBody void deblock(@RequestParam(name="user") String user){
         memberService.enableSet(user,true);
 
+    }
+
+    //Q&A 관리창 보기
+    @GetMapping("/adminTest/adminQnaList")
+    public String adminQnaList(Model model,
+                               @PageableDefault(size=5)@SortDefault.SortDefaults({
+                                       @SortDefault(sort = "ref", direction = Sort.Direction.DESC),
+                                       @SortDefault(sort = "lev", direction = Sort.Direction.DESC)
+                               })Pageable pageable) {
+
+        List<QnADTO> qnaList = qnaService.getQnAList(pageable);
+        Page<QnA> pageQnA = qnaService.pagingQnAList(pageable);
+
+        int startPage = Math.max(0, pageQnA.getPageable().getPageNumber()-2);
+        int endPage = Math.min(pageQnA.getPageable().getPageNumber()+2, pageQnA.getTotalPages()-1);
+        int endEndPage = pageQnA.getTotalPages()-1;
+
+        model.addAttribute("qnaList",qnaList);
+        model.addAttribute("startPage",startPage);
+        model.addAttribute("endPage",endPage);
+        model.addAttribute("endEndPage",endEndPage);
+        model.addAttribute("template","/admin/adminQnaList.html");
+        return "/admin/adminSidebar.html";
+    }
+
+    //Q&A 답변
+    @GetMapping("/adminTest/qnaAnswer")
+    public String qnaAnswer(Model model,@RequestParam int seq) {
+
+        QnADTO qnaDTO = qnaService.qnaView(seq);
+        model.addAttribute("qnaDTO",qnaDTO);
+        model.addAttribute("template","/admin/adminQnaAnswer.html");
+        return "/admin/adminSidebar.html";
+    }
+
+    //답변 DB 등록
+    @PostMapping("/adminTest/qnaAnswerWrite")
+    public @ResponseBody void qnaAnswerWrite(@RequestBody @Valid QnADTO qnaDTO) {
+        QnADTO qnaAnswerDTO = new QnADTO();
+        qnaAnswerDTO.setName("관리자");
+        qnaAnswerDTO.setEmail("admin@wm.com");
+        qnaAnswerDTO.setTitle(qnaDTO.getTitle());
+        qnaAnswerDTO.setContent(qnaDTO.getContent());
+        qnaAnswerDTO.setRef(qnaDTO.getSeq());
+        qnaAnswerDTO.setLev(1);
+        qnaService.qnaAnswerWrite(qnaAnswerDTO);
+    }
+
+    //Q&A search
+    @PostMapping("/adminTest/searchQna")
+    public @ResponseBody ModelAndView searchQna(@RequestParam(name="searchValue") String searchValue,
+                                                @RequestParam(name="searchOption") String searchOption,
+                                                @PageableDefault(size=5)@SortDefault.SortDefaults({
+                                                        @SortDefault(sort = "ref", direction = Sort.Direction.DESC),
+                                                        @SortDefault(sort = "lev", direction = Sort.Direction.DESC)})Pageable pageable) {
+
+        List<QnADTO> qnaList = qnaService.qnaSearchList(pageable, searchValue, searchOption);
+        Page<QnA> pageQnA = qnaService.pagingQnaSearchList(pageable, searchValue, searchOption);
+
+        int startPage = Math.max(0, pageQnA.getPageable().getPageNumber()-2);
+        int endPage = Math.min(pageQnA.getPageable().getPageNumber()+2, pageQnA.getTotalPages()-1);
+        int endEndPage = pageQnA.getTotalPages()-1;
+
+        ModelAndView mov = new ModelAndView("jsonView");
+
+        mov.addObject("qnaList",qnaList);
+        mov.addObject("startPage",startPage);
+        mov.addObject("endPage",endPage);
+        mov.addObject("endEndPage",endEndPage);
+
+        return mov;
     }
 
 }
