@@ -354,15 +354,10 @@ public class ClientController {
     //회원 신고하기
     @PostMapping("/getShopperScore")
     @ResponseBody
-    public double getShopperScore(@RequestParam Object shopper){
-        double score = memberService.getShopperScore(shopper+"");
-        int intScore = (int)Math.floor(score);
-        double leftScore = score-intScore;
-        if(leftScore>=0.5){
-
-        }else{
-
-        }
+    public double getShopperScore(@RequestParam String shopper){
+        System.out.println("============getShopperScore===============================");
+        double score = memberService.getShopperScore(shopper);
+        System.out.println(score+"===========================================");
         return score;
     }
 

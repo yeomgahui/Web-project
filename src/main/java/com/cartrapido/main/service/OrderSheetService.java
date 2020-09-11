@@ -41,4 +41,9 @@ public class OrderSheetService {
             }
         return orderSheetDTOList;
     }
+
+    public int storeRank(String store){
+        int count = orderSheetRepository.countAllByStore(store);
+        return count;
+    }
 }
