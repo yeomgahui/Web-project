@@ -7,7 +7,9 @@ import com.cartrapido.main.domain.repository.OrderNumRepository;
 import com.cartrapido.main.web.dto.OrderExtraInfoDTO;
 import com.cartrapido.main.web.dto.OrderNumDTO;
 import com.cartrapido.main.web.dto.OrderNumHistoryDTO;
+import com.cartrapido.main.web.dto.SalesOfMonthDTO;
 import lombok.AllArgsConstructor;
+import org.hibernate.event.spi.SaveOrUpdateEventListener;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @AllArgsConstructor
@@ -115,5 +118,18 @@ public class OrderNumHistoryService {
        Long revenueBrut = Math.round((double)revenue*0.1);
         DecimalFormat df = new DecimalFormat("#,###");
         return df.format(revenueBrut);
+    }
+    @Transactional
+    public List<SalesOfMonthDTO> salesOfMonth(){
+        List<Object[]> result = orderNumHistoryRepository.salesOfMonth();
+        System.out.println(result.size());
+        List<SalesOfMonthDTO> sales = new ArrayList<SalesOfMonthDTO>();
+        for(Object[] obj : result){
+            SalesOfMonthDTO smDTO = new SalesOfMonthDTO();
+            smDTO.setMonth((String) obj[0]);
+            smDTO.setSalesMonth(obj[1]);
+            sales.add(smDTO);
+        }
+        return sales;
     }
 }

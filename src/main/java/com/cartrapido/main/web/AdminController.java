@@ -77,6 +77,8 @@ public class AdminController {
         model.addAttribute("totalMember",memberService.getTotalMember());
         //shopper와 client수
         model.addAttribute("NumOfCS",memberService.getChaqueMember());
+        //달별 주문량
+        model.addAttribute("salesOfMonth",orderNumHistoryService.salesOfMonth());
 
         model.addAttribute("js","/js/admin/dashboard.js");
         model.addAttribute("template","/admin/dashboard.html");
