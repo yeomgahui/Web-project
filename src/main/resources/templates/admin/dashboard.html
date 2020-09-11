@@ -51,37 +51,60 @@
 
     <!-- /. ROW  -->
     <div class="row">
-        <div class="">
-            <div class="card" style="margin-left: 30px; float: left">
-                <canvas style=" height: 400px; width:670px;" id="lineChart"></canvas>
+        <div class="col-md-8">
+            <div class="card" style="margin-left: 10px">
+                <canvas id="lineChart"></canvas>
             </div>
         </div>
+        <div class="col-md-4">
+            <div class="card">
+                <canvas  id="docutChart" style="height: 60px; width: 60px; " th:data-shopper="${NumOfCS}"></canvas>
+            </div>
+        </div>
+        <!--/.row-->
+    </div>
 
-            <div>
-                <div class="card" style="width: 400px; height: 400px; float: right; margin-left: 10px">
-                    <canvas  id="docutChart" style="height: 80px; width: 80px; " th:data-shopper="${NumOfCS}"></canvas>
+    <br>
+    <div class="row">
+        <!--스토어 판매 순위-->
+        <div class="col-md-4">
+            <div class="card" style="margin-left: 10px">
+                <div class="card-header">
+                    <h4>Store Rank</h4>
+                </div>
+                <div class="card-body">
+                    <ol class="border" id="storeRank">
+
+                    </ol>
                 </div>
             </div>
 
+        </div>
+        <div class="col-md-4">
+            <div class="card" style="margin-bottom: 10px">
+                <div class="card-header" style="background-color: #00796B">
+                    <h4 style="color:white">오늘 주문량</h4>
+                </div>
+                <div class="card-body">
+                    <h1 th:text="${todaySales}"></h1>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" style="background-color: #00796B">
+                    <h4 style="color:white">오늘 방문자</h4>
+                </div>
+                <div class="card-body">
+
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-4">
+
+
+        </div>
 
     </div>
-    
-            <!--스토어 판매 순위-->
-        <div class="col-md-4 col-sm-12 col-xs-12">
-            <div class="card"><div class="card-action">
-                <b><span id="rankBtn">Store Rank</span></b>
-            </div>
-                <div class="card-image">
-                    <div class="collection">
-                        <div id="storeRank">
 
-                        </div>
-
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
 
 </div>
