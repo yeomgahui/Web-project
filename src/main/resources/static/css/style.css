@@ -137,6 +137,23 @@ ol {
 	margin: 0 auto;
 }
 
+.section-title h3 {
+	color: #1c1c1c;
+	font-weight: 700;
+	position: relative;
+}
+
+.section-title h3:after {
+	position: absolute;
+	left: 0;
+	bottom: -15px;
+	height: 4px;
+	width: 80px;
+	background: #7fad39;
+	content: "";
+	margin: 0 auto;
+}
+
 .set-bg {
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -2499,7 +2516,7 @@ ol {
 
 .blog__details__hero__text ul li {
 	font-size: 16px;
-	color: #ffffff;
+	color: #636363;
 	list-style: none;
 	display: inline-block;
 	margin-right: 45px;

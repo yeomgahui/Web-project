@@ -67,29 +67,20 @@ public class EmartCrawlingService {
     public void getEmartDatas() {
 
         //날짜 비교해서 크롤링하기
-        List<LocalDateTime> list = productRepository.martDate(store);
-
-        if (list.size() != 0) {
-            LocalDate latest = LocalDate.from(list.get(0));
-            LocalDate today = LocalDate.from(LocalDateTime.now());
-
-            if (today.isAfter(latest)) {
-                productRepository.deleteByStore(store);
-                crawling();
-            }
-        }
-        else {
-            crawling();
-        }
-
-//        for(ProductDTO productDTO: emartProductList){
-//            System.out.println(productDTO.getStore());
-//            System.out.println(productDTO.getProductId());
-//            System.out.println(productDTO.getCategory());
-//            System.out.println(productDTO.getProductName());
-//            System.out.println(productDTO.getImage());
+//        List<LocalDateTime> list = productRepository.martDate(store);
+//
+//        if (list.size() != 0) {
+//            LocalDate latest = LocalDate.from(list.get(0));
+//            LocalDate today = LocalDate.from(LocalDateTime.now());
+//
+//            if (today.isAfter(latest)) {
+//                productRepository.deleteByStore(store);
+//                crawling();
+//            }
 //        }
-
+//        else {
+            crawling();
+//        }
     }
 
     public void crawling() {
@@ -139,7 +130,6 @@ public class EmartCrawlingService {
                         //}
 
                         ProductDTO productDTO = ProductDTO.builder()
-                                //.productId((long)count++)
                                 .itemId(itemId)
                                 .productName(productName)
                                 .productPrice(Integer.parseInt(productPrice))

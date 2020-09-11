@@ -2,6 +2,7 @@ package com.cartrapido.main.service;
 
 import com.cartrapido.main.domain.entity.QnA;
 import com.cartrapido.main.domain.repository.QnARepository;
+import com.cartrapido.main.web.dto.CartDTO;
 import com.cartrapido.main.web.dto.QnADTO;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,6 +94,21 @@ public class QnAService {
     public Page<QnA> pagingMyQnAList(String userEmail, Pageable pageable) {
         Page<QnA> pagingMyQnAList = qnaRepository.findAllByEmail(userEmail, pageable);
         return pagingMyQnAList;
+    }
+
+    @Transactional
+    public QnADTO qnaView(int seq) {
+        QnA qna = qnaRepository.findAllBySeq(seq);
+        QnADTO qnaDTO = QnADTO.builder()
+                .seq(qna.getSeq())
+                .name(qna.getName())
+                .email(qna.getEmail())
+                .title(qna.getTitle())
+                .content(qna.getContent())
+                .ref(qna.getRef())
+                .lev(qna.getLev())
+                .build();
+        return qnaDTO;
     }
 
 

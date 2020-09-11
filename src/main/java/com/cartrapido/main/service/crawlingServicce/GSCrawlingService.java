@@ -68,14 +68,6 @@ public class GSCrawlingService {
         driver = new ChromeDriver(options);
         instantNoodlesCrawling();
 
-//        for(ProductDTO productDTO: gsProductList){
-//            System.out.println(productDTO.getStore());
-//            System.out.println(productDTO.getProductId());
-//            System.out.println(productDTO.getCategory());
-//            System.out.println(productDTO.getProductName());
-//            System.out.println(productDTO.getImage());
-//        }
-
     }
 
     public void lunchBoxCrawling() {
@@ -119,7 +111,6 @@ public class GSCrawlingService {
                 String productcontent = "";
 
                 ProductDTO productDTO = ProductDTO.builder()
-                        //.productId((long)count++)
                         .itemId(itemId)
                         .productName(productName)
                         .productPrice(Integer.parseInt(productPrice))
@@ -181,7 +172,6 @@ public class GSCrawlingService {
                 String productcontent = "";
 
                 ProductDTO productDTO = ProductDTO.builder()
-                        //.productId((long)count++)
                         .itemId(itemId)
                         .productName(productName)
                         .productPrice(Integer.parseInt(productPrice))
@@ -243,7 +233,6 @@ public class GSCrawlingService {
                 String productcontent = "";
 
                 ProductDTO productDTO = ProductDTO.builder()
-                        //.productId((long)count++)
                         .itemId(itemId)
                         .productName(productName)
                         .productPrice(Integer.parseInt(productPrice))
@@ -305,7 +294,6 @@ public class GSCrawlingService {
                 String productcontent = "";
 
                 ProductDTO productDTO = ProductDTO.builder()
-                        //.productId((long)count++)
                         .itemId(itemId)
                         .productName(productName)
                         .productPrice(Integer.parseInt(productPrice))
@@ -368,7 +356,6 @@ public class GSCrawlingService {
                 String productcontent = "";
 
                 ProductDTO productDTO = ProductDTO.builder()
-                        //.productId((long)count++)
                         .itemId(itemId)
                         .productName(productName)
                         .productPrice(Integer.parseInt(productPrice))
@@ -430,7 +417,6 @@ public class GSCrawlingService {
                 String productcontent = "";
 
                 ProductDTO productDTO = ProductDTO.builder()
-                        //.productId((long)count++)
                         .itemId(itemId)
                         .productName(productName)
                         .productPrice(Integer.parseInt(productPrice))
@@ -492,7 +478,6 @@ public class GSCrawlingService {
                 String productcontent = "";
 
                 ProductDTO productDTO = ProductDTO.builder()
-                        //.productId((long)count++)
                         .itemId(itemId)
                         .productName(productName)
                         .productPrice(Integer.parseInt(productPrice))
@@ -554,7 +539,6 @@ public class GSCrawlingService {
                 String productcontent = "";
 
                 ProductDTO productDTO = ProductDTO.builder()
-                        //.productId((long)count++)
                         .itemId(itemId)
                         .productName(productName)
                         .productPrice(Integer.parseInt(productPrice))

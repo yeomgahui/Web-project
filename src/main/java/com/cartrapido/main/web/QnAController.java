@@ -12,11 +12,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
@@ -79,5 +77,9 @@ public class QnAController {
         return "/clientWebBody/qnaMyList";
     }
     @GetMapping("/qnaView")
-    public String qnaView() { return "/clientWebBody/qnaView";  }
+    public String qnaView(Model model, @RequestParam String seq) {
+        System.out.println(seq);
+        QnADTO qnaDTO = qnaService.qnaView(Integer.parseInt(seq));
+        model.addAttribute("qnaDTO",qnaDTO);
+        return "/clientWebBody/qnaView";  }
 }

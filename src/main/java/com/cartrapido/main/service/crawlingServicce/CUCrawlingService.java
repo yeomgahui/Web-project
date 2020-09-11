@@ -85,15 +85,6 @@ public class CUCrawlingService {
 //
 //        driver = new ChromeDriver(options);
 //        drinkCrawling();
-
-//        for(ProductDTO productDTO: cuProductList){
-//            System.out.println(productDTO.getStore());
-//            System.out.println(productDTO.getProductId());
-//            System.out.println(productDTO.getCategory());
-//            System.out.println(productDTO.getProductName());
-//            System.out.println(productDTO.getImage());
-//        }
-
     }
 
     public void convenienceFoodCrawling() {
@@ -135,7 +126,7 @@ public class CUCrawlingService {
                 String productcontent = "";
 
                 ProductDTO productDTO = ProductDTO.builder()
-                        //.productId((long)count++)
+                        .itemId(itemId)
                         .productName(productName)
                         .productPrice(Integer.parseInt(productPrice))
                         .productQty(10)
