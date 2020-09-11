@@ -6,6 +6,7 @@ import com.cartrapido.main.memberControl.service.BlackListService;
 import com.cartrapido.main.service.*;
 import com.cartrapido.main.web.dto.MemberListDTO;
 import com.cartrapido.main.web.dto.OrderSheetDTO;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -76,12 +77,18 @@ public class AdminController {
         model.addAttribute("totalMember",memberService.getTotalMember());
         //shopper와 client수
         model.addAttribute("NumOfCS",memberService.getChaqueMember());
-        //달별 주문량
-        model.addAttribute("salesOfMonth",orderNumHistoryService.salesOfMonth());
 
         model.addAttribute("js","/js/admin/dashboard.js");
         model.addAttribute("template","/admin/dashboard.html");
         return "/admin/adminSidebar.html";
+    }
+    @PostMapping("/adminTest/chartData")
+    public @ResponseBody ModelAndView chartData(){
+        System.out.println("data가져오기");
+
+        ModelAndView mv = new ModelAndView("jsonView");
+        mv.addObject("list",orderNumHistoryService.salesOfMonth());
+        return mv;
     }
 
 
