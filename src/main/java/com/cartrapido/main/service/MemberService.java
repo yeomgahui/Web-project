@@ -220,7 +220,14 @@ public class MemberService implements UserDetailsService {
         Member member = memberRepository.findByEmail(shopper).get();
         int score = member.getScore();
         int scoreCount = member.getScoreCount();
-        double scoreAverage = score/scoreCount;
-        return scoreAverage;
+        System.out.println(score);
+        System.out.println(scoreCount);
+        if(scoreCount==0){
+            return 0;
+        }else{
+            double scoreAverage = score/scoreCount;
+            return scoreAverage;
+        }
+
     }
 }

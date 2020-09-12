@@ -7,7 +7,11 @@ import com.cartrapido.main.memberControl.dto.BlackListResponseDTO;
 import com.cartrapido.main.memberControl.service.BlackListService;
 import com.cartrapido.main.service.*;
 import com.cartrapido.main.web.dto.MemberListDTO;
+
 import com.cartrapido.main.web.dto.QnADTO;
+
+import com.cartrapido.main.web.dto.OrderSheetDTO;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,11 +25,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
+
+import java.util.*;
+
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -36,6 +44,7 @@ public class AdminController {
     private final ProductService productService;
     private final OrderNumHistoryService orderNumHistoryService;
     private final OrderNumService orderNumService;
+    private final OrderSheetService orderSheetService;
 
     @Autowired
     private QnAService qnaService;
@@ -89,10 +98,20 @@ public class AdminController {
         model.addAttribute("totalMember",memberService.getTotalMember());
         //shopper와 client수
         model.addAttribute("NumOfCS",memberService.getChaqueMember());
+        //오늘 주문량
+        model.addAttribute("todaySales", orderNumHistoryService.getTodaySales());
 
         model.addAttribute("js","/js/admin/dashboard.js");
         model.addAttribute("template","/admin/dashboard.html");
         return "/admin/adminSidebar.html";
+    }
+    @PostMapping("/adminTest/chartData")
+    public @ResponseBody ModelAndView chartData(){
+        System.out.println("data가져오기");
+
+        ModelAndView mv = new ModelAndView("jsonView");
+        mv.addObject("list",orderNumHistoryService.salesOfMonth());
+        return mv;
     }
 
 
@@ -192,6 +211,40 @@ public class AdminController {
         mov.addObject("endEndPage",endEndPage);
 
         return mov;
+
+    @PostMapping("/adminTest/storeRank")
+    @ResponseBody
+    public ModelAndView storeRank(Model model){
+        System.out.println("============storeRank========================");
+        String[] storeList = {"emart","lottemart","homeplus","cu","gs25","ministop"};
+
+        List<OrderSheetDTO> orderSheetDTOS= new ArrayList<>();
+
+        ModelAndView mv = new ModelAndView("jsonView");
+
+        for(String data : storeList){
+            OrderSheetDTO orderSheetDTO = new OrderSheetDTO();
+            orderSheetDTO.setStore(data);
+            orderSheetDTO.setAmount(orderSheetService.storeRank(data));
+            orderSheetDTOS.add(orderSheetDTO);
+        }
+
+        Collections.sort(orderSheetDTOS, new Comparator<OrderSheetDTO>() {
+            @Override
+            public int compare(OrderSheetDTO s1, OrderSheetDTO s2) {
+                if (s1.getAmount() < s2.getAmount()) {
+                    return 1;
+                } else if (s1.getAmount() > s2.getAmount()) {
+                    return -1;
+                }
+                return 0;
+            }
+        });
+
+        model.addAttribute("list", orderSheetDTOS);
+        mv.addObject("list",orderSheetDTOS);
+        return mv;
+
     }
 
 }

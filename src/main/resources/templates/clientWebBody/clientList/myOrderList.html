@@ -105,14 +105,11 @@
                                                         &emsp;<img src="img/matching.png" style="width:10%">
 
                                                             <div class="dropdown">
-                                                                <button id="accuse" onclick="myFunction()" class="dropbtn"
+                                                                <button id="accuse" class="dropbtn"
                                                                         th:text="${orderNumList.shopper}"
-                                                                        th:data-useremail="${orderNumList.userEmail}" th:data-shopper="${orderNumList.shopper}"
-                                                                >
+                                                                        th:data-useremail="${orderNumList.userEmail}" th:data-shopper="${orderNumList.shopper}">
                                                                 </button>님과 매칭 되셨어요!
-                                                                <div id="myDropdown" class="dropdown-content">
-                                                                    <a  data-target="#myModal" data-toggle="modal" href="#myModal" th:data-useremail="${orderNumList.userEmail}" th:data-shopper="${orderNumList.shopper}">신고하기</a>
-                                                                </div>
+
                                                             </div>
 
 
@@ -151,45 +148,6 @@
                         </perfect-scrollbar>
                     </div>
                 </div>
-                <!--모달 시작-->
-                <div id="myModal" class="modal fade" role="dialog">
-                    <div class="modal-dialog">
-
-                        <!-- Modal content-->
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title">신고하기</h4>
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            </div>
-                            <div class="modal-body">
-                                <form>
-                                    <table>
-                                        <tr>
-                                            <td style="text-align: center">신고자 : </td>
-                                            <td><input type="text" id="useremail" style="border: none"></td>
-                                        </tr>
-                                        <tr>
-                                            <td style="text-align: center">신고할 회원 : </td>
-                                            <td><input type="text" id="shopper" style="border: none"></td>
-                                        </tr>
-                                        <tr>
-                                            <td style="text-align: center">신고 사유</td>
-                                            <td><textarea id="content" placeholder="신고 사유를 100자 이내로 작성해주세요." style="resize: none; width:350px; height: 100px;"></textarea></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" style="text-align: center"><button type="button" id="btn-save" class="btn btn-primary">제출</button></td>
-                                        </tr>
-                                    </table>
-                                </form>
-                            </div>
-                            <!--<div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            </div>-->
-                        </div>
-
-                    </div>
-                </div>
-
 
                 <!--for each 여기까지 -->
 
@@ -216,8 +174,7 @@
 <script>
     $(document).ready(function () {
         $('#accuse').click(function () {
-            $('#useremail').val($(this).data('useremail'));
-            $('#shopper').val($(this).data('shopper'));
+            myFunction($(this).data('shopper'),$(this).data('useremail'));
         });
 
         $('#content').on('keyup', function() {
@@ -233,9 +190,8 @@
         });
     });
 
-    function myFunction() {
+    function myFunction(shopper,useremail) {
         //shopper score 가져오기
-        let shopper = $('#shopper').val();
         let stars ='';
         $.ajax({
                 type: 'POST',
@@ -245,11 +201,16 @@
                 success : function (data) {
                   let intScore = parseInt(data);
                   let doubleScore = parseFloat(data)-intScore;
-                  for(let i=0; i<intScore ;i++){
-                      stars += '<i class="fa fa-star fa-3x"></i>';
-                  }
-                  if(doubleScore>=0.5){
-                      stars +='<i class="fa fa-star-half-full fa-3x"></i>';
+                  if(data==0){
+                      stars += '<i class="fa fa-smile-o fa-2x">첫 배달이에요!</i>';
+                  }else{
+                      for(let i=0; i<intScore ;i++){
+                          stars += '<i class="fa fa-star fa-3x"></i>';
+                      }
+                      if(doubleScore>=0.5){
+                          stars +='<i class="fa fa-star-half-full fa-3x"></i>';
+                      }
+
                   }
                     const { value: text } = Swal.fire({
                         title: shopper,
@@ -265,8 +226,8 @@
                             //신고하기를 눌렀을때 일어나는 이벤트
                             if (value) {
                                 var data ={
-                                    useremail: $('#useremail').val(),
-                                    shopper: $('#shopper').val(),
+                                    useremail: useremail,
+                                    shopper: shopper,
                                     content: value
                                 }
                                 $.ajax({
@@ -295,39 +256,6 @@
 
     }
 
-    // Close the dropdown menu if the user clicks outside of it
-    window.onclick = function(event) {
-        if (!event.target.matches('.dropbtn')) {
-
-            var dropdowns = document.getElementsByClassName("dropdown-content");
-            var i;
-            for (i = 0; i < dropdowns.length; i++) {
-                var openDropdown = dropdowns[i];
-                if (openDropdown.classList.contains('show')) {
-                    openDropdown.classList.remove('show');
-                }
-            }
-        }
-    }
-    $('#btn-save').on('click',function () {
-        var data ={
-            useremail: $('#useremail').val(),
-            shopper: $('#shopper').val(),
-            content: $('#content').val()
-        }
-        $.ajax({
-            type: 'POST',
-            url: '/blackListSave',
-            data: JSON.stringify(data),
-            contentType: 'application/json; charset=utf-8',
-        }).done(function () {
-            alert('해당 회원을 신고하였습니다.');
-            $("#myModal").modal("hide");
-
-        }).fail(function (error) {
-            alert(JSON.stringify(error));
-        });
-    });
 
     //주문 제거
     function finishOrder(orderNum) {
@@ -394,7 +322,7 @@
                             buttons: false
                         });
                     }
-
+                    alert(orderNum+'g'+score)
                     $.ajax({
                         url: "/finishOrder",
                         data: {
@@ -417,57 +345,6 @@
 
     };
 
-    function ask() {
-        let wrap = document.createElement('div');
-        wrap.setAttribute('class', 'text-muted');
-        wrap.innerHTML =
-            //sad
-            '<button onclick="reply(\'sad\')" type="button" value="sad" class="btn feel">' +
-            '<i class="fa fa-frown-o fa-3x"></i></button>' +
-            //일반
-            '<button onclick="reply(\'neutral\')" type="button" value="neutral" class="btn feel">' +
-            '<i class="fa fa-meh-o fa-3x"></i></button>' +
-            //기쁨
-            '<button onclick="reply(\'happy\')" type="button" value="happy" class="btn feel">' +
-            '<i class="fa fa-smile-o fa-3x"></i></button><hr>'
-
-        swal({
-            title: "",
-            text: "How do you like the new features?",
-            icon: "info",
-            className: '',
-            closeOnClickOutside: false,
-            content: {
-                element: wrap
-            },
-            buttons: {
-                confirm: {
-                    text: "Close",
-                    value: '',
-                    visible: true,
-                    className: "btn btn-default",
-                    closeModal: true,
-                }
-            },
-        }).then((value) => {
-            if (value === 'sad') {
-                swal("Sorry!", {
-                    icon: "error",
-                    buttons: false
-                });
-            } else if (value === 'neutral') {
-                swal("Okay!", {
-                    icon: "warning",
-                    buttons: false
-                });
-            } else if (value === 'happy') {
-                swal("Hooray!", {
-                    icon: "success",
-                    buttons: false
-                });
-            }
-        });
-    }
 
     function reply(feel){
         swal.setActionValue(feel);
