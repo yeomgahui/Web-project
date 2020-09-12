@@ -1,14 +1,12 @@
 package com.cartrapido.main.domain.entity;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Setter
 @Entity
 @Table(name = "QnA")
 public class QnA extends TimeEntity{
@@ -30,6 +28,7 @@ public class QnA extends TimeEntity{
     private String content;
 
     @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ref; //그룹번호
 
     @Column
@@ -52,4 +51,6 @@ public class QnA extends TimeEntity{
         this.ref = ref;
         this.lev = lev;
     }
+
+
 }
