@@ -3,11 +3,14 @@ package com.cartrapido.main.service;
 
 import com.cartrapido.main.config.auth.dto.SessionUser;
 import com.cartrapido.main.domain.entity.Member;
+import com.cartrapido.main.domain.entity.Visit;
 import com.cartrapido.main.domain.repository.MemberRepository;
+import com.cartrapido.main.domain.repository.VisitRepository;
 import com.cartrapido.main.exception.ValidCustomException;
 import com.cartrapido.main.web.dto.MemberListDTO;
 import com.cartrapido.main.web.dto.MemberRequestDTO;
 import com.cartrapido.main.web.dto.MemberUpdateRequestDTO;
+import com.cartrapido.main.web.dto.VisitSaveDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,6 +32,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class MemberService implements UserDetailsService {
     private MemberRepository memberRepository;
+    private VisitRepository visitRepository;
     private HttpSession httpSession;
 
     @Transactional
@@ -186,6 +190,7 @@ public class MemberService implements UserDetailsService {
         System.out.println("loadUserByUserName 진입");
         Member userEntity = memberRepository.findByEmail(userEmail).orElseThrow(() -> new UsernameNotFoundException(userEmail));
         httpSession.setAttribute("user", new SessionUser(userEntity));
+
 
         return userEntity;
     }
