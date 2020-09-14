@@ -48,7 +48,7 @@ public class ClientListController {
         System.out.println(endEndPage+"endEndPage-------------------------------------------");
 
 
-        if(orderNumHistories==null)
+        if(orderNumHistories.getSize()==0)
             return "/clientWebBody/clientList/noList";
         else {
             model.addAttribute("orderNumList", orderNumHistories);

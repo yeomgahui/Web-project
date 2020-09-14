@@ -52,25 +52,8 @@ public class OrderNumHistoryService {
         int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1); // page는 index 처럼 0부터 시작
         pageable = PageRequest.of(page, 3);
         System.out.println();
-        return orderNumHistoryRepository.findAllByUserEmail(userEmail,pageable);
+        return orderNumHistoryRepository.findAllByUserEmailOrderByCreatedDateDesc(userEmail,pageable);
     }
-
-/*    public List<OrderNumHistoryDTO> getMyOrderNumList(String userEmail, Pageable pageable) {
-        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1); // page는 index 처럼 0부터 시작
-        pageable = PageRequest.of(page, 3);
-
-        List<OrderNumHistory> orderNumList = orderNumHistoryRepository.findAllByUserEmail(userEmail,pageable);
-        List<OrderNumHistoryDTO> orderNumDTOList = new ArrayList<>();
-        for (OrderNumHistory orderNum : orderNumList) {
-            OrderNumHistoryDTO orderNumDTO = new OrderNumHistoryDTO(
-                    orderNum.getOrderNum(), orderNum.getUserEmail(), orderNum.getShopper(),
-                    orderNum.getDeliveryCost(), orderNum.getProductTot(),
-                    orderNum.getPay()
-            );
-            orderNumDTOList.add(orderNumDTO);
-        }
-        return  orderNumDTOList;
-    }*/
 
 
     public List<OrderNumHistoryDTO> getMyOrderNumListShopper(String shopperEmail) {
