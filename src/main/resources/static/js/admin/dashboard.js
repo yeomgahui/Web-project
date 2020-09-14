@@ -86,7 +86,7 @@ $(document).ready(function () {
             $('#storeRank').children().first().css('font-size',28);
 
 
-        })
+        });
 
 
 });

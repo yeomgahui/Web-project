@@ -3,17 +3,12 @@ package com.cartrapido.main.service;
 
 import com.cartrapido.main.config.auth.dto.SessionUser;
 import com.cartrapido.main.domain.entity.Member;
-import com.cartrapido.main.domain.entity.Visit;
 import com.cartrapido.main.domain.repository.MemberRepository;
-import com.cartrapido.main.domain.repository.VisitRepository;
 import com.cartrapido.main.exception.ValidCustomException;
-import com.cartrapido.main.web.dto.MemberListDTO;
 import com.cartrapido.main.web.dto.MemberRequestDTO;
 import com.cartrapido.main.web.dto.MemberUpdateRequestDTO;
-import com.cartrapido.main.web.dto.VisitSaveDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -23,16 +18,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.Optional;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class MemberService implements UserDetailsService {
     private MemberRepository memberRepository;
-    private VisitRepository visitRepository;
     private HttpSession httpSession;
 
     @Transactional
@@ -218,7 +210,6 @@ public class MemberService implements UserDetailsService {
         int newPoint = member.getPoint()-point;
         member.setPoint(newPoint);
         memberRepository.save(member);
-
     }
 
     public double getShopperScore(String shopper) {
@@ -233,6 +224,5 @@ public class MemberService implements UserDetailsService {
             double scoreAverage = score/scoreCount;
             return scoreAverage;
         }
-
     }
 }
