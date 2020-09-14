@@ -1,7 +1,5 @@
 package com.cartrapido.main.config.auth;
 
-import com.cartrapido.main.config.auth.dto.SessionUser;
-import com.cartrapido.main.domain.entity.Member;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -13,7 +11,10 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Set;
 
+
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
+
+
 
     @Override
     public void onAuthenticationSuccess(
