@@ -199,18 +199,19 @@ public class AdminController {
         List<QnADTO> qnaList = qnaService.qnaSearchList(pageable, searchValue, searchOption);
         Page<QnA> pageQnA = qnaService.pagingQnaSearchList(pageable, searchValue, searchOption);
 
-        int startPage = Math.max(0, pageQnA.getPageable().getPageNumber()-2);
-        int endPage = Math.min(pageQnA.getPageable().getPageNumber()+2, pageQnA.getTotalPages()-1);
-        int endEndPage = pageQnA.getTotalPages()-1;
+        int startPage = Math.max(0, pageQnA.getPageable().getPageNumber() - 2);
+        int endPage = Math.min(pageQnA.getPageable().getPageNumber() + 2, pageQnA.getTotalPages() - 1);
+        int endEndPage = pageQnA.getTotalPages() - 1;
 
         ModelAndView mov = new ModelAndView("jsonView");
 
-        mov.addObject("qnaList",qnaList);
-        mov.addObject("startPage",startPage);
-        mov.addObject("endPage",endPage);
-        mov.addObject("endEndPage",endEndPage);
+        mov.addObject("qnaList", qnaList);
+        mov.addObject("startPage", startPage);
+        mov.addObject("endPage", endPage);
+        mov.addObject("endEndPage", endEndPage);
 
         return mov;
+    }
 
     @PostMapping("/adminTest/storeRank")
     @ResponseBody
