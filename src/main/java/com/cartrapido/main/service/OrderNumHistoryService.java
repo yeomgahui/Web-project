@@ -135,6 +135,7 @@ public class OrderNumHistoryService {
 
     @Transactional
     public Long getTodaySales(){
+        System.out.println("오늘 주문량"+orderNumHistoryRepository.getTodaySales());
         return orderNumHistoryRepository.getTodaySales();
     }
 }

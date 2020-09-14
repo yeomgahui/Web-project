@@ -196,6 +196,9 @@ public class AdminController {
                                                         @SortDefault(sort = "ref", direction = Sort.Direction.DESC),
                                                         @SortDefault(sort = "lev", direction = Sort.Direction.DESC)})Pageable pageable) {
 
+        System.out.println(searchOption);
+        System.out.println(searchValue);
+
         List<QnADTO> qnaList = qnaService.qnaSearchList(pageable, searchValue, searchOption);
         Page<QnA> pageQnA = qnaService.pagingQnaSearchList(pageable, searchValue, searchOption);
 
@@ -211,6 +214,7 @@ public class AdminController {
         mov.addObject("endEndPage",endEndPage);
 
         return mov;
+    }
 
     @PostMapping("/adminTest/storeRank")
     @ResponseBody
@@ -244,7 +248,6 @@ public class AdminController {
         model.addAttribute("list", orderSheetDTOS);
         mv.addObject("list",orderSheetDTOS);
         return mv;
-
     }
 
 }
