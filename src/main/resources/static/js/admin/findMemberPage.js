@@ -11,7 +11,7 @@ $("#searchBtn").click(function () {
                 "searchOption" :$('#findUser option:selected').val()};
 
     $.ajax({
-        url:'/adminTest/findMember/1',
+        url:'/adminTest/findMember/'+i,
         type: 'POST',
         data: data,
         dataType: 'json'

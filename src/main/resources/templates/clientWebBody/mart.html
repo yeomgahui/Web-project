@@ -112,6 +112,7 @@
                            th:data-price="${product.productPrice}"
                            th:data-image="${product.image}"
                            th:data-content="${product.productContent}"
+                           th:data-wish="${product.wishPoint}"
                         >
                             <img th:src="@{${product.image}}" th:width="262.5px"></a>
                         <ul class="product__item__pic__hover">
@@ -122,8 +123,8 @@
                                 th:data-image="${product.image}"
                                 th:data-content="${product.productContent}"
                                 th:data-store="${mart}"
+
                             ><a href="#"><i class="fa fa-heart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-retweet"></i></a></li>
                             <li th:onclick="|javascript:putInCart('${product.productId}')|">
                                 <a href="#"><i class="fa fa-shopping-cart"></i></a></li>
                         </ul>
@@ -219,28 +220,30 @@
         });
 
         $('.modaldata').click(function () {
-            //$.ajax()
-            $('.modalPId').text($(this).data('id'));
+            alert($(this).data('id'));
+            $('.modalPId').val($(this).data('id'));
             $('h3.product-name').text($(this).data('name'));
-            $('span.product-price').text($(this).data('price')+"won");
+            $('span.product-price').text($(this).data('price')+"원");
+            $('span.product-wishPoint').text($(this).data('wish'));
             $('p.product-content').html($(this).data('content'));
             $('img.product__details__pic__item--large').attr('src', $(this).data('image'));
-
-
-
         });
 
         $('#addCart').click(function () {
-            Swal.fire({
-                icon: 'success',
-                title: '상품을 장바구니에 보관합니다',
-                showConfirmButton: false,
-                timer: 1500
-            })
+            // Swal.fire({
+            //     icon: 'success',
+            //     title: '상품을 장바구니에 보관합니다',
+            //     showConfirmButton: false,
+            //     timer: 1500
+            // })
+            // var id = document.forms[0].elements.modalPId.val();
+            // alert(id);
+            // alert($('.pro-qty input').val());
 
             $.ajax({
                 url: "/clientMart/putInCart",
-                data: {productId:$('.modalPId').text()},
+                data: {productId:$('.modalPId').text(),
+                    amount: $('.pro-qty input').val()},
                 type: "POST"
             }).done(function(json) {
             }).error(function(xhr, status, errorThrown) {

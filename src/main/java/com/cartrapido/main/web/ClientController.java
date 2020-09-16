@@ -340,9 +340,14 @@ public class ClientController {
         System.out.println("-----------putInWishList "+wishItemDTO.getProductName());
         SessionUser user = (SessionUser) session.getAttribute("user");
         wishItemDTO.setEmail(user.getEmail());
+
         //위시리스트 중복체크
         if(wishItemService.checkWishList(wishItemDTO.getProductId(), user.getEmail())==true)
             wishItemService.saveWishItem(wishItemDTO);
+
+        System.out.println("-----------putInWishList "+wishItemDTO.getProductId());
+        productService.updateWishPoint(wishItemDTO.getProductId());
+
     }
 
     //회원 신고하기
