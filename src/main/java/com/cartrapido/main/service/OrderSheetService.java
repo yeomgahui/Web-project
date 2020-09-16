@@ -5,6 +5,7 @@ import com.cartrapido.main.domain.entity.Product;
 import com.cartrapido.main.domain.repository.OrderSheetRepository;
 import com.cartrapido.main.domain.repository.ProductRepository;
 import com.cartrapido.main.web.dto.OrderSheetDTO;
+import com.cartrapido.main.web.dto.ProductDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +20,6 @@ public class OrderSheetService {
     ProductRepository productRepository;
     @Transactional
     public void saveOrderSheet(OrderSheetDTO orderSheetDTO) {
-        System.out.println("=============saveOrderSheet================"+orderSheetDTO.getProductName());
         OrderSheet orderSheet = orderSheetRepository.save(orderSheetDTO.toEntitiy());
 
     }
@@ -29,13 +29,15 @@ public class OrderSheetService {
         List<OrderSheetDTO> orderSheetDTOList = new ArrayList<>();
 
             for(OrderSheet orderSheet : orderSheetList){
-                OrderSheetDTO orderSheetDTO = new OrderSheetDTO(
-                        orderNum, orderSheet.getUserEmail(),
-                        orderSheet.getProductId(), orderSheet.getAmount()
-                );
+                OrderSheetDTO orderSheetDTO = OrderSheetDTO.builder()
+                        .orderNum(orderNum)
+                        .productId(orderSheet.getProductId())
+                        .amount(orderSheet.getAmount())
+                        .build();
+                Product product = productRepository.findAllByProductId(orderSheet.getProductId());
                 orderSheetDTO.setOtherInfo(
-                        orderSheet.getProductName(), orderSheet.getProductPrice(),
-                        orderSheet.getStore(), orderSheet.getImage()
+                        product.getProductName(), product.getProductPrice(),
+                        product.getStore(), product.getImage()
                 );
                 orderSheetDTOList.add(orderSheetDTO);
             }

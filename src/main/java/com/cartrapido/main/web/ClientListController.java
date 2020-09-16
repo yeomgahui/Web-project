@@ -5,6 +5,7 @@ import com.cartrapido.main.domain.entity.OrderNumHistory;
 import com.cartrapido.main.service.*;
 import com.cartrapido.main.web.dto.OrderNumDTO;
 import com.cartrapido.main.web.dto.OrderNumHistoryDTO;
+import com.cartrapido.main.web.dto.ProductDTO;
 import com.cartrapido.main.web.dto.WishItemDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,10 @@ public class ClientListController {
     @Autowired
     private WishItemService wishItemService;
 
+    @Autowired
+    private ProductService productService;
+
+    //과거 주문서 목록
     @GetMapping("/listHistory")
     public String listHistory(Model model, HttpSession session,
                               @PageableDefault(size=3, direction = Sort.Direction.DESC) Pageable pageable) {
@@ -60,6 +65,7 @@ public class ClientListController {
 
     }
 
+    //내 주문서 목록 (현재 주문 진행중인)
     @GetMapping("/myOrderList")
     public String myOrderList(Model model, HttpSession session) {
         SessionUser user = (SessionUser) session.getAttribute("user");
@@ -74,6 +80,7 @@ public class ClientListController {
 
     }
 
+    //결제할 주문서 목록
     @GetMapping("/toPayList")
     public String toPayList(Model model, HttpSession session) {
         SessionUser user = (SessionUser) session.getAttribute("user");
@@ -88,11 +95,19 @@ public class ClientListController {
 
     }
 
+    //위시리스트 목록
     @GetMapping("/wishItems")
     public String wishItems(Model model, HttpSession session) {
         SessionUser user = (SessionUser) session.getAttribute("user");
         String userEmail = user.getEmail();
         List<WishItemDTO> wishItemDTOList = wishItemService.findByEmail(userEmail);
+        for(WishItemDTO wishDTO:wishItemDTOList){
+            ProductDTO productDTO = productService.getProductInfo(wishDTO.getProductId());
+            wishDTO.setOtherInfo(
+                    productDTO.getProductName(),productDTO.getProductPrice(),
+                    productDTO.getProductContent(),productDTO.getImage()
+            );
+        }
         if(wishItemDTOList.size()==0){
             return "/clientWebBody/wish/noWishItem";
         }else {

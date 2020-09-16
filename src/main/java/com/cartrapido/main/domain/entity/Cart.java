@@ -21,31 +21,15 @@ public class Cart {
     @Column(nullable = false)
     private Long productId;
 
-    @Column(length = 100, nullable = false)
-    private String store;
-
-    @Column(length = 100, nullable = false)
+    @Column(nullable = false)
     private int amount;
 
-    @Column(length = 100)
-    private String productName;
-
-    @Column(length = 100)
-    private int productPrice;
-
-    @Column
-    private String image;
-
-
     @Builder
-    public Cart(String userEmail, Long productId, int amount , String productName , int productPrice, String image, String store) {
+    public Cart(Long cartId, String userEmail, Long productId, int amount) {
+        this.cartId = cartId;
         this.userEmail = userEmail;
         this.productId = productId;
         this.amount = amount;
-        this.productName = productName;
-        this.productPrice = productPrice;
-        this.image = image;
-        this.store = store;
     }
 
 
