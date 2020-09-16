@@ -143,24 +143,20 @@ public class AdminController {
     }
 
     //Q&A 관리창 보기
-    @GetMapping("/adminTest/adminQnaList")
-    public String adminQnaList(Model model,
-                               @PageableDefault(size=5)@SortDefault.SortDefaults({
-                                       @SortDefault(sort = "ref", direction = Sort.Direction.DESC),
-                                       @SortDefault(sort = "lev", direction = Sort.Direction.DESC)
-                               })Pageable pageable) {
+    @GetMapping("/adminTest/adminQnaList/{page}")
+    public String adminQnaList(Model model, @PathVariable int page) {
 
-        List<QnADTO> qnaList = qnaService.getQnAList(pageable);
-        Page<QnA> pageQnA = qnaService.pagingQnAList(pageable);
+        //List<QnADTO> qnaList = qnaService.getQnAList(pageable);
+        Page<QnA> pageQnAList = qnaService.pageQnAList(PageRequest.of(page-1,5,Sort.by("ref").descending().and(Sort.by("lev")))); //
+        List<QnADTO> qnaList = pageQnAList.stream().map(QnADTO::new).collect(Collectors.toList());
 
-        int startPage = Math.max(0, pageQnA.getPageable().getPageNumber()-2);
-        int endPage = Math.min(pageQnA.getPageable().getPageNumber()+2, pageQnA.getTotalPages()-1);
-        int endEndPage = pageQnA.getTotalPages()-1;
+        for(QnADTO qnADTO:qnaList){
+            System.out.println(qnADTO.getSeq());
+            System.out.println(qnADTO.getTitle());
+        }
 
         model.addAttribute("qnaList",qnaList);
-        model.addAttribute("startPage",startPage);
-        model.addAttribute("endPage",endPage);
-        model.addAttribute("endEndPage",endEndPage);
+        model.addAttribute("pageNum",pageQnAList.getTotalPages());
         model.addAttribute("template","/admin/adminQnaList.html");
         return "/admin/adminSidebar.html";
     }
@@ -188,32 +184,37 @@ public class AdminController {
         qnaService.qnaAnswerWrite(qnaAnswerDTO);
     }
 
+
+
     //Q&A search
-    @PostMapping("/adminTest/searchQna")
-    public @ResponseBody ModelAndView searchQna(@RequestParam(name="searchValue") String searchValue,
-                                                @RequestParam(name="searchOption") String searchOption,
-                                                @PageableDefault(size=5)@SortDefault.SortDefaults({
-                                                        @SortDefault(sort = "ref", direction = Sort.Direction.DESC),
-                                                        @SortDefault(sort = "lev", direction = Sort.Direction.DESC)})Pageable pageable) {
+    @PostMapping("/adminTest/searchQna/{page}")
+    public @ResponseBody ModelAndView searchQna(@PathVariable int page,
+                                                @RequestParam(name="searchValue") String searchValue,
+                                                @RequestParam(name="searchOption") String searchOption) {
 
-        System.out.println(searchOption);
-        System.out.println(searchValue);
+        Page<QnA> pageQnAList = qnaService.pagingQnaSearchList(PageRequest.of(page-1,5,Sort.by("ref").descending().and(Sort.by("lev"))), searchValue, searchOption); //
+        List<QnADTO> qnaList = pageQnAList.stream().map(QnADTO::new).collect(Collectors.toList());
 
-        List<QnADTO> qnaList = qnaService.qnaSearchList(pageable, searchValue, searchOption);
-        Page<QnA> pageQnA = qnaService.pagingQnaSearchList(pageable, searchValue, searchOption);
-
-        int startPage = Math.max(0, pageQnA.getPageable().getPageNumber() - 2);
-        int endPage = Math.min(pageQnA.getPageable().getPageNumber() + 2, pageQnA.getTotalPages() - 1);
-        int endEndPage = pageQnA.getTotalPages() - 1;
+        for(QnADTO qnADTO:qnaList){
+            System.out.println(qnADTO.getSeq());
+            System.out.println(qnADTO.getTitle());
+        }
 
         ModelAndView mov = new ModelAndView("jsonView");
 
         mov.addObject("qnaList", qnaList);
-        mov.addObject("startPage", startPage);
-        mov.addObject("endPage", endPage);
-        mov.addObject("endEndPage", endEndPage);
+        mov.addObject("pageNum",pageQnAList.getTotalPages());
 
         return mov;
+    }
+
+    @GetMapping("/adminTest/adminQnaView")
+    public String qnaView(Model model, @RequestParam int seq) {
+
+        QnADTO qnaDTO = qnaService.qnaView(seq);
+        model.addAttribute("qnaDTO",qnaDTO);
+        model.addAttribute("template","/admin/adminQnaView.html");
+        return "/admin/adminSidebar.html";
     }
 
     @PostMapping("/adminTest/storeRank")

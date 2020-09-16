@@ -194,4 +194,9 @@ public class QnAService {
 
         return qnaSearchList;
     }
+
+    public Page<QnA> pageQnAList(Pageable pageable){
+        Page<QnA> pageQnAList = qnaRepository.findAll(pageable);
+        return pageQnAList;
+    }
 }

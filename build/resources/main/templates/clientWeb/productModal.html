@@ -3,6 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 >
 <!-- Modal -->
+<form id="modal" name="modal">
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -31,15 +32,11 @@
                                     <input type="hidden" class="modalPId">
                                     <h3 class="product-name"></h3>
                                     <div class="product__details__rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-half-o"></i>
-                                        <span>(18 reviews)</span>
+                                        <i class="fa fa-heart" style="color: #EDBB0E;"></i>
+                                        <span class="product-wishPoint"></span>
                                     </div>
                                     <div class="product__details__price">
-                                        <span class="product-price">원</span>
+                                        <span class="product-price"></span>
                                     </div>
                                     <p><span class="product-content"></span></p>
                                     <div class="product__details__quantity " style="width : 120px; display: inline-block;">
@@ -168,5 +165,5 @@
         </div>
     </div>
 </div>
-
+</form>
 </html>

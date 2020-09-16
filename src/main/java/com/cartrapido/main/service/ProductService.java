@@ -1,6 +1,7 @@
 package com.cartrapido.main.service;
 
 import com.cartrapido.main.domain.entity.Product;
+import com.cartrapido.main.domain.entity.QnA;
 import com.cartrapido.main.domain.repository.ProductRepository;
 import com.cartrapido.main.web.dto.ProductDTO;
 import lombok.AllArgsConstructor;
@@ -37,6 +38,7 @@ public class ProductService {
                     .store(product.getStore())
                     .category(product.getCategory())
                     .image(product.getImage())
+                    .wishPoint(product.getWishPoint())
                     .build();
 
                 productDTOList.add(productDTO);
@@ -66,6 +68,7 @@ public class ProductService {
                     .store(product.getStore())
                     .category(product.getCategory())
                     .image(product.getImage())
+                    .wishPoint(product.getWishPoint())
                     .build();
 
             productDTOList.add(productDTO);
@@ -90,6 +93,7 @@ public class ProductService {
                     .store(product.getStore())
                     .category(product.getCategory())
                     .image(product.getImage())
+                    .wishPoint(product.getWishPoint())
                     .build();
 
             productDTOList.add(productDTO);
@@ -109,6 +113,7 @@ public class ProductService {
                 .store(product.getStore())
                 .category(product.getCategory())
                 .image(product.getImage())
+                .wishPoint(product.getWishPoint())
                 .build();
         return productDTO;
     }
@@ -132,6 +137,7 @@ public class ProductService {
                     .store(product.getStore())
                     .category(product.getCategory())
                     .image(product.getImage())
+                    .wishPoint(product.getWishPoint())
                     .build();
 
             productDTOList.add(productDTO);
@@ -165,6 +171,7 @@ public class ProductService {
                     .store(product.getStore())
                     .category(product.getCategory())
                     .image(product.getImage())
+                    .wishPoint(product.getWishPoint())
                     .build();
 
             productDTOList.add(productDTO);
@@ -198,6 +205,7 @@ public class ProductService {
                     .store(product.getStore())
                     .category(product.getCategory())
                     .image(product.getImage())
+                    .wishPoint(product.getWishPoint())
                     .build();
 
             productDTOList.add(productDTO);
@@ -224,5 +232,11 @@ public class ProductService {
 //            categoryList.add(category);
 //        }
         return getCategoryList;
+    }
+
+    public void updateWishPoint(Long productId){
+        Product product = productRepository.findAllByProductId(productId);
+        product.setWishPoint(product.getWishPoint()+1);
+        productRepository.save(product);
     }
 }

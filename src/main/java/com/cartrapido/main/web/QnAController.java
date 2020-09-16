@@ -7,6 +7,7 @@ import com.cartrapido.main.web.dto.QnADTO;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -14,6 +15,7 @@ import org.springframework.data.web.SortDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpSession;
@@ -43,7 +45,7 @@ public class QnAController {
     public String qnaList(Model model,
                           @PageableDefault(size=5)@SortDefault.SortDefaults({
                                   @SortDefault(sort = "ref", direction = Sort.Direction.DESC),
-                                  @SortDefault(sort = "lev", direction = Sort.Direction.DESC)
+                                  @SortDefault(sort = "lev", direction = Sort.Direction.ASC)
                           })Pageable pageable) {
 
         List<QnADTO> qnaList = qnaService.getQnAList(pageable);
@@ -120,5 +122,33 @@ public class QnAController {
         String userEmail = user.getEmail();
 
         qnaService.qnaDeleteAll(userEmail);
+    }
+
+    //Q&A search
+    @PostMapping("/searchQna/{page}")
+    public @ResponseBody
+    ModelAndView searchQna(@PathVariable int page,
+                           @RequestParam(name="searchValue") String searchValue,
+                           @RequestParam(name="searchOption") String searchOption,
+                           @PageableDefault(size=5)@SortDefault.SortDefaults({
+                                                        @SortDefault(sort = "ref", direction = Sort.Direction.DESC),
+                                                        @SortDefault(sort = "lev", direction = Sort.Direction.ASC)
+                                                })Pageable pageable) {
+
+        List<QnADTO> qnaList = qnaService.qnaSearchList(PageRequest.of(page-1,5,Sort.by("ref").descending().and(Sort.by("lev"))), searchValue, searchOption);
+        Page<QnA> pageQnA = qnaService.pagingQnaSearchList(pageable, searchValue, searchOption);
+
+        int startPage = Math.max(0, pageQnA.getPageable().getPageNumber() - 2);
+        int endPage = Math.min(pageQnA.getPageable().getPageNumber() + 2, pageQnA.getTotalPages() - 1);
+        int endEndPage = pageQnA.getTotalPages() - 1;
+
+        ModelAndView mov = new ModelAndView("jsonView");
+
+        mov.addObject("qnaList", qnaList);
+        mov.addObject("startPage", startPage);
+        mov.addObject("endPage", endPage);
+        mov.addObject("endEndPage", endEndPage);
+
+        return mov;
     }
 }

@@ -22,6 +22,7 @@ public class ProductDTO {
     private String store;
     private String category;
     private String image;
+    private int wishPoint;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 
@@ -36,6 +37,7 @@ public class ProductDTO {
                 .store(store)
                 .category(category)
                 .image(image)
+                .wishPoint(wishPoint)
                 .build();
         return product;
     }
@@ -49,7 +51,8 @@ public class ProductDTO {
                       int productQty,
                       String store,
                       String category,
-                      String image){
+                      String image,
+                      int wishPoint){
         this.productId = productId;
         this.itemId = itemId;
         this.productName = productName;
@@ -59,6 +62,7 @@ public class ProductDTO {
         this.store = store;
         this.category = category;
         this.image = image;
+        this.wishPoint = wishPoint;
 
     }
 }
