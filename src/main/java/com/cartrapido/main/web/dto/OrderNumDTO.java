@@ -64,16 +64,6 @@ public class OrderNumDTO {
         this.createdDate = createdDate;
     }
 
-    public OrderNumDTO(String userEmail, String shopper,
-                       int deliveryCost, int productTot, String pay
-                    ){
-        this.orderNum = orderNum;
-        this.userEmail = userEmail;
-        this.shopper = shopper ;
-        this.deliveryCost = deliveryCost;
-        this.productTot = productTot;
-        this.pay = pay;
-    }
 
 
 

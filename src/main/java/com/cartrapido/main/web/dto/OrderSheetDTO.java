@@ -11,14 +11,13 @@ public class OrderSheetDTO {
 
     private Long orderId;
     private Long orderNum;
-    private String userEmail;
     private Long productId;
     private int amount;
+    private String store;
 
     //기본 외 받아야할 product 정보를
     private String productName;
     private int productPrice;
-    private String store;
     private String image;
 
     public OrderSheetDTO() {
@@ -28,33 +27,33 @@ public class OrderSheetDTO {
     public OrderSheet toEntitiy(){
         OrderSheet orderSheet = OrderSheet.builder()
                 .orderNum(orderNum)
-                .userEmail(userEmail)
                 .productId(productId)
                 .amount(amount)
-                .productName(productName)
-                .productPrice(productPrice)
                 .store(store)
-                .image(image)
                 .build();
         return orderSheet;
 
     }
 
     @Builder //테이블에 값을 넣을때 쓰는 빌더
-    public OrderSheetDTO(Long orderNum, String userEmail, Long productId, int amount){
+    public OrderSheetDTO(Long orderNum, String userEmail, Long productId, int amount,
+                        String productName,int productPrice,String store,String image
+                    ){
         this.orderNum=orderNum;
-        this.userEmail =userEmail;
         this.productId = productId;
         this.amount = amount;
+        this.productName=productName;
+        this.productPrice=productPrice;
+        this.store=store;
+        this.image=image;
     }
 
-    @Builder //테이블 외 값으로 shopper에게 보여줄 값들.
+    //테이블 외 값으로 shopper에게 보여줄 값들.
     public void setOtherInfo(String productName, int productPrice, String store, String image){
         this.productName = productName;
         this.productPrice = productPrice;
         this.store = store;
         this.image = image;
-
     }
 
 }
