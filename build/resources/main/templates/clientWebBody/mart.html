@@ -221,7 +221,14 @@
 
         $('.modaldata').click(function () {
             var modalProductId= $(this).data('id');
-
+            var wishListInfo={
+                productId : $(this).data('id'),
+                productName : $(this).data('name'),
+                productPrice : $(this).data('price'),
+                productContent : $(this).data('content'),
+                image : $(this).data('image'),
+                store : $(this).data('store')
+            };
             $('.modalPId').val($(this).data('id'));
             $('h3.product-name').text($(this).data('name'));
             $('span.product-price').text($(this).data('price')+"원");
@@ -239,6 +246,27 @@
                     Swal.fire({
                         icon: 'success',
                         title: '상품을 장바구니에 보관합니다',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }).error(function(xhr, status, errorThrown) {
+                    alert(xhr.status);
+                    alert(errorThrown);
+                });
+
+            });
+
+            $('#addWish').click(function () {
+
+                $.ajax({
+                    url: "/putInWishList",
+                    data: JSON.stringify(wishListInfo),
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                }).done(function(json) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Wish List에 추가!',
                         showConfirmButton: false,
                         timer: 1500
                     })
