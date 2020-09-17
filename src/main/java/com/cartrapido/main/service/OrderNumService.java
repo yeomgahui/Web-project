@@ -117,12 +117,19 @@ public class OrderNumService {
 
     public OrderNumDTO getOrderNum(Long orderNum1){
         OrderNum orderNum = orderNumRepository.findByOrderNum(orderNum1);
-        OrderNumDTO orderNumDTO = new OrderNumDTO (
-                orderNum.getOrderNum(), orderNum.getUserEmail(), orderNum.getShopper(),
-                orderNum.getDeliveryCost(), orderNum.getProductTot(),
-                orderNum.getPay(), orderNum.getAddress(), orderNum.getDetailAddress(),
-                orderNum.getAgree(), orderNum.getRequest(),orderNum.getCreatedDate()
-        );
+        OrderNumDTO orderNumDTO = OrderNumDTO.builder()
+                .orderNum(orderNum.getOrderNum())
+                .userEmail(orderNum.getUserEmail())
+                .shopper(orderNum.getShopper())
+                .deliveryCost(orderNum.getDeliveryCost())
+                .productTot(orderNum.getProductTot())
+                .pay(orderNum.getPay())
+                .address(orderNum.getAddress())
+                .detailAddress(orderNum.getDetailAddress())
+                .agree(orderNum.getAgree())
+                .request(orderNum.getRequest())
+                .createdDate(orderNum.getCreatedDate())
+                .build();
         return orderNumDTO;
     }
 
