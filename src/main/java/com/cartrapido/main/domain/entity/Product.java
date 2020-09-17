@@ -1,16 +1,14 @@
 package com.cartrapido.main.domain.entity;
 
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Setter
 @Entity
 @Table(name = "product")
 public class Product extends TimeEntity{
@@ -43,6 +41,9 @@ public class Product extends TimeEntity{
     @Column
     private String image;
 
+    @Column
+    private int wishPoint;
+
     @Builder
     public Product(Long productId,
                    String itemId,
@@ -52,7 +53,8 @@ public class Product extends TimeEntity{
                    int productQty,
                    String store,
                    String category,
-                   String image) {
+                   String image,
+                   int wishPoint) {
 
         this.productId = productId;
         this.itemId = itemId;
@@ -63,6 +65,7 @@ public class Product extends TimeEntity{
         this.store = store;
         this.category = category;
         this.image = image;
+        this.wishPoint = wishPoint;
     }
 
 

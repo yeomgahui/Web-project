@@ -21,4 +21,6 @@ public interface QnARepository extends JpaRepository<QnA, Integer> {
     Page<QnA> findByTitleContaining(String searchValue, Pageable pageable);
     Page<QnA> findByNameContaining(String searchValue, Pageable pageable);
 
+
+
 }

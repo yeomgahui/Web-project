@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,17 +26,17 @@ public class OrderNumService {
 
     public List<OrderNumDTO> getOrderNumList() {
         List<OrderNum> orderNumList =orderNumRepository.findAll();
-
-
-
         List<OrderNumDTO> orderNumDTOList =new ArrayList<>();
         for(OrderNum orderNum : orderNumList){
-            OrderNumDTO orderNumDTO = new OrderNumDTO(
-                    orderNum.getOrderNum(), orderNum.getUserEmail(), orderNum.getShopper(),
-                    orderNum.getDeliveryCost(), orderNum.getProductTot(),
-                    orderNum.getPay(), orderNum.getCreatedDate()
-            );
-
+            OrderNumDTO orderNumDTO =OrderNumDTO.builder()
+                    .orderNum(orderNum.getOrderNum())
+                    .userEmail(orderNum.getUserEmail())
+                    .shopper(orderNum.getShopper())
+                    .deliveryCost(orderNum.getDeliveryCost())
+                    .productTot(orderNum.getProductTot())
+                    .pay(orderNum.getPay())
+                    .createdDate(orderNum.getCreatedDate())
+                    .build();
             orderNumDTOList.add(orderNumDTO);
         }
         return  orderNumDTOList;
@@ -88,7 +89,6 @@ public class OrderNumService {
         orderNum1.setShopper(shopperEmail);
 
         return orderNumRepository.save(orderNum1).getUserEmail();
-
     }
 
     public List<OrderNumDTO> getMyOrderNumListShopper(String shopperEmail) {

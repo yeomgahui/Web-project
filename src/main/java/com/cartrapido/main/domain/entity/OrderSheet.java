@@ -3,10 +3,12 @@ package com.cartrapido.main.domain.entity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "orderSheet")
@@ -19,9 +21,6 @@ public class OrderSheet {
     @Column(nullable = false)
     private Long orderNum;
 
-    @Column(length = 100, nullable = false)
-    private String userEmail;
-
     @Column(nullable = false)
     private Long productId;
 
@@ -32,27 +31,20 @@ public class OrderSheet {
     private String store;
 
     @Column
-    private String productName;
-
+    private int latitude;
     @Column
-    private int productPrice;
-
-    @Column
-    private String image;
+    private int longitude;
 
 
     @Builder
-    public OrderSheet(Long orderNum, String userEmail, Long productId, int amount,
-                      String store, String productName, int productPrice, String image
-                        ) {
+    public OrderSheet(Long orderNum, Long productId, int amount, String store,
+                        int latitude, int longitude ) {
         this.orderNum = orderNum;
-        this.userEmail = userEmail;
         this.productId = productId;
         this.amount = amount;
         this.store = store;
-        this.productName = productName;
-        this.productPrice = productPrice;
-        this.image = image;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
 

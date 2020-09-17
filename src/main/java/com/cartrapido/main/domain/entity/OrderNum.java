@@ -46,11 +46,16 @@ public class OrderNum extends TimeEntity{
     @Column
     private String agree;
 
-
+    @Column
+    private int latitude;
+    @Column
+    private int longitude;
 
     @Builder
-    public OrderNum(String userEmail, String shopper ,
-                     int deliveryCost, int productTot ,String pay, String address, String detailAddress,String agree){
+    public OrderNum(Long orderNum, String userEmail, String shopper ,
+                     int deliveryCost, int productTot ,String pay, String address, String detailAddress,String agree,
+                     int latitude, int longitude){
+        this.orderNum = orderNum;
         this.userEmail = userEmail;
         this.shopper = shopper ;
         this.deliveryCost = deliveryCost;
@@ -59,14 +64,11 @@ public class OrderNum extends TimeEntity{
         this.address = address;
         this.detailAddress = detailAddress;
         this.agree = agree;
+        this.latitude=latitude;
+        this.longitude=longitude;
     }
 
-    @Builder
-    public OrderNum(Long orderNum, String userEmail, String shopper ){
-        this.orderNum = orderNum;
-        this.userEmail = userEmail;
-        this.shopper = shopper ;
-    }
+
 
 
 

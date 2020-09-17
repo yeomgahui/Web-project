@@ -11,10 +11,10 @@ import java.util.List;
 public interface OrderNumHistoryRepository extends JpaRepository<OrderNumHistory,Long> {
 //    List<OrderNumHistory> findAllByUserEmail(String userEmail, Pageable pageable);
     Page<OrderNumHistory> findAllByUserEmail(String userEmail, Pageable pageable);
+    Page<OrderNumHistory> findAllByUserEmailOrderByCreatedDateDesc(String userEmail, Pageable pageable);
     List<OrderNumHistory> findAllByShopper(String shopper);
     OrderNumHistory findByOrderNum(Long orderNum);
     OrderNumHistory findByOriOrderNum(Long orderNum);
-
     //중계 수수료 계산
     @Query(value="select sum(m.delivery_cost) FROM order_num_history m",nativeQuery = true)
     Long selectTotals();

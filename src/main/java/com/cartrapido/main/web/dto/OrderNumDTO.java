@@ -21,9 +21,15 @@ public class OrderNumDTO {
     private String request;
     private String agree;
     private LocalDate createdDate;
+    //위도 경도
+    private int latitude;
+    private int longitude;
 
     @Builder
-    public OrderNumDTO(Long orderNum, String userEmail, String shopper, int deliveryCost, int productTot, String pay, String address, String detailAddress, String agree, String request, LocalDate createdDate) {
+    public OrderNumDTO(Long orderNum, String userEmail, String shopper, int deliveryCost,
+                       int productTot, String pay, String address, String detailAddress,
+                       String agree, String request, LocalDate createdDate,
+                       int latitude, int longitude) {
         this.orderNum = orderNum;
         this.userEmail = userEmail;
         this.shopper = shopper ;
@@ -35,6 +41,8 @@ public class OrderNumDTO {
         this.address = address;
         this.detailAddress = detailAddress;
         this.createdDate = createdDate;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
 
@@ -47,6 +55,8 @@ public class OrderNumDTO {
                 .pay(pay)
                 .address(address)
                 .detailAddress(detailAddress)
+                .latitude(latitude)
+                .longitude(longitude)
                 .build();
         return orderNum;
     }
@@ -64,16 +74,6 @@ public class OrderNumDTO {
         this.createdDate = createdDate;
     }
 
-    public OrderNumDTO(String userEmail, String shopper,
-                       int deliveryCost, int productTot, String pay
-                    ){
-        this.orderNum = orderNum;
-        this.userEmail = userEmail;
-        this.shopper = shopper ;
-        this.deliveryCost = deliveryCost;
-        this.productTot = productTot;
-        this.pay = pay;
-    }
 
 
 

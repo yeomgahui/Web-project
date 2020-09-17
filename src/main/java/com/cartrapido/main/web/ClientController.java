@@ -11,6 +11,7 @@ import com.cartrapido.main.domain.repository.WishItemRepository;
 import com.cartrapido.main.service.*;
 import com.cartrapido.main.web.dto.*;
 import lombok.AllArgsConstructor;
+import org.openqa.selenium.support.FindAll;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.batch.BatchAutoConfiguration;
@@ -31,8 +32,6 @@ import java.util.*;
 @Controller
 @AllArgsConstructor
 public class ClientController {
-
-
 
     @Autowired
     private ProductService productService;
@@ -118,6 +117,7 @@ public class ClientController {
         return "/clientWebBody/category";
     }
 
+    //장바구니에 넣기
     @PostMapping("/clientMart/putInCart")
     @ResponseBody
     public void putInCart(@RequestParam Long productId,HttpSession session,
@@ -130,11 +130,11 @@ public class ClientController {
 
         String userEmail = user.getEmail();
         System.out.println(productDTO.getStore()+" 상품을 카트에 넣는다");
-
-        CartDTO cartDTO = new CartDTO(userEmail,productId,amount,
-                productDTO.getProductName(), productDTO.getProductPrice(),
-                productDTO.getImage(), productDTO.getStore());
-
+        CartDTO cartDTO = CartDTO.builder()
+                .userEmail(userEmail)
+                .productId(productId)
+                .amount(amount)
+                .build();
         if(cartService.checkCart(productId, userEmail)==true) cartService.saveCart(cartDTO);
     }
 
@@ -153,24 +153,28 @@ public class ClientController {
 
     }
 
+    //위시리스트 상품 삭제
     @PostMapping("/deleteWishItem")
     @ResponseBody
     public void deleteWishItem(@RequestParam Long wiSequence) {
         wishItemService.deleteWishItem(wiSequence);
     }
 
+    //카트에서 상품 삭제
     @PostMapping("/deleteInCart")
     @ResponseBody
     public void deleteInCart(@RequestParam Long cartId) {
         cartService.deleteCart(cartId);
     }
 
+    //주문서 삭제
     @PostMapping("/deleteOrder")
     @ResponseBody
     public void deleteOrder(@RequestParam Long orderNum) {
         orderNumService.deleteOrder(orderNum);
     }
 
+    //거래 끝내기
     @PostMapping("/finishOrder")
     @ResponseBody
     public void finishOrder(@RequestParam Long orderNum, @RequestParam int score, HttpSession session) {
@@ -203,42 +207,42 @@ public class ClientController {
 
     }
 
-    @PostMapping("/amountPlus")
-    @ResponseBody
-    public void amountPlus(@RequestParam Long cartId) {
-        cartService.amountPlus(cartId);
-    }
-
-    @PostMapping("/amountMinus")
-    @ResponseBody
-    public void amountMinus(@RequestParam Long cartId) {
-        cartService.amountPlus(cartId);
-    }
-
-
+    //주문서 발주하기
     @PostMapping("/clientWeb/pushOrder")
     @ResponseBody /*@ModelAttribute List<CartDTO> cartList*/
     public String pushOrder(@RequestParam (value = "chbox[]") List<Long> checkArr,
                             @RequestParam (value = "amountArr[]") List<Integer> amountArr,
                             @RequestParam int productTot,
-                            @RequestParam int deliveryCost
+                            @RequestParam int deliveryCost,
+                            HttpSession session
     ) {
-        CartDTO cartDTO = cartService.getCartIdInfo(checkArr.get(0));
-        String userEmail = cartDTO.getUserEmail();
-        OrderNumDTO orderNumDTO = new OrderNumDTO(
-                userEmail,null,deliveryCost, productTot, "false"
-        );
+        SessionUser user = (SessionUser) session.getAttribute("user");
+        String userEmail = user.getEmail();
+        System.out.println("pushOrder---------------------"+userEmail);
+        OrderNumDTO orderNumDTO = OrderNumDTO.builder()
+                .userEmail(userEmail)
+                .shopper(null)
+                .deliveryCost(deliveryCost)
+                .productTot(productTot)
+                .pay("false")
+                .build();
+
         //OrderNum 저장
         OrderNum orderNum = orderNumService.saveOrderNum(orderNumDTO);
         Long orderNum1 = orderNum.getOrderNum();
         //OrderSheet 저장
         for(int i = 0 ; i <checkArr.size() ;i++){
-            cartDTO = cartService.getCartIdInfo(checkArr.get(i));
-            OrderSheetDTO orderSheetDTO = new OrderSheetDTO(
-                    orderNum1, orderNumDTO.getUserEmail(),
-                    cartDTO.getProductId(), amountArr.get(i)
-            );
-            orderSheetDTO.setOtherInfo(cartDTO.getProductName(), cartDTO.getProductPrice(), cartDTO.getStore(),cartDTO.getImage());
+            CartDTO cartDTO= cartService.getCartIdInfo(checkArr.get(i));
+            String store = productService.getProductInfo(cartDTO.getProductId()).getStore();
+            OrderSheetDTO orderSheetDTO =  OrderSheetDTO.builder()
+                    .orderNum(orderNum1)
+                    .userEmail(userEmail)
+                    .productId(cartDTO.getProductId())
+                    .amount(amountArr.get(i))
+                    .store(store)
+                    .build();
+            System.out.println("pushOrder---------------------"+userEmail);
+
             orderSheetService.saveOrderSheet(orderSheetDTO);
             cartService.deleteCart(checkArr.get(i));
         }
@@ -252,25 +256,28 @@ public class ClientController {
         return "/clientWeb/clientLayout";
     }
 
+    //마이페이지 화면
     @GetMapping("/clientMypage")
     public String clientMypage() {
 
         return "/clientWebBody/myPage";
     }
 
+    //쇼핑카트 화면
     @GetMapping("/shoppingCart")
     public String shoppingCart(HttpSession session, Model model) {
         SessionUser user = (SessionUser) session.getAttribute("user");
         String userEmail = user.getEmail();
         List<CartDTO> cartList = cartService.getCartList(userEmail);
-
+        for(CartDTO cartDTO: cartList){
+            ProductDTO productDTO = productService.getProductInfo(cartDTO.getProductId());
+            cartDTO.setOtherInfo(
+                    productDTO.getProductName(),productDTO.getProductPrice(),
+                    productDTO.getStore(),productDTO.getImage()
+                    );
+            System.out.println("shoppingCart----------------------------"+cartDTO.getAmount());
+        }
         if(cartList.size()!=0) {
-            for (CartDTO cartDTO : cartList) {
-                System.out.println("카트 아이디 " + cartDTO.getCartId());
-                System.out.println("카트 주인 " + cartDTO.getUserEmail());
-                System.out.println("들어갈 상품 번호 " + cartDTO.getProductId());
-                System.out.println("들어갈 상품 번호 " + cartDTO.getImage());
-            }
             Long firstCartId = cartList.get(0).getCartId();
             Long lastCartId = cartList.get(cartList.size() - 1).getCartId();
             model.addAttribute("firstCartId", firstCartId);
@@ -285,6 +292,7 @@ public class ClientController {
         return "/clientWebBody/shoppingCart";
     }
 
+    //결제할 주문서들
     @GetMapping("/clientWeb/payMyOrder/{orderNum}")
     public String payMyOrder(@PathVariable("orderNum") Long orderNum, Model model){
         OrderNumDTO orderNumDTO = orderNumService.getOrderNum(orderNum);
@@ -306,6 +314,7 @@ public class ClientController {
         return "/clientWebBody/clientView/payMyOrder";
     }
 
+    //과거주문서 내용보기
     @GetMapping("/clientWeb/viewHistoryOrder/{orderNum}")
     public String viewHistoryOrder(@PathVariable("orderNum") Long orderNum, Model model){
         OrderNumHistoryDTO orderNumDTO = orderNumHistoryService.findByOriOrderNum(orderNum);
@@ -345,28 +354,34 @@ public class ClientController {
         return "/clientWebBody/clientView/viewMyOrder";
     }
 
-
+    //채팅
     @GetMapping("/clientChatting")
     public String clientChatting() {
         return "/clientWebBody/clientChatting.html";
     }
 
-
+    //주문서 기타정보 저장하기
     @PostMapping("/saveAddress")
     @ResponseBody
     public void saveAddress(@RequestBody @Valid OrderExtraInfoDTO OrderExtraInfoDTO) {
         orderNumService.saveAddress(OrderExtraInfoDTO);
     }
 
+    //위시리스트에 담기
     @PostMapping("/putInWishList")
     @ResponseBody
     public void putInWishList(@RequestBody @Valid WishItemDTO wishItemDTO, HttpSession session) {
         System.out.println("-----------putInWishList "+wishItemDTO.getProductName());
         SessionUser user = (SessionUser) session.getAttribute("user");
         wishItemDTO.setEmail(user.getEmail());
+
         //위시리스트 중복체크
         if(wishItemService.checkWishList(wishItemDTO.getProductId(), user.getEmail())==true)
             wishItemService.saveWishItem(wishItemDTO);
+
+        System.out.println("-----------putInWishList "+wishItemDTO.getProductId());
+        productService.updateWishPoint(wishItemDTO.getProductId());
+
     }
 
     //회원 신고하기

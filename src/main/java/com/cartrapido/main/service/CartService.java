@@ -18,13 +18,14 @@ import java.util.Optional;
 public class CartService {
     CartRepository cartRepository;
 
+    //장바구니에 넣기
     @Transactional
     public Cart saveCart(CartDTO cartDTO) {
-        System.out.print(cartDTO.getUserEmail() + "의 카트에 넣음");
         Cart cart = cartRepository.save(cartDTO.toEntity());
         return cart;
     }
 
+    //중복상품 확인    
     @Transactional
     public boolean checkCart(Long productId, String userEmail) {
         System.out.print("중복 상품 있는지 확인");
@@ -38,10 +39,9 @@ public class CartService {
     @Transactional
     public void updateCart(Long productId, String userEmail){
         Cart cart = cartRepository.findAllByProductIdAndUserEmail(productId, userEmail);
-
-//        List<CartDTO> cartDTOList = new ArrayList<>();
     }
 
+    //장바구니 리스트 조회
     @Transactional
     public List<CartDTO> getCartList(String userEmail) {
         List<Cart> cartslist = cartRepository.findAllByUserEmail(userEmail);
@@ -53,49 +53,30 @@ public class CartService {
                     .userEmail(cart.getUserEmail())
                     .productId(cart.getProductId())
                     .amount(cart.getAmount())
-                    .productName(cart.getProductName())
-                    .productPrice(cart.getProductPrice())
-                    .image(cart.getImage())
-                    .store(cart.getStore())
                     .build();
 
             cartDTOList.add(cartDTO);
-
         }
-
         return cartDTOList;
     }
 
+    //장바구니 상품 정보
     public CartDTO getCartIdInfo(Long cartId) {
         Cart cart = cartRepository.findAllByCartId(cartId);
         CartDTO cartDTO = CartDTO.builder()
+                .cartId(cart.getCartId())
                 .userEmail(cart.getUserEmail())
                 .productId(cart.getProductId())
                 .amount(cart.getAmount())
-                .productName(cart.getProductName())
-                .productPrice(cart.getProductPrice())
-                .image(cart.getImage())
-                .store(cart.getStore())
                 .build();
         return cartDTO;
 
     }
 
+    //장바구니에서 제거
     public void deleteCart(Long cartId) {
         cartRepository.deleteById(cartId);
         System.out.println(cartId+" 카트 튜플을 삭제");
-
-//        cartRepository.deleteAllByCartId(cartId);
     }
 
-    public void amountPlus(Long cartId) {
-        Cart cart = cartRepository.findAllByCartId(cartId);
-        cart.setAmount(cart.getAmount()+1);
-        cartRepository.save(cart);
-    }
-    public void amountMinus(Long cartId) {
-        Cart cart = cartRepository.findAllByCartId(cartId);
-        cart.setAmount(cart.getAmount()-1);
-        cartRepository.save(cart);
-    }
 }

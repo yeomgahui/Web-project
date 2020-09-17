@@ -14,30 +14,19 @@ public class WishItemDTO {
 
     private Long wiSequence;
     private Long productId;
-    private String itemId;
-    private String productName;
-    private int productPrice;
-    private String productContent;
-    private String store;
-    private String category;
-    private String image;
     private String email;
 
-    //필요한지? 고민
-    private LocalDateTime createdDate;
-    private LocalDateTime modifiedDate;
+
+    //기본 외 받아야할 product 정보를
+    private String productName;
+    private int productPrice;
+    private String image;
+    private String productContent;
 
     public WishItem toEntity(){
         WishItem wishItem = WishItem.builder()
                 .wiSequence(wiSequence)
                 .productId(productId)
-                .itemId(itemId)
-                .productName(productName)
-                .productPrice(productPrice)
-                .productContent(productContent)
-                .store(store)
-                .category(category)
-                .image(image)
                 .email(email)
                 .build();
         return wishItem;
@@ -46,24 +35,19 @@ public class WishItemDTO {
     @Builder
     public WishItemDTO(Long wiSequence,
                        Long productId,
-                       String itemId,
-                       String productName,
-                       String productContent,
-                       int productPrice,
-                       String store,
-                       String category,
-                       String image,
                        String email){
         this.wiSequence = wiSequence;
         this.productId = productId;
-        this.itemId = itemId;
+        this.email = email;
+    }
+
+    //테이블 외 값으로 shopper에게 보여줄 값들.
+    public void setOtherInfo(String productName, int productPrice, String productContent, String image){
         this.productName = productName;
         this.productPrice = productPrice;
         this.productContent = productContent;
-        this.store = store;
-        this.category = category;
         this.image = image;
-        this.email = email;
     }
+
 
 }
