@@ -78,11 +78,11 @@ public class IndexController {
     }
 
 
-    //어드민 페이지
-    @GetMapping("/admin")
-    public String dispAdmin(){
-        return "/adminPage";
-    }
+//    //어드민 페이지
+//    @GetMapping("/admin")
+//    public String dispAdmin(){
+//        return "/adminPage";
+//    }
 
     @GetMapping("/user/denied")
     public String userDenied(){

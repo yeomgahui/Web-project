@@ -80,7 +80,7 @@
                 <div class="breadcrumb__text">
                     <h2>Q&A</h2>
                     <div class="breadcrumb__option">
-                        <a href="./index">Home</a>
+                        <a href="/qnaList">Home</a>
                         <span>Q&A</span>
                     </div>
                 </div>
@@ -111,9 +111,15 @@
                             <td class="shoping__cart__item" style="text-align: center;">
                                 <h5 th:text="${qnaDTO.seq}"></h5>
                             </td>
-                            <td class="shoping__cart__item">
+                            <td class="shoping__cart__item" th:if="${qnaDTO.lev}==0">
                                 <a th:href="'/qnaView?seq='+${qnaDTO.seq}">
                                 <h5 th:text="${qnaDTO.title}"></h5>
+                                </a>
+                            </td>
+                            <td class="shoping__cart__item" th:unless="${qnaDTO.lev}==0">
+                                <a th:href="'/qnaView?seq='+${qnaDTO.seq}">
+                                    <p class="fa fa-long-arrow-right" style="margin-right: 3px"></p>
+                                    <h5 th:text="${qnaDTO.title}"></h5>
                                 </a>
                             </td>
                             <td class="shoping__cart__item" style="text-align: center;">

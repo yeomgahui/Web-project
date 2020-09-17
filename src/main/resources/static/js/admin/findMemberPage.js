@@ -11,7 +11,7 @@ $("#searchBtn").click(function () {
                 "searchOption" :$('#findUser option:selected').val()};
 
     $.ajax({
-        url:'/adminTest/findMember/'+i,
+        url:'/admin/findMember/1',
         type: 'POST',
         data: data,
         dataType: 'json'
@@ -62,7 +62,7 @@ $("#userInfo").on("click",".cancleBtn",function () {
     var $selectedBtn = $(this);
     $.ajax({
         method: 'POST',
-        url: '/adminTest/deblock',
+        url: '/admin/deblock',
         data: "user="+$(this).data('email')
     }).done(function () {
 
@@ -82,7 +82,7 @@ function pageClick(i) {
         "searchOption" :$('#findUser option:selected').val()};
 
     $.ajax({
-        url:'/adminTest/findMember/'+i,
+        url:'/admin/findMember/'+i,
         type: 'POST',
         data: data,
         dataType: 'json'

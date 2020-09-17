@@ -20,7 +20,7 @@
                 <div class="breadcrumb__text">
                     <h2>
                         <!--/*@thymesVar id="mart" type="java.lang.String"*/-->
-                        <span th:text="${mart}"/></h2>
+                        <span id="mart" th:text="${mart}"/></h2>
                     <!--..---------------------------.............-->
 
                     <!--....................-->
@@ -41,14 +41,34 @@
         <div class="row">
 
             <!-- clientSidebar-->
-            <th:block th:include="clientWeb/martSidebar.html" ></th:block>
+            <div class="col-lg-3" xmlns:th="http://www.w3.org/1999/xhtml">
+                <div class="hero__categories">
+                    <div class="hero__categories__all">
+                        <i class="fa fa-bars"></i>
+                        <span>All departments</span>
+                    </div>
+                    <ul>
+                        <li th:each=" category : ${categoryList}">
+                            <a th:href="@{'/clientMart/'+${mart}+'/'+${category}}" th:text="${category}"></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="blog__sidebar">
+                    <div class="blog__sidebar__search">
+                        <form action="#">
+                            <input type="text" id="productSearch" placeholder="Search...">
+                            <button type="button" onclick="searchProduct(1)"><span class="icon_search"></span></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
 
             <div class="col-lg-9 col-md-7">
                 <!--filter-->
                 <th:block th:include="clientWeb/filterItem.html" ></th:block>
 
                 <!-- 제품 데이터 시작-->
-                <div class="row">
+                <div class="row" id="product_item">
                     <div class="col-lg-4 col-md-6 col-sm-6" th:each="product : ${productList}">
                         <div class="product__item">
                             <div class="product__item__pic set-bg">
@@ -81,12 +101,9 @@
                         </div>
                     </div>
 
-
                     <!--모달-->
                     <th:block th:include="clientWeb/productModal.html" ></th:block>
-
-                    <!-- 제품 데이터 끝-->
-                </div>
+                </div><!-- 제품 데이터 끝-->
 
                 <!--페이징-->
                 <div th:if="${category} == 'ALL'">
@@ -134,13 +151,12 @@
             alert(xhr.status);
             alert(errorThrown);
         });
-
     }
-
 
     $(document).ready(function () {
 
         $('.putInWishList').click(function () {
+            alert('wishList');
             var wishListInfo={
                 productId : $(this).data('id'),
                 productName : $(this).data('name'),
@@ -149,7 +165,6 @@
                 image : $(this).data('image'),
                 store : $(this).data('store')
             };
-            //alert(JSON.stringify(wishListInfo));
 
             $.ajax({
                 url: "/putInWishList",
@@ -224,6 +239,83 @@
         });
 
     });
+
+
+    function searchProduct(i){
+        $('#product_item').empty();
+        $('.pagination').empty();
+
+        var data ={"searchValue" :$('#productSearch').val(),
+            "store":$('#mart').text(),
+            "category":$('#category').text()};
+        $.ajax({
+            url:'/searchProduct/'+i,
+            type: 'POST',
+            data: data,
+            dataType: 'json'
+        }).done(function (data) {
+            $.each(data.productList, function (index, items) {
+                var html ='';
+                html += '<div class="col-lg-4 col-md-6 col-sm-6">';
+                html += '<div class="product__item">'
+
+                html += '<div class="product__item__pic set-bg">';
+                html += '<img src="'+items.image+'" width="262.5px">';
+                html +=  '<ul class="product__item__pic__hover">';
+                html +=  '<li class="putInWishList" onclick="putInWishList('+items.productId+')">'
+                    + '<input type="hidden" id="productId" value="'+items.productId+'">'
+                    + '<input type="hidden" id="productName" value="'+items.productName+'">'
+                    + '<input type="hidden" id="productPrice" value="'+items.productPrice+'">'
+                    + '<input type="hidden" id="image" value="'+items.image+'">'
+                    + '<input type="hidden" id="productContent" value="'+items.productContent+'">'
+                    + '<input type="hidden" id="mart" value="'+data.mart+'">'
+                    + '<a href="#"><i class="fa fa-heart"></i></a></li>';
+                html +=  '<li onclick="putInCart('+items.productId+')">';
+                html +=  '    <a href="#"><i class="fa fa-shopping-cart"></i></a></li>';
+                html +=  '</ul>';
+                html +=  '</div>';
+                html +=  '<div class="product__item__text">'
+                html +=  '    <h6><span>'+items.productName+'</span></h6>'
+                html +=  '    <h5><span>'+items.productPrice+'원</span></h5>'
+                html +=  '</div>'
+
+                $('#product_item').append(html);
+
+
+            });
+            var paginationCode='';
+
+            paginationCode += '<div><a href="/productList?page=0"><i class="fa fa-long-arrow-left"></i></a></div>';
+            for(var i= data.startPage+1; i<= data.endPage+1; i++) {
+                paginationCode += '<div><a onclick="searchProduct('+i+')"><i>'+i+'</i></a></div>';
+            }
+            paginationCode += '<div><a href="/productList?page='+data.endPage+'"><i class="fa fa-long-arrow-right" ></i></a></div>';
+
+            $('.pagination').append(paginationCode);
+
+        }).fail(function (error) {
+            alert(JSON.stringify(error));
+        });
+    }
+
+    function putInWishList(productId) {
+
+        $.ajax({
+            url: "/clientMart/putInWishList",
+            data: {productId:productId},
+            type: "POST"
+        }).done(function(json) {
+            Swal.fire({
+                icon: 'success',
+                title: '위시리스트에 추가!',
+                showConfirmButton: false,
+                timer: 1500
+            })
+        }).error(function(xhr, status, errorThrown) {
+            alert(xhr.status);
+            alert(errorThrown);
+        });
+    }
 
 </script>
 

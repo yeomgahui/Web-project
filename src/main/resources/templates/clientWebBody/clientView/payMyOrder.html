@@ -2,7 +2,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
->
+      xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>MyPage</title>
@@ -39,14 +39,12 @@
                                     <!--for each-->
                                     <div class="card wish-list mb-3"
                                          style="
-                                            background-repeat:no-repeat; background-position:center; background-size:cover; pading:10px;
-                                            background-image:url('/img/backFruit.jpg');"
+                                            background-repeat:no-repeat; background-size: 100%; pading:10px;
+                                            background-image:url('/img/backFruit1.png');"
                                     >
                                         <br>
-                                        <strong align="center" class="mb-4 text-success">
-                                        <br><br><br><br>
-                                            <h2><span th:text="${orderSize}"></span>개의 품목을 주문하셨습니다!</h2></strong>
-                                        <br><br><br>
+                                        <h2 align="center" style="margin-top: 150px;" class="mb-4 text-success">
+                                            <strong><span th:text="${orderSize}"></span>개의 품목을 주문하셨습니다!</strong></h2>
 
                                         <!--여기서부터 for each로 돌려서 장바구니 추가되게 해야함-->
                                         <div class="card-body" th:each="orderSheet : ${orderNumList}">

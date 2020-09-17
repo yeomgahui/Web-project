@@ -141,13 +141,19 @@ public class QnAService {
     //나의 문의글 삭제
     @Transactional
     public void qnaDelete(int seq) {
-        qnaRepository.deleteById(seq);
+        QnA qna = qnaRepository.findAllBySeq(seq);
+        int ref = qna.getRef();
+        qnaRepository.deleteByRef(ref);
     }
 
     //나의 문의글 전체 삭제
     @Transactional
     public void qnaDeleteAll(String userEmail) {
-        qnaRepository.deleteByEmail(userEmail);
+        List<QnA> list = qnaRepository.deleteByEmail(userEmail);
+        for(QnA qna : list){
+            int ref = qna.getRef();
+            qnaRepository.deleteByRef(ref);
+        }
     }
 
     // 답변 등록

@@ -16,12 +16,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.batch.BatchAutoConfiguration;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -52,11 +54,11 @@ public class ClientController {
     private ChatRoomService chatRoomService;
     private ChatMessageService chatMessageService;
 
-/*    @GetMapping("/clientMain")
-    public String clientWeb() {
+    /*    @GetMapping("/clientMain")
+        public String clientWeb() {
 
-        return "/clientWebBody/clientMain";
-    }*/
+            return "/clientWebBody/clientMain";
+        }*/
     @Autowired
     private OrderNumHistoryService orderNumHistoryService;
 
@@ -195,10 +197,10 @@ public class ClientController {
         OrderNumDTO orderNumDTO = orderNumService.getOrderNum(orderNum);
         OrderNumHistoryDTO orderNumHistoryDTO =
                 new OrderNumHistoryDTO(
-                orderNum, orderNum, orderNumDTO.getUserEmail(), orderNumDTO.getShopper(),
-                orderNumDTO.getDeliveryCost(), orderNumDTO.getProductTot(), orderNumDTO.getPay(),
-                orderNumDTO.getAddress(), orderNumDTO.getDetailAddress(),
-                orderNumDTO.getAgree(), orderNumDTO.getRequest(),orderNumDTO.getCreatedDate());
+                        orderNum, orderNum, orderNumDTO.getUserEmail(), orderNumDTO.getShopper(),
+                        orderNumDTO.getDeliveryCost(), orderNumDTO.getProductTot(), orderNumDTO.getPay(),
+                        orderNumDTO.getAddress(), orderNumDTO.getDetailAddress(),
+                        orderNumDTO.getAgree(), orderNumDTO.getRequest(),orderNumDTO.getCreatedDate());
 
 
         orderNumHistoryService.saveOrderNum(orderNumHistoryDTO);
@@ -211,7 +213,7 @@ public class ClientController {
         //결제액의 1퍼센트 포인트 적립
         int savePoint = (orderNumDTO.getProductTot()+orderNumDTO.getDeliveryCost())/100;
         memberService.updatePoint(userEmail,savePoint);
-        
+
         user.setPoint(user.getPoint()+savePoint);
         session.setAttribute("user",user);
 
@@ -284,7 +286,7 @@ public class ClientController {
             cartDTO.setOtherInfo(
                     productDTO.getProductName(),productDTO.getProductPrice(),
                     productDTO.getStore(),productDTO.getImage()
-                    );
+            );
             System.out.println("shoppingCart----------------------------"+cartDTO.getAmount());
         }
         if(cartList.size()!=0) {
@@ -410,5 +412,60 @@ public class ClientController {
         return score;
     }
 
+    //product search
+    @PostMapping("/searchProduct/{page}")
+    public @ResponseBody
+    ModelAndView searchProduct(@PathVariable int page,
+                               @RequestParam(name="searchValue") String searchValue,
+                               @RequestParam(name="store") String store,
+                               @RequestParam(name="category") String category,
+                               @PageableDefault(size=30, direction = Sort.Direction.ASC)Pageable pageable) {
+
+        System.out.println(searchValue);
+        System.out.println(store);
+        System.out.println(category);
+
+        List<ProductDTO> productList = productService.productSearchList(PageRequest.of(page-1,30), searchValue, store, category);
+        Page<Product> pageProduct = productService.pagingProductSearchList(pageable, searchValue, store, category);
+
+        int startPage = Math.max(0, pageProduct.getPageable().getPageNumber() - 2);
+        int endPage = Math.min(pageProduct.getPageable().getPageNumber() + 2, pageProduct.getTotalPages() - 1);
+        int endEndPage = pageProduct.getTotalPages() - 1;
+
+        for(ProductDTO productDTO :productList){
+            System.out.println(store+category+productDTO.getProductName());
+        }
+
+        ModelAndView mov = new ModelAndView("jsonView");
+
+        mov.addObject("productList", productList);
+        mov.addObject("mart", store);
+        mov.addObject("startPage", startPage);
+        mov.addObject("endPage", endPage);
+        mov.addObject("endEndPage", endEndPage);
+
+        return mov;
+    }
+
+    @PostMapping("/clientMart/putInWishList")
+    @ResponseBody
+    public void putInWishList(@RequestParam Long productId, HttpSession session) {
+        ProductDTO productDTO = productService.getProductInfo(productId);
+
+        System.out.println("-----------putInWishList "+productDTO.getProductName());
+
+        SessionUser user = (SessionUser) session.getAttribute("user");
+        WishItemDTO wishItemDTO = new WishItemDTO();
+        wishItemDTO.setEmail(user.getEmail());
+        wishItemDTO.setProductId(productId);
+
+        //위시리스트 중복체크
+        if(wishItemService.checkWishList(wishItemDTO.getProductId(), user.getEmail())==true)
+            wishItemService.saveWishItem(wishItemDTO);
+
+        System.out.println("-----------putInWishList "+wishItemDTO.getProductId());
+        productService.updateWishPoint(wishItemDTO.getProductId());
+
+    }
 
 }

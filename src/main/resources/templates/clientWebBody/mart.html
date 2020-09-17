@@ -28,7 +28,7 @@
 
                     <!--....................-->
                     <div class="breadcrumb__option">
-                        <a href="./index">Home</a>
+                        <a th:href="'/clientMart/'+${mart}">Home</a>
                         <span>Shop</span>
                     </div>
                 </div>
@@ -113,6 +113,8 @@
                            th:data-image="${product.image}"
                            th:data-content="${product.productContent}"
                            th:data-wish="${product.wishPoint}"
+                           th:data-store="${product.store}"
+                           th:data-category="${product.category}"
                         >
                             <img th:src="@{${product.image}}" th:width="262.5px"></a>
                         <ul class="product__item__pic__hover">
@@ -229,12 +231,14 @@
                 image : $(this).data('image'),
                 store : $(this).data('store')
             };
+            var info = $(this).data('store')+' > '+$(this).data('category');
             $('.modalPId').val($(this).data('id'));
             $('h3.product-name').text($(this).data('name'));
             $('span.product-price').text($(this).data('price')+"원");
             $('span.product-wishPoint').text($(this).data('wish'));
             $('p.product-content').html($(this).data('content'));
             $('img.product__details__pic__item--large').attr('src', $(this).data('image'));
+            $('h6.product-info').text(info);
 
             $('#addCart').click(function () {
                 $.ajax({
