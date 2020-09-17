@@ -108,11 +108,11 @@ public class OrderNumService {
     }
 
     public void updatePay(Long orderNum,HttpSession session){
-        HashMap clientLatlng = (HashMap) session.getAttribute("clientLatlng");
+//        HashMap clientLatlng = (HashMap) session.getAttribute("clientLatlng");
         OrderNum orderNum1 = orderNumRepository.findByOrderNum(orderNum);
         orderNum1.setPay("true");
-        orderNum1.setLongitude((Double) clientLatlng.get("lng"));
-        orderNum1.setLatitude((Double) clientLatlng.get("lat"));
+//        orderNum1.setLongitude((Double) clientLatlng.get("lng"));
+//        orderNum1.setLatitude((Double) clientLatlng.get("lat"));
         orderNumRepository.save(orderNum1);
         OrderNum orderNum2 = orderNumRepository.findByOrderNum(orderNum);
     }

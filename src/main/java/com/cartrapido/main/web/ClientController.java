@@ -142,37 +142,26 @@ public class ClientController {
     @ResponseBody
     public String clientLatlng(@RequestBody HashMap clientLatlng, HttpSession session){
 
-
         System.out.println("clientLatlng : "+ clientLatlng);
-
 
         session.setAttribute("clientLatlng", clientLatlng);
 
-
-
-
         return "/clientLatlng";
 
-
     }
-
-
-
 
     @PostMapping("/marketLatlng")
     @ResponseBody
     public String marketLatlng(@RequestBody List<Map> marketLatlng, HttpSession session){
 
-
         System.out.println("marketLatlng : "+ marketLatlng.get(0));
-
 
         session.setAttribute("market", marketLatlng);
 
         return "/marketLatlng";
 
-
     }
+
 
     //위시리스트 상품 삭제
     @PostMapping("/deleteWishItem")
