@@ -22,14 +22,14 @@ public class OrderNumDTO {
     private String agree;
     private LocalDate createdDate;
     //위도 경도
-    private int latitude;
-    private int longitude;
+    private double latitude;
+    private double longitude;
 
     @Builder
     public OrderNumDTO(Long orderNum, String userEmail, String shopper, int deliveryCost,
                        int productTot, String pay, String address, String detailAddress,
                        String agree, String request, LocalDate createdDate,
-                       int latitude, int longitude) {
+                       double latitude, double longitude) {
         this.orderNum = orderNum;
         this.userEmail = userEmail;
         this.shopper = shopper ;

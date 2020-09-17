@@ -31,14 +31,14 @@ public class OrderSheet {
     private String store;
 
     @Column
-    private int latitude;
+    private double latitude;
     @Column
-    private int longitude;
+    private double longitude;
 
 
     @Builder
     public OrderSheet(Long orderNum, Long productId, int amount, String store,
-                        int latitude, int longitude ) {
+                      double latitude, double longitude ) {
         this.orderNum = orderNum;
         this.productId = productId;
         this.amount = amount;

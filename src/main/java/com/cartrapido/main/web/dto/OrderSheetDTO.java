@@ -18,8 +18,8 @@ public class OrderSheetDTO {
     private String store;
 
     //위도 경도
-    private int latitude;
-    private int longitude;
+    private double latitude;
+    private double longitude;
 
     //기본 외 받아야할 product 정보를
     private String productName;
@@ -45,7 +45,7 @@ public class OrderSheetDTO {
     @Builder //테이블에 값을 넣을때 쓰는 빌더
     public OrderSheetDTO(Long orderNum, String userEmail, Long productId, int amount,
                         String productName,int productPrice,String store,String image,
-                         int latitude, int longitude){
+                         double latitude, double longitude){
         this.orderNum=orderNum;
         this.productId = productId;
         this.amount = amount;
@@ -66,7 +66,7 @@ public class OrderSheetDTO {
     }
 
     //위도 경도 set하기
-    public void setLocation(int latitude, int longitude){
+    public void setLocation(double latitude, double longitude){
         this.latitude = latitude;
         this.longitude = longitude;
     }
