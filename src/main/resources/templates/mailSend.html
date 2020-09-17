@@ -7,7 +7,7 @@
         html{
             height: 100%;
         }
-        body#mailSenderBody{ background-image:url("https://hdwallsource.com/img/2014/9/blur-26347-27038-hd-wallpapers.jpg");
+        body#mailSenderBody{ background-image:url("https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
             background-repeat:no-repeat;
             background-position:center;
             background-size:cover;
@@ -73,19 +73,28 @@
 <div class="container">
     <div class="mail-form">
         <div id="main-content" class="" style="display: flex; flex-direction: column; background: white; width: 540px;
-                                                margin: 0px auto 20px; box-shadow: rgb(136,136,136) 2px 1px 20px; min-height: 350px">
+                                                margin: 0px auto 20px; box-shadow: rgb(136,136,136) 2px 1px 20px; min-height: 385px">
             <div style="margin: 0px auto; width: 380px;">
                 <div style="width: 100%; margin: auto; ">
-                    <span style="display: block; margin: 16px 0px 24px; text-align: center;">
-                        브랜드 로고 cartrapido
+                    <span style="display: block;
+                                  color: darkgreen;
+                                  font-size: 2em;
+                                  font-weight: bold;
+                                  margin: 16px 0px 24px;
+                                  text-align: center;">
+                        What's in my cart?
                     </span>
-                    <h1 style="font-size: 22px; font-weight: 700; color: rgb(66,66,66); line-height: 1.3em; margin: 8px 0px 0px;
+                    <h1 style="font-size: 22px; font-weight: 700; color: rgb(66,66,66); line-height: 1.3em; margin: 8px 0px 16px;
                                 text-align: center;">
                         <span style="color: rgb(66,66,66); font-weight: bold;"> 비밀번호를 잊으셨나요?</span>
                     </h1>
-                    <h2 style="font-size: 18px; font-weight: 600; color: rgb(117,117,117); line-height: 1.3em; margin: 8px 0px 16px;
+                    <h2 style="font-size: 14px; color: rgb(117,117,117); line-height: 1.3em; margin: 8px 0px;
                                 text-align: center;">
-                        이메일을 입력하시면 초기화 비밀번호를 알려드립니다.
+                        이메일을 입력하시면
+                    </h2>
+                    <h2 style="font-size: 14px; color: rgb(117,117,117); line-height: 1.3em; margin: 8px 0px 16px;
+                                text-align: center;">
+                        초기화 비밀번호를 알려드립니다.
                     </h2>
                     <form name="mailSendForm" id="mailSendForm" th:action="@{/mail}" >
                         <div style="position: relative; ">
@@ -98,7 +107,6 @@
                     </form>
                     <input type="button" id="loginBtn" class="goBtn" value="로그인하러 가기" onclick="window.location='/user/loginPage'" style="float:left;">
                     <input type="button" id="signUpBtn" class="goBtn" value="회원가입하러가기" onclick="window.location='/'" style="float: right">
-
 
                 </div>
             </div>

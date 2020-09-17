@@ -4,6 +4,7 @@ import com.cartrapido.main.domain.entity.Product;
 import com.cartrapido.main.domain.entity.QnA;
 import com.cartrapido.main.domain.repository.ProductRepository;
 import com.cartrapido.main.web.dto.ProductDTO;
+import com.cartrapido.main.web.dto.QnADTO;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -41,7 +43,7 @@ public class ProductService {
                     .wishPoint(product.getWishPoint())
                     .build();
 
-                productDTOList.add(productDTO);
+            productDTOList.add(productDTO);
 
         }
 
@@ -239,4 +241,53 @@ public class ProductService {
         product.setWishPoint(product.getWishPoint()+1);
         productRepository.save(product);
     }
+
+    //QnA Search list
+    @Transactional
+    public List<ProductDTO> productSearchList(Pageable pageable, String searchValue, String store, String category) {
+
+        List<Product> productList = pagingProductSearchList(pageable, searchValue,store,category ).getContent();
+
+        List<ProductDTO> productDTOList = new ArrayList<>();
+
+        for(Product product : productList){
+            ProductDTO productDTO = ProductDTO.builder()
+                    .productId(product.getProductId())
+                    .productName(product.getProductName())
+                    .productPrice(product.getProductPrice())
+                    .productQty(product.getProductQty())
+                    .productContent(product.getProductContent())
+                    .store(product.getStore())
+                    .category(product.getCategory())
+                    .image(product.getImage())
+                    .wishPoint(product.getWishPoint())
+                    .build();
+
+            productDTOList.add(productDTO);
+        }
+
+        for(ProductDTO productDTO : productDTOList){
+            System.out.println("productDTOList"+productDTO.getProductName());
+        }
+        return productDTOList;
+    }
+
+    @Transactional
+    public Page<Product> pagingProductSearchList(Pageable pageable, String searchValue, String store, String category) {
+        System.out.println("pagingProductSearchList"+searchValue);
+
+        Page<Product> productSearchList =
+                productRepository.productSearchCategory(store, category, searchValue, pageable);
+        return productSearchList;
+    }
+
+    @Transactional
+    public Page<Product> pagingProductSearchList(Pageable pageable, String searchValue, String store) {
+        System.out.println("pagingProductSearchList"+searchValue);
+
+        Page<Product> productSearchList =
+                productRepository.productSearchCategory(store, searchValue, pageable);
+        return productSearchList;
+    }
+
 }

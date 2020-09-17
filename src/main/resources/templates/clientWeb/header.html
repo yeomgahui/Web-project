@@ -9,7 +9,19 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
             <style>
+                header {
+                    background-color: rgba(255,255,255,100);
+                    position: fixed;
+                    width:100%;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    z-index: 10;
+                }
 
+                body {
+                    padding-top: 135.19px;
+                }
 
                 .quantity {
                     float: left;
@@ -220,15 +232,16 @@
                                     <li><a href="/clientMart/ministop">ministop</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#">My Page</a>
+                            <li><a href="#">My Cart</a>
                                 <ul class="header__menu__dropdown">
-                                    <li><a href="/clientMypage">계정 관리</a></li>
+                                    <li><a href="/clientMypage">내정보</a></li>
                                     <li><a href="/shoppingCart">장바구니</a></li>
+                                    <li><a href="/wishItems" >위시리스트</a></li>
                                     <li><a href="/myOrderList">주문 내역</a></li>
-                                    <li><a href="/toPayList">결제대기 주문서</a></li>
-                                    <li><a href="/listHistory">과거 주문서</a></li>
+                                    <li><a href="/toPayList">결제 대기</a></li>
+                                    <li><a href="/listHistory">지난 주문내역</a></li>
                                     <li><a href="/chat/clientChatting">채팅</a></li>
-                                    <li><a href="/wishItems">위시리스트</a></li>
+                                    <li><a href="/qnaMyList">나의 Q&A</a></li>
                                 </ul>
                             </li>
                             <li><a href="#">Contact</a>

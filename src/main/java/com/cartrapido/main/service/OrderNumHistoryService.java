@@ -97,8 +97,14 @@ public class OrderNumHistoryService {
     }
     //중계 수수료 계산
     public String getTotalRevenue(){
-       Long revenue= orderNumHistoryRepository.selectTotals();
-       Long revenueBrut = Math.round((double)revenue*0.1);
+
+        Long revenue= orderNumHistoryRepository.selectTotals();
+        Long revenueBrut = null;
+        if(revenue != null){
+            revenueBrut = Math.round((double)revenue*0.1);
+        }else{
+            return "0";
+        }
         DecimalFormat df = new DecimalFormat("#,###");
         return df.format(revenueBrut);
     }

@@ -50,14 +50,14 @@ public class AdminController {
     private QnAService qnaService;
 
     //어드민 페이지 테스트
-    @GetMapping("/adminTest")
+    @GetMapping("/admin")
     public String dispAdmin(Model model){
         // /admin/blackList.html 붙이기
         model.addAttribute("template","/admin/adminMain.html");
         return "/admin/adminSidebar.html";
     }
     //회원관리
-    @GetMapping("/adminTest/blackList")
+    @GetMapping("/admin/blackList")
     public String blackList(Model model){
         List<BlackListResponseDTO> blackList = blackListService.findAllDesc();
 
@@ -69,7 +69,7 @@ public class AdminController {
         return "/admin/adminSidebar.html";
     }
     //블랙리스트 삭제
-    @PostMapping("/adminTest/deleteBlackList")
+    @PostMapping("/admin/deleteBlackList")
     public @ResponseBody void deleteBlackList(@RequestParam(name="id") Long id){
         blackListService.delete(id);
     }
@@ -84,7 +84,7 @@ public class AdminController {
 
     }
     //차트
-    @GetMapping("/adminTest/dashboard")
+    @GetMapping("/admin/dashboard")
     public String dashboard(Model model){
         //총 상품 갯수
         model.addAttribute("productCount",productService.getTotalNumProduct());
@@ -105,7 +105,7 @@ public class AdminController {
         model.addAttribute("template","/admin/dashboard.html");
         return "/admin/adminSidebar.html";
     }
-    @PostMapping("/adminTest/chartData")
+    @PostMapping("/admin/chartData")
     public @ResponseBody ModelAndView chartData(){
         System.out.println("data가져오기");
 
@@ -116,14 +116,14 @@ public class AdminController {
 
 
     //회원 검색 페이지
-    @GetMapping("/adminTest/findMemberPage")
+    @GetMapping("/admin/findMemberPage")
     public String findMemberPage(Model model){
         model.addAttribute("js","/js/admin/findMemberPage.js");
         model.addAttribute("template","/admin/findMemberPage.html");
         return "/admin/adminSidebar.html";
     }
 
-    @PostMapping("/adminTest/findMember/{page}")
+    @PostMapping("/admin/findMember/{page}")
     public @ResponseBody ModelAndView findMember(@PathVariable int page, @RequestParam(name="user") String user, @RequestParam(name="searchOption") String searchOption){
 
         //회원 조회
@@ -136,14 +136,14 @@ public class AdminController {
 
         return mv;
     }
-    @PostMapping("/adminTest/deblock")
+    @PostMapping("/admin/deblock")
     public  @ResponseBody void deblock(@RequestParam(name="user") String user){
         memberService.enableSet(user,true);
 
     }
 
     //Q&A 관리창 보기
-    @GetMapping("/adminTest/adminQnaList/{page}")
+    @GetMapping("/admin/adminQnaList/{page}")
     public String adminQnaList(Model model, @PathVariable int page) {
 
         //List<QnADTO> qnaList = qnaService.getQnAList(pageable);
@@ -162,7 +162,7 @@ public class AdminController {
     }
 
     //Q&A 답변
-    @GetMapping("/adminTest/qnaAnswer")
+    @GetMapping("/admin/qnaAnswer")
     public String qnaAnswer(Model model,@RequestParam int seq) {
 
         QnADTO qnaDTO = qnaService.qnaView(seq);
@@ -172,7 +172,7 @@ public class AdminController {
     }
 
     //답변 DB 등록
-    @PostMapping("/adminTest/qnaAnswerWrite")
+    @PostMapping("/admin/qnaAnswerWrite")
     public @ResponseBody void qnaAnswerWrite(@RequestBody @Valid QnADTO qnaDTO) {
         QnADTO qnaAnswerDTO = new QnADTO();
         qnaAnswerDTO.setName("관리자");
@@ -187,7 +187,7 @@ public class AdminController {
 
 
     //Q&A search
-    @PostMapping("/adminTest/searchQna/{page}")
+    @PostMapping("/admin/searchQna/{page}")
     public @ResponseBody ModelAndView searchQna(@PathVariable int page,
                                                 @RequestParam(name="searchValue") String searchValue,
                                                 @RequestParam(name="searchOption") String searchOption) {
@@ -208,7 +208,7 @@ public class AdminController {
         return mov;
     }
 
-    @GetMapping("/adminTest/adminQnaView")
+    @GetMapping("/admin/adminQnaView")
     public String qnaView(Model model, @RequestParam int seq) {
 
         QnADTO qnaDTO = qnaService.qnaView(seq);
@@ -217,7 +217,7 @@ public class AdminController {
         return "/admin/adminSidebar.html";
     }
 
-    @PostMapping("/adminTest/storeRank")
+    @PostMapping("/admin/storeRank")
     @ResponseBody
     public ModelAndView storeRank(Model model){
         System.out.println("============storeRank========================");

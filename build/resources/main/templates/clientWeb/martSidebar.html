@@ -10,4 +10,12 @@
             </li>
         </ul>
     </div>
+    <div class="blog__sidebar" th:style="${ category=='ALL' ? 'display:none':'display:flex'}">
+        <div class="blog__sidebar__search">
+            <form action="#">
+                <input type="text" id="productSearch" placeholder="Search...">
+                <button type="button" onclick="searchProduct(1)"><span class="icon_search"></span></button>
+            </form>
+        </div>
+    </div>
 </div>

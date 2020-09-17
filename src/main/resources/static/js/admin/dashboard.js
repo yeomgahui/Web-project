@@ -4,7 +4,7 @@ $(document).ready(function () {
     //달별 주문량 가져오기
     $.ajax({
         method: 'POST',
-        url: '/adminTest/chartData',
+        url: '/admin/chartData',
         dataType: 'json',
     }).done(function (data) {
         var monthsSales = new Array();
@@ -62,7 +62,7 @@ $(document).ready(function () {
     //스토어별 판매량
 
         $.ajax({
-            url: '/adminTest/storeRank',
+            url: '/admin/storeRank',
             type: 'POST',
             dataType: 'json'
         }).done(function (data) {

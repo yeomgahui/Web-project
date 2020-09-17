@@ -76,7 +76,7 @@
 
 
 <!-- Blog Details Section Begin -->
-<section class="blog-details spad">
+<section class="blog-details spad" >
     <div class="container">
         <div class="row">
 
@@ -89,47 +89,48 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="signup-form">
-                                <form action="/examples/actions/confirmation.php" method="post" class="form-horizontal myPageForm">
-                                    <div class="row">
-                                        <div class="col-8 offset-4">
-                                            <h2>My Info</h2>
+                                <form action="/examples/actions/confirmation.php" method="post" class="form-horizontal myPageForm" style="padding: 30px; border: 1px solid rgba(0, 0, 0, 0.3);; border-radius: 4px;">
+                                    <div class="form-group row">
+                                        <div class="col-9 offset-3" style="margin:0 auto; padding-bottom: 30px">
+                                            <h3 style="text-align: center;"><strong style="border-bottom: 3px solid #7fad39;">내 정보</strong></h3>
                                         </div>
                                     </div>
+
                                     <div class="form-group row " >
-                                        <label class="col-form-label col-4">Username</label>
-                                        <div class="col-8">
+                                        <label class="col-form-label col-2" style="font-size: inherit;">이름</label>
+                                        <div class="col-10">
                                             <input type="text" class="form-control correctable" id="name" name="name" th:value="${session.user.name}" required="required" readonly ="true">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-form-label col-4">이메일</label>
-                                        <div class="col-8">
+                                        <label class="col-form-label col-2" style="font-size: inherit;">이메일</label>
+                                        <div class="col-10">
                                             <input type="email" class="form-control" name="email" id="email" th:value="${session.user.email}" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-form-label col-4" >주소</label>
-                                        <div class="col-8">
+                                        <label class="col-form-label col-2" style="font-size: inherit;">주소</label>
+                                        <div class="col-10">
                                             <input type="text" class="form-control correctable" name="address" id="address" th:value="${session.user.address}" required="required" readonly ="true">
                                         </div>
                                     </div>
                                     <div class="form-group row pwd hidden" >
-                                        <label class="col-form-label col-4" >비밀번호</label>
-                                        <div class="col-8 hidden">
+                                        <label class="col-form-label col-2" style="font-size: inherit;">비밀번호</label>
+                                        <div class="col-10 hidden">
                                             <input type="password" class="form-control" id="password" name="password" required="required">
                                         </div>
                                     </div>
                                     <div class="form-group row pwd hidden" >
-                                        <label class="col-form-label col-4">비밀번호 확인</label>
-                                        <div class="col-8">
+                                        <label class="col-form-label col-2" style="font-size: inherit;">비밀번호 확인</label>
+                                        <div class="col-10">
                                             <input type="password" class="form-control" id="confirmPwd" name="confirm_password" required="required">
                                             <div id="pwdDiv"></div>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <div class="col-8 offset-4">
-                                            <input type="button" style="display: inline-block; float: left;" value="수정하기" class="btn btn-primary" id ="myPageBtn">
-                                            <input type="button" style="display: inline-block; float: right;" value="회원 탈퇴" class="btn btn-primary" id="withdrawalBtn">
+                                        <div class="col-8 offset-4" style="font-size: inherit; margin:0 auto">
+                                            <input type="button" style="display: inline-block; float: left; background: #7fad39;" value="수정하기" class="btn btn-primary" id ="myPageBtn">
+                                            <input type="button" style="display: inline-block; float: right; background: #7fad39;" value="회원 탈퇴" class="btn btn-primary" id="withdrawalBtn">
                                         </div>
                                     </div>
                                 </form>
@@ -147,7 +148,7 @@
                                                 <table style="margin: auto">
                                                     <tbody>
                                                     <tr>
-                                                        <td>
+                                                        <td s>
                                                             <input type="password" id="passwordTextBox" placeholder="Password" />
                                                             <input type="hidden" id="check">
                                                         </td>
@@ -159,7 +160,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td>
-                                                            <input type="button" class="btn btn-primary" id="pwdButton" value="확인" />
+                                                            <input type="button" class="btn btn-primary" id="pwdButton" style="background: #7fad39; margin: 0 auto;" value="확인" />
                                                             <div id="pwdCheckDiv"></div>
                                                         </td>
                                                     </tr>
@@ -174,7 +175,7 @@
                                             </div>
 
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-success" data-dismiss="modal" style="background: #7fad39;">Close</button>
                                             </div>
 
                                         </div>

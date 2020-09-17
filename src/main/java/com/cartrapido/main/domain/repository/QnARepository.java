@@ -9,11 +9,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
+
 public interface QnARepository extends JpaRepository<QnA, Integer> {
 
     Page<QnA> findAllByEmail(String email, Pageable pageable);
     QnA findAllBySeq(int seq);
-    void deleteByEmail(String email);
+    List<QnA> findBySeq(int seq);
+    List<QnA> deleteByEmail(String email);
+    void deleteByRef(int ref);
 
     @Query("select max(q.seq) from QnA q")
     int findByMaxId();

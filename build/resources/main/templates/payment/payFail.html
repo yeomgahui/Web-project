@@ -24,18 +24,33 @@
 
             <th:block th:include="clientWeb/mypageSidebar.html"></th:block>
 
-            <div class="col-lg-8 col-md-7 order-md-1 order-1">
-
+            <div class="col-lg-8 col-md-7 order-md-1 order-1"
+                 style="
+                   background-repeat:no-repeat; background-position:center; background-size:cover; padding:10px;
+                   background-image:url('/img/nolistBack4.png');">
 
                 <div class="blog__details__content">
-                    <div class="row">
-                        <h2 align="center"> 결제에 실패했습니다. </h2>
+                    <br><br><br>
+                    <h2 style="margin-left: 20px"> 결제에 실패했습니다. </h2>
+                    <h6> 결제 대기중인 주문서 페이지에서 결제를 다시 진행해주세요.</h6>
+                    <span class="btn-outline-success" onclick="location.href='/toPayList'">
                         <br>
-                        결제 대기중인 주문서 페이지에서 결제를 다시 진행해주세요.
-                        <span class="btn-outline-success" onclick="location.href='/toPayList'">
-                        <br>
-                    </div>
                 </div>
+
+                <div class="blog__details__content">
+                    <br><br><br>
+                    <h2 style="margin-left: 20px"> 주문하신 상품이 없으시네요! </h2>
+                    <br>
+                    <span class="btn btn-outline-success btn-lg" style="margin-left: 20px" onclick="location.href='/clientMain'">
+                        주문하러 가기
+                        </span>&emsp;&emsp;&emsp;&emsp;
+                    <span class="btn btn-outline-success btn-lg" style="margin-left: 20px" onclick="location.href='/shoppingCart'">
+                        장바구니로 가기
+                        </span>
+                    <br>
+                </div>
+
+
             </div>
         </div>
     </div>

@@ -7,12 +7,12 @@
 <style>
     .myPageForm{
         width: 500px;
+        margin-left: 50px;
 
     }
     .hidden{
         display: none;
     }
-
 
 
 </style>
@@ -22,108 +22,112 @@
     <div class="row">
         <th:block th:include="shopperWeb/sidebar.html" ></th:block>
 
-        <div class="col-lg-9" id="col-lg-9" >
+        <div class="col-lg-8 col-md-7 order-md-1 order-1">
 
-            <!--            여기서부터 바디부분-->
 
-            <form method="post" class="form-horizontal myPageForm">
+            <div class="blog__details__content">
                 <div class="row">
-                    <div class="col-8 offset-4">
-                        <h2>My Info</h2>
-                        <br>
-                        <br>
-                    </div>
-                </div>
+                    <div class="col-lg-6">
+                        <div class="signup-form">
+                            <form action="/examples/actions/confirmation.php" method="post" class="form-horizontal myPageForm" style="padding: 30px; border: 1px solid rgba(0, 0, 0, 0.3);; border-radius: 4px;">
+                                <div class="form-group row">
+                                    <div class="col-9 offset-3" style="margin:0 auto; padding-bottom: 30px">
+                                        <h3 style="text-align: center;"><strong style="border-bottom: 3px solid #007bff;">내 정보</strong></h3>
+                                    </div>
+                                </div>
 
-                <div class="form-group row " >
-                    <label class="col-form-label col-4">Username</label>
-                    <div class="col-8">
-                        <input type="text" class="form-control correctable" id="name" name="name" th:value="${session.user.name}" required="required" readonly ="true">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-form-label col-4">이메일</label>
-                    <div class="col-8">
-                        <input type="email" class="form-control" name="email" id="email" th:value="${session.user.email}" readonly>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-form-label col-4">주소</label>
-                    <div class="col-8">
-                        <input type="text" class="form-control correctable" name="address" id="address" th:value="${session.user.address}" required="required" readonly ="true">
-                    </div>
-                </div>
-                <div class="form-group row pwd hidden" >
-                    <label class="col-form-label col-4" >비밀번호</label>
-                    <div class="col-8 hidden">
-                        <input type="password" class="form-control" id="password" name="password" required="required">
-                    </div>
-                </div>
-                <div class="form-group row pwd hidden" >
-                    <label class="col-form-label col-4">비밀번호 확인</label>
-                    <div class="col-8">
-                        <input type="password" class="form-control" id="confirmPwd" name="confirm_password" required="required">
-                        <div id="pwdDiv"></div>
-                    </div>
-                </div>
-                <div class="form-group row pageBtn">
-                    <div class="col-8 offset-4">
-                        <input type="button" value="수정하기" class="btn btn-primary btn-lg" id ="myPageBtn">
-                    </div>
-                </div>
-            </form>
+                                <div class="form-group row " >
+                                    <label class="col-form-label col-4" style="font-size: inherit;">이름</label>
+                                    <div class="col-8">
+                                        <input type="text" class="form-control correctable" id="name" name="name" th:value="${session.user.name}" required="required" readonly ="true">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-form-label col-4" style="font-size: inherit;">이메일</label>
+                                    <div class="col-8">
+                                        <input type="email" class="form-control" name="email" id="email" th:value="${session.user.email}" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-form-label col-4" style="font-size: inherit;">주소</label>
+                                    <div class="col-8">
+                                        <input type="text" class="form-control correctable" name="address" id="address" th:value="${session.user.address}" required="required" readonly ="true">
+                                    </div>
+                                </div>
+                                <div class="form-group row pwd hidden" >
+                                    <label class="col-form-label col-4" style="font-size: inherit;">비밀번호</label>
+                                    <div class="col-8 hidden">
+                                        <input type="password" class="form-control" id="password" name="password" required="required">
+                                    </div>
+                                </div>
+                                <div class="form-group row pwd hidden" >
+                                    <label class="col-form-label col-4" style="font-size: inherit;">비밀번호 확인</label>
+                                    <div class="col-8">
+                                        <input type="password" class="form-control" id="confirmPwd" name="confirm_password" required="required">
+                                        <div id="pwdDiv"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group row pageBtn">
+                                    <div class="col-4 offset-8" >
+                                        <input type="button" value="수정하기" class="btn btn-primary btn-lg" id ="myPageBtn">
+                                    </div>
+                                </div>
+                            </form>
 
             <!--여기까지 바디-->
+                        </div>
+                    </div>
+                </div>
+                <!-- 모달 시작-->
+                <div id="pwdpop" class="modal fade" role="dialog">
+                    <div class ="modal-dialog">
+                        <!-- 모달 content시작-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">비밀번호를 입력해주세요.</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                            </div>
+
+                            <div class="modal-body">
+                                <table style="margin: auto; text-align: center">
+                                    <tbody>
+                                    <tr>
+                                        <td>
+                                            <input type="password" id="passwordTextBox" placeholder="Password" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span id="passwordSpan"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="button" style="" class="btn btn-primary" id="pwdButton" value="확인" />
+                                            <div id="pwdCheckDiv"></div>
+                                        </td>
+                                    </tr>
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success"  data-dismiss="modal">Close</button>
+                            </div>
+
+                        </div>
+                        <!-- 모달 content끝-->
+
+                    </div>
+
+                </div>
+            </div>
         </div>
     </div>
-</div>
-<!-- 모달 시작-->
-<div id="pwdpop" class="modal fade" role="dialog">
-    <div class ="modal-dialog">
-        <!-- 모달 content시작-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">비밀번호를 입력해주세요.</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-
-            </div>
-
-            <div class="modal-body">
-                <table style="margin: auto; text-align: center">
-                    <tbody>
-                    <tr>
-                        <td>
-                            <input type="password" id="passwordTextBox" placeholder="Password" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span id="passwordSpan"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="button" style="" class="btn btn-primary" id="pwdButton" value="확인" />
-                            <div id="pwdCheckDiv"></div>
-                        </td>
-                    </tr>
-
-
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success"  data-dismiss="modal">Close</button>
-            </div>
-
-        </div>
-        <!-- 모달 content끝-->
-
-    </div>
-
-</div>
-<!-- 모달 끝-->
+                <!-- 모달 끝-->
 <script>
 
     //유효성 검사 함수
