@@ -10,9 +10,33 @@ function geolocate() {
             var circle = new google.maps.Circle(
                 {center: geolocation, radius: position.coords.accuracy});
             autocomplete.setBounds(circle.getBounds());
+
+
+            ajax(geolocation);
         });
     }
 }
+
+
+function ajax(geolocation) {
+
+    console.log(geolocation);
+
+    $.ajax({
+        url: "/clientLatlng",
+        data: JSON.stringify(geolocation),
+        contentType: 'application/json; charset=UTF-8',
+        dataType : "json",
+        type: "POST"
+    }).done(function(json) {
+        alert("done");
+
+    }).fail(function(error) {
+
+    });
+}
+
+
 function initAutocomplete() {
     // Create the autocomplete object, restricting the search predictions to
     // geographical location types.
