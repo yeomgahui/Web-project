@@ -138,17 +138,38 @@ public class ClientController {
         if(cartService.checkCart(productId, userEmail)==true) cartService.saveCart(cartDTO);
     }
 
-    @PostMapping("/latlng")
+    @PostMapping("/clientLatlng")
     @ResponseBody
-    public String test(@RequestBody List<Map> marketLocationDTO, HttpSession session){
+    public String clientLatlng(@RequestBody HashMap clientLatlng, HttpSession session){
 
 
-        System.out.println("dto : "+ marketLocationDTO.get(0));
+        System.out.println("clientLatlng : "+ clientLatlng);
 
 
-        session.setAttribute("market", marketLocationDTO);
+        session.setAttribute("clientLatlng", clientLatlng);
 
-        return "/latlng";
+
+
+
+        return "/clientLatlng";
+
+
+    }
+
+
+
+
+    @PostMapping("/marketLatlng")
+    @ResponseBody
+    public String marketLatlng(@RequestBody List<Map> marketLatlng, HttpSession session){
+
+
+        System.out.println("marketLatlng : "+ marketLatlng.get(0));
+
+
+        session.setAttribute("market", marketLatlng);
+
+        return "/marketLatlng";
 
 
     }

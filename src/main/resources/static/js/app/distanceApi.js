@@ -293,7 +293,7 @@
     function ajax(locs) {
 
         $.ajax({
-            url: "/latlng",
+            url: "/marketLatlng",
             data: JSON.stringify(locs),
             contentType: 'application/json; charset=UTF-8',
             dataType : "json",
