@@ -79,7 +79,7 @@ public class PayController {
         SessionUser user = (SessionUser) session.getAttribute("user");
         String userEmail = user.getEmail();
         //pay현황 true로 변경 & 위도 경도 삽입
-        orderNumService.updatePay(orderNum);
+        orderNumService.updatePay(orderNum, session);
         //orderSheet 위도와 경도 삽입
         orderSheetService.updateOrderSheet(orderNum,session);
         //point 차감

@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -105,10 +107,14 @@ public class OrderNumService {
         return  orderNumDTOList;
     }
 
-    public void updatePay(Long orderNum){
+    public void updatePay(Long orderNum,HttpSession session){
+        HashMap clientLatlng = (HashMap) session.getAttribute("clientLatlng");
         OrderNum orderNum1 = orderNumRepository.findByOrderNum(orderNum);
         orderNum1.setPay("true");
+        orderNum1.setLongitude((Double) clientLatlng.get("lng"));
+        orderNum1.setLatitude((Double) clientLatlng.get("lat"));
         orderNumRepository.save(orderNum1);
+        OrderNum orderNum2 = orderNumRepository.findByOrderNum(orderNum);
     }
 
     public void deleteOrder(Long orderNum) {
