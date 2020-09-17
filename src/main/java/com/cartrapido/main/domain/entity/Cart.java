@@ -24,6 +24,12 @@ public class Cart {
     @Column(length = 100, nullable = false)
     private String store;
 
+    @Column(length = 100)
+    private Double lat;
+
+    @Column(length = 100)
+    private Double lng;
+
     @Column(length = 100, nullable = false)
     private int amount;
 
@@ -38,7 +44,7 @@ public class Cart {
 
 
     @Builder
-    public Cart(String userEmail, Long productId, int amount , String productName , int productPrice, String image, String store) {
+    public Cart(String userEmail, Long productId, int amount , String productName , int productPrice, String image, String store, Double lat, Double lng) {
         this.userEmail = userEmail;
         this.productId = productId;
         this.amount = amount;
@@ -46,6 +52,8 @@ public class Cart {
         this.productPrice = productPrice;
         this.image = image;
         this.store = store;
+        this.lat = lat;
+        this.lng = lng;
     }
 
 

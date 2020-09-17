@@ -12,6 +12,8 @@ import com.cartrapido.main.service.*;
 import com.cartrapido.main.web.dto.*;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.batch.BatchAutoConfiguration;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -22,12 +24,15 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.List;
+import java.lang.reflect.Array;
+import java.util.*;
 
 
 @Controller
 @AllArgsConstructor
 public class ClientController {
+
+
 
     @Autowired
     private ProductService productService;
@@ -115,18 +120,37 @@ public class ClientController {
 
     @PostMapping("/clientMart/putInCart")
     @ResponseBody
-    public void putInCart(@RequestParam Long productId, HttpSession session,
+    public void putInCart(@RequestParam Long productId,HttpSession session,
                           @RequestParam(required=true,defaultValue="1") Integer amount) {
 
         ProductDTO productDTO = productService.getProductInfo(productId);
         SessionUser user = (SessionUser) session.getAttribute("user");
+
+
+
         String userEmail = user.getEmail();
         System.out.println(productDTO.getStore()+" 상품을 카트에 넣는다");
+
         CartDTO cartDTO = new CartDTO(userEmail,productId,amount,
                 productDTO.getProductName(), productDTO.getProductPrice(),
                 productDTO.getImage(), productDTO.getStore());
 
         if(cartService.checkCart(productId, userEmail)==true) cartService.saveCart(cartDTO);
+    }
+
+    @PostMapping("/latlng")
+    @ResponseBody
+    public String test(@RequestBody List<Map> marketLocationDTO, HttpSession session){
+
+
+        System.out.println("dto : "+ marketLocationDTO.get(0));
+
+
+        session.setAttribute("market", marketLocationDTO);
+
+        return "/latlng";
+
+
     }
 
     @PostMapping("/deleteWishItem")

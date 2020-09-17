@@ -8,7 +8,9 @@ import org.omg.CORBA.ServerRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.batch.BatchAutoConfiguration;
 import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.context.annotation.Bean;
@@ -27,7 +29,7 @@ import java.io.IOException;
 import java.util.Map;
 
 @EnableJpaAuditing
-@SpringBootApplication
+@SpringBootApplication(exclude={BatchAutoConfiguration.class})
 public class Application{
 
     @Bean

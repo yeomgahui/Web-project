@@ -70,6 +70,9 @@
         // var markers = [];
         var distance;
         var hashmap = new HashMap();
+        var hashMap2 = new HashMap();
+        var marketNameMatch = new HashMap();
+        let locs = [];
 
 
 
@@ -111,12 +114,18 @@
         });
 
         var markets = ['홈플러스','이마트','롯데마트','CU','GS25','MINISTOP'];
+        var marketsNameEdit = ['homeplus','emart','lottemart','cu','gs25','ministop'];
+
 
         // alert(markets.length);
 
 
         for (var k = 0; k < markets.length; k++) {
             let market = markets[k];
+            let marketEdit = marketsNameEdit[k];
+
+            marketNameMatch.put(market,marketEdit);
+
 
             // alert(market);
 
@@ -148,6 +157,7 @@
 
 
 
+
                 if (status == google.maps.places.PlacesServiceStatus.OK) {
                     for (var i = 0; i < results.length; i++) {
                         const regexr = [/24/, /조이마트/, /노브랜드/, /하이/];//제외
@@ -162,32 +172,36 @@
 
                         } else {
 
-                            // if(!martName.test(results[i].name)){
-                            // const idx = results.indexOf(results[i].name)
-                            // results.splice(idx,1)
 
 
-                            // }else{
-
-
-                            // markers.push(createMarker(results[i])); //지도에 표시
 
 
                             distance = computeDistance(results[i].geometry.location, latlng);
 
                             hashmap.put(results[i].name, distance);
 
+                            var latlngStart = {
 
-                            // alert("startpoint로 부터" + results[i].name + "은   "+ distance.toFixed(1) + "km 만큼 떨어져있음!");
+
+                                latitude: results[i].geometry.location.lat(),
+                                longitude: results[i].geometry.location.lng()
+                            }
+
+                            hashMap2.put(results[i].name, latlngStart);//검색용 해쉬맵
 
 
-                            // }// if
+
+
+
+
 
 
                         }//else
 
 
                     }//for
+
+
                     // get object keys array
 
                     // alert(Math.min.apply(null, hashmap.values())); //가장 가까운 값 반환
@@ -196,6 +210,7 @@
                     var min;
                     var minVal;
                     var minKey;
+
 
 
                     min = hashmap.values()[2];
@@ -226,17 +241,81 @@
                     $("#" + market + "_minKey").text(minKey);
                     $("#" + market + "_minVal").text(minVal.toFixed(1) + "km");
 
+
+
+
+
+                    var loc = {
+
+                        market : marketNameMatch.get(market),
+                        lat : hashMap2.get(minKey).latitude,
+                        lng : hashMap2.get(minKey).longitude
+                    }
+
+                    locs.push({
+                        market : loc.market,
+                        lat : loc.lat,
+                        lng : loc.lng
+                    });
+
+
+
+                    //locs값이 다 채워지면 컨트롤러로 보냄
+                    if(locs.length === markets.length){
+
+
+                        ajax(locs);
+
+
+                    }
+
+
+
+
                     hashmap.clear();//데이터가 쌓이지 않게 지워줌
 
 
                 }//if
 
 
-            });
+            });//내부함수
 
 
         }//for
+
+
+
+    }//init
+
+
+
+
+    function ajax(locs) {
+
+        $.ajax({
+            url: "/latlng",
+            data: JSON.stringify(locs),
+            contentType: 'application/json; charset=UTF-8',
+            dataType : "json",
+            type: "POST"
+        }).done(function(json) {
+            alert("done");
+
+        }).fail(function(error) {
+
+        });
     }
+
+
+
+
+
+
+
+
+
+
+
 
 
     function latlngFromAdress(results, status) {//변하지 않는 original 위치

@@ -15,6 +15,8 @@ public class CartDTO {
     private int productPrice;
     private String image;
     private String store;
+    private Double lat;
+    private Double lng;
 
 
 
@@ -28,6 +30,8 @@ public class CartDTO {
                 .productPrice(productPrice)
                 .image(image)
                 .store(store)
+                .lat(lat)
+                .lng(lng)
                 .build();
 
         return cart;
@@ -44,6 +48,7 @@ public class CartDTO {
         this.productPrice = productPrice;
         this.image = image;
         this.store = store;
+
     }
 
     @Builder
@@ -56,6 +61,7 @@ public class CartDTO {
         this.productPrice = productPrice;
         this.image = image;
         this.store = store;
+
     }
 
 }

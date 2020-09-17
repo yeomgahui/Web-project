@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @AllArgsConstructor
@@ -91,6 +93,9 @@ public class ShopperController {
 
         List<OrderNumDTO> orderNumDTOList = orderNumService.getMyOrderNumListShopper(shopperEmail);
         if(orderNumDTOList.size()!=0){
+
+
+            //오름차순으로 넣어주기
             model.addAttribute("orderNumList", orderNumDTOList);
         }
         return "/shopperWebBody/shopperList/myOrderSheets";
@@ -138,5 +143,20 @@ public class ShopperController {
         chatRoomService.save(requestDTO);
 
     }
+
+    @PostMapping("/currentLocation")
+    @ResponseBody
+    public String currentLocation(@RequestBody HashMap hash,HttpSession session){
+
+        System.out.println("dto : "+ hash);
+
+        session.setAttribute("latlng", hash);
+
+        return "/currentLocation";
+
+
+
+    }
+
 
 }
