@@ -3,6 +3,7 @@ package com.cartrapido.main.web;
 import com.cartrapido.main.config.auth.dto.SessionUser;
 import com.cartrapido.main.service.MemberService;
 import com.cartrapido.main.service.OrderNumService;
+import com.cartrapido.main.service.OrderSheetService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,8 @@ public class PayController {
     private OrderNumService orderNumService;
     @Autowired
     private MemberService memberService;
+    @Autowired
+    private OrderSheetService orderSheetService;
 
     @GetMapping("/payment/kakaoPay/{orderNum}/{payTot}/{point}")
     public String kakaoPay(@PathVariable("payTot") int payTot,
@@ -75,12 +78,15 @@ public class PayController {
         System.out.println("===========updatePay=====point==========="+point+"=================");
         SessionUser user = (SessionUser) session.getAttribute("user");
         String userEmail = user.getEmail();
-        //pay현황 true로 변경
+        //pay현황 true로 변경 & 위도 경도 삽입
         orderNumService.updatePay(orderNum);
+        //orderSheet 위도와 경도 삽입
+        orderSheetService.updateOrderSheet(orderNum,session);
         //point 차감
         memberService.usePoint(userEmail,point);
         //point session 업데이트
         user.setPoint(user.getPoint()-point);
         session.setAttribute("user",user);
+
     }
 }

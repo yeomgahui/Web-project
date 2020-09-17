@@ -47,14 +47,14 @@ public class OrderNum extends TimeEntity{
     private String agree;
 
     @Column
-    private int latitude;
+    private double latitude;
     @Column
-    private int longitude;
+    private double longitude;
 
     @Builder
     public OrderNum(Long orderNum, String userEmail, String shopper ,
                      int deliveryCost, int productTot ,String pay, String address, String detailAddress,String agree,
-                     int latitude, int longitude){
+                    double latitude, double longitude){
         this.orderNum = orderNum;
         this.userEmail = userEmail;
         this.shopper = shopper ;
