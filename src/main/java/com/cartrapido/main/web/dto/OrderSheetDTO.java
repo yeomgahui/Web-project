@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Column;
+
 @Getter
 @Setter
 public class OrderSheetDTO {
@@ -15,14 +17,17 @@ public class OrderSheetDTO {
     private int amount;
     private String store;
 
+    //위도 경도
+    private int latitude;
+    private int longitude;
+
     //기본 외 받아야할 product 정보를
     private String productName;
     private int productPrice;
     private String image;
 
-    public OrderSheetDTO() {
-
-    }
+    //storeRank처리하기 위한 생성자
+    public OrderSheetDTO(){}
 
     public OrderSheet toEntitiy(){
         OrderSheet orderSheet = OrderSheet.builder()
@@ -30,6 +35,8 @@ public class OrderSheetDTO {
                 .productId(productId)
                 .amount(amount)
                 .store(store)
+                .latitude(latitude)
+                .longitude(longitude)
                 .build();
         return orderSheet;
 
@@ -37,8 +44,8 @@ public class OrderSheetDTO {
 
     @Builder //테이블에 값을 넣을때 쓰는 빌더
     public OrderSheetDTO(Long orderNum, String userEmail, Long productId, int amount,
-                        String productName,int productPrice,String store,String image
-                    ){
+                        String productName,int productPrice,String store,String image,
+                         int latitude, int longitude){
         this.orderNum=orderNum;
         this.productId = productId;
         this.amount = amount;
@@ -46,6 +53,8 @@ public class OrderSheetDTO {
         this.productPrice=productPrice;
         this.store=store;
         this.image=image;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     //테이블 외 값으로 shopper에게 보여줄 값들.
@@ -54,6 +63,12 @@ public class OrderSheetDTO {
         this.productPrice = productPrice;
         this.store = store;
         this.image = image;
+    }
+
+    //위도 경도 set하기
+    public void setLocation(int latitude, int longitude){
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
 }

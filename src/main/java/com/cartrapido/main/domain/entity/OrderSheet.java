@@ -30,13 +30,21 @@ public class OrderSheet {
     @Column
     private String store;
 
+    @Column
+    private int latitude;
+    @Column
+    private int longitude;
+
+
     @Builder
-    public OrderSheet(Long orderNum, Long productId, int amount, String store
-                        ) {
+    public OrderSheet(Long orderNum, Long productId, int amount, String store,
+                        int latitude, int longitude ) {
         this.orderNum = orderNum;
         this.productId = productId;
         this.amount = amount;
         this.store = store;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
 
