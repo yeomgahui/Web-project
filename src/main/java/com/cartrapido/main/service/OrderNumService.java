@@ -58,7 +58,7 @@ public class OrderNumService {
         return  orderNumDTOList;
     }
 
-    public List<OrderNumDTO> getPaidOrder(String userEmail, String pay) {
+    public List<OrderNumDTO> getPaidOrder(String userEmail, int pay) {
         List<OrderNum> orderNumList = orderNumRepository.findAllByUserEmailAndPay(userEmail,pay);
         List<OrderNumDTO> orderNumDTOList = new ArrayList<>();
         for (OrderNum orderNum : orderNumList) {
@@ -71,7 +71,7 @@ public class OrderNumService {
         }
         return  orderNumDTOList;
     }
-    public List<OrderNumDTO> shopperGetPaidOrder(String pay) {
+    public List<OrderNumDTO> shopperGetPaidOrder(int pay) {
         List<OrderNum> orderNumList = orderNumRepository.findAllByPay(pay);
         List<OrderNumDTO> orderNumDTOList = new ArrayList<>();
         for (OrderNum orderNum : orderNumList) {
@@ -110,7 +110,7 @@ public class OrderNumService {
     public void updatePay(Long orderNum,HttpSession session){
 //        HashMap clientLatlng = (HashMap) session.getAttribute("clientLatlng");
         OrderNum orderNum1 = orderNumRepository.findByOrderNum(orderNum);
-        orderNum1.setPay("true");
+        orderNum1.setPay(1);
 //        orderNum1.setLongitude((Double) clientLatlng.get("lng"));
 //        orderNum1.setLatitude((Double) clientLatlng.get("lat"));
         orderNumRepository.save(orderNum1);
