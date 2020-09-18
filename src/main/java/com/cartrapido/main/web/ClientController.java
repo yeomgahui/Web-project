@@ -236,7 +236,6 @@ public class ClientController {
                 .shopper(null)
                 .deliveryCost(deliveryCost)
                 .productTot(productTot)
-                .pay("false")
                 .build();
 
         //OrderNum 저장
