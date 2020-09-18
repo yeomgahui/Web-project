@@ -18,23 +18,23 @@ function geolocate() {
 }
 
 
-function ajax(geolocation) {
-
-    console.log(geolocation);
-
-    $.ajax({
-        url: "/clientLatlng",
-        data: JSON.stringify(geolocation),
-        contentType: 'application/json; charset=UTF-8',
-        dataType : "json",
-        type: "POST"
-    }).done(function(json) {
-        alert("done");
-
-    }).fail(function(error) {
-
-    });
-}
+// function ajax(geolocation) {
+//
+//
+//
+//     $.ajax({
+//         url: "/clientLatlng",
+//         data: JSON.stringify(geolocation),
+//         contentType: 'application/json; charset=UTF-8',
+//         dataType : "json",
+//         type: "POST"
+//     }).done(function(json) {
+//         alert("done");
+//
+//     }).fail(function(error) {
+//
+//     });
+// }
 
 
 function initAutocomplete() {

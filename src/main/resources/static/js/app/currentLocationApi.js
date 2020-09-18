@@ -33,6 +33,23 @@ function ajax(des) {
 
 
     });
+
+
+
+    $.ajax({
+        type : "GET",
+        url : "clientLatlng",
+        success : function(data) {
+            console.log(data);
+
+        },
+        error : function(error) {
+            console.log("error");
+        },
+    });
+
+
+
 }
 
 

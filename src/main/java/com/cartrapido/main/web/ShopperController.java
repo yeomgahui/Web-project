@@ -74,6 +74,8 @@ public class ShopperController {
         return "/shopperWebBody/shopperList/orderSheetList";
     }
 
+
+
     @GetMapping("/myOrderSheetsHistory")
     public String myOrderSheetsHistory(Model model, HttpSession session ) {
         SessionUser user = (SessionUser) session.getAttribute("user");
@@ -156,6 +158,28 @@ public class ShopperController {
 
 
 
+    }
+
+    @RequestMapping(value = "clientLatlng")
+    @ResponseBody
+    public List<OrderNumDTO>  ajax() {
+
+        List<OrderNumDTO> orderNumDTOList = orderNumService.shopperGetPaidOrder("true");
+        System.out.println(orderNumDTOList);
+        List<OrderNumDTO> orderNumDTOListReturn = new ArrayList<>();
+        for(int i = 0 ; i<orderNumDTOList.size();i++){
+            if(orderNumDTOList.get(i).getShopper()==null){
+                orderNumDTOListReturn.add(orderNumDTOList.get(i));
+                System.out.println(orderNumDTOListReturn);
+            }
+
+        }
+
+
+
+
+
+        return orderNumDTOListReturn;
     }
 
 
