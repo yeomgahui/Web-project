@@ -198,7 +198,7 @@ public class ClientController {
         OrderNumHistoryDTO orderNumHistoryDTO =
                 new OrderNumHistoryDTO(
                         orderNum, orderNum, orderNumDTO.getUserEmail(), orderNumDTO.getShopper(),
-                        orderNumDTO.getDeliveryCost(), orderNumDTO.getProductTot(), orderNumDTO.getPay(),
+                        orderNumDTO.getDeliveryCost(), orderNumDTO.getProductTot(), null,
                         orderNumDTO.getAddress(), orderNumDTO.getDetailAddress(),
                         orderNumDTO.getAgree(), orderNumDTO.getRequest(),orderNumDTO.getCreatedDate());
 
