@@ -31,8 +31,8 @@ public class OrderNum extends TimeEntity{
     @Column
     private int productTot;
 
-    @Column
-    private String pay;//1 = true  , 0 = false
+    @Column(columnDefinition = "integer default 0")
+    private int pay;//1 = true  , 0 = false
 
     @Column
     private String address;
@@ -53,7 +53,7 @@ public class OrderNum extends TimeEntity{
 
     @Builder
     public OrderNum(Long orderNum, String userEmail, String shopper ,
-                     int deliveryCost, int productTot ,String pay, String address, String detailAddress,String agree,
+                     int deliveryCost, int productTot ,int pay, String address, String detailAddress,String agree,
                     double latitude, double longitude){
         this.orderNum = orderNum;
         this.userEmail = userEmail;

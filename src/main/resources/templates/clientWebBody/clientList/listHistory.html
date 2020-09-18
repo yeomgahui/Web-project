@@ -69,25 +69,25 @@
                                                         <div>
                                                             주문일 : <span th:text="${orderNumList.createdDate}"/><br>
                                                             product cost - <span id="productTot"
-                                                                      th:value="${orderNumList.productTot}"
-                                                                      th:text="${orderNumList.productTot}"/>won
+                                                                                 th:value="${orderNumList.productTot}"
+                                                                                 th:text="${orderNumList.productTot}"/>won
                                                             <br>
                                                             delivery cost - <span id="deliveryCost"
-                                                                                   th:value="${orderNumList.deliveryCost}"
-                                                                                   th:text="${orderNumList.deliveryCost}"/>won
+                                                                                  th:value="${orderNumList.deliveryCost}"
+                                                                                  th:text="${orderNumList.deliveryCost}"/>won
                                                             <br><br>
 
                                                             <strong>Tot. <span id="deliveryCost"
-                                                                  th:text="${orderNumList.deliveryCost}+${orderNumList.productTot}"/>Won </strong>
+                                                                               th:text="${orderNumList.deliveryCost}+${orderNumList.productTot}"/>Won </strong>
                                                         </div>
 
                                                     </div>
                                                 </div>
                                             </div>
                                         </li>
-                                <!--for each 여기까지 -->
+                                        <!--for each 여기까지 -->
 
-                                </ul>
+                                    </ul>
 
 
                                 </div></div>
@@ -118,7 +118,7 @@
         location.href="/payment/kakaoPay/"+orderNum+"/"+payTot;
     };
 
-     function deleteOrder(orderNum) {
+    function deleteOrder(orderNum) {
 
         Swal.fire({
             title: '정말로 삭제하시겠습니까?',
@@ -131,11 +131,11 @@
         }).then((result) => {
             if (result.value) {
 
-/*                Swal.fire(
-                    '삭제 완료!',
-                    '주문서가 삭제되었습니다.',
-                    'success'
-                )*/
+                /*                Swal.fire(
+                                    '삭제 완료!',
+                                    '주문서가 삭제되었습니다.',
+                                    'success'
+                                )*/
 
                 $.ajax({
                     url: "/deleteOrder",

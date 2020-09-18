@@ -15,7 +15,7 @@ public class OrderNumDTO {
     private String shopper;
     private int deliveryCost;
     private int productTot;
-    private String pay;
+    private int pay;
     private String address;
     private String detailAddress;
     private String request;
@@ -27,7 +27,7 @@ public class OrderNumDTO {
 
     @Builder
     public OrderNumDTO(Long orderNum, String userEmail, String shopper, int deliveryCost,
-                       int productTot, String pay, String address, String detailAddress,
+                       int productTot, int pay, String address, String detailAddress,
                        String agree, String request, LocalDate createdDate,
                        double latitude, double longitude) {
         this.orderNum = orderNum;
@@ -64,7 +64,7 @@ public class OrderNumDTO {
 
 
     public OrderNumDTO(Long orderNum, String userEmail, String shopper,
-                       int deliveryCost, int productTot, String pay, LocalDate createdDate){
+                       int deliveryCost, int productTot, int pay, LocalDate createdDate){
         this.orderNum = orderNum;
         this.userEmail = userEmail;
         this.shopper = shopper ;
