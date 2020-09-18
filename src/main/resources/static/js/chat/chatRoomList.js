@@ -35,12 +35,6 @@ function enterRoom(roomId) {
 
                 messageElement = document.createElement('li');
 
-                if(items.sender == roomInfo.sender){
-                    messageElement.classList.add('chat-left');
-                }else{
-                    messageElement.classList.add('chat-right');
-                }
-
                 /*보낸 사람 이름*/
                 var chatAvatar = document.createElement('div');
                 chatAvatar.classList.add('chat-avatar');
@@ -51,14 +45,22 @@ function enterRoom(roomId) {
                 var avatarName = document.createTextNode(idSplit[0]);
                 avatarNameDiv.appendChild(avatarName);
                 chatAvatar.appendChild(avatarNameDiv);
-                messageElement.appendChild(chatAvatar);
 
                 /*메시지 추가*/
                 var chatMessageDiv = document.createElement('div');
                 chatMessageDiv.classList.add('chat-text');
                 var chatMessage = document.createTextNode(items.message);
                 chatMessageDiv.appendChild(chatMessage);
-                messageElement.appendChild(chatMessageDiv);
+
+                if(items.sender == roomInfo.sender){
+                    messageElement.classList.add('chat-left');
+                    messageElement.appendChild(chatAvatar);
+                    messageElement.appendChild(chatMessageDiv);
+                }else{
+                    messageElement.classList.add('chat-right');
+                    messageElement.appendChild(chatMessageDiv);
+                    messageElement.appendChild(chatAvatar);
+                }
 
                 messageArea.appendChild(messageElement);
                 var chatContent = document.querySelector('.chat-content');
@@ -115,19 +117,6 @@ function onMessageReceived(message){
     var messageArea = document.querySelector('#messageArea');
 
     var messageElement = document.createElement('li');
-
-    if(recv.sender == roomInfo.sender){
-        messageElement.classList.add('chat-left');
-    }else{
-        messageElement.classList.add('chat-right');
-    }
-    /*이름 프로필*/
-    /*var avatarElement = document.createElement('i');
-    var avatarText = document.createTextNode(message.sender[0]);
-    avatarElement.appendChild(avatarText);
-    avatarElement.style['background-color'] = getAvatarColor(message.sender);*/
-
-    /*보낸 사람 이름*/
     var chatAvatar = document.createElement('div');
     chatAvatar.classList.add('chat-avatar');
     var avatarNameDiv = document.createElement('div');
@@ -137,18 +126,31 @@ function onMessageReceived(message){
     var avatarName = document.createTextNode(idSplit[0]);
     avatarNameDiv.appendChild(avatarName);
     chatAvatar.appendChild(avatarNameDiv);
-    messageElement.appendChild(chatAvatar);
+
 
     /*메시지 추가*/
     var chatMessageDiv = document.createElement('div');
     chatMessageDiv.classList.add('chat-text');
     var chatMessage = document.createTextNode(recv.message);
     chatMessageDiv.appendChild(chatMessage);
-    messageElement.appendChild(chatMessageDiv);
 
+
+    if(recv.sender == roomInfo.sender){
+        //나
+        messageElement.classList.add('chat-left');
+        messageElement.appendChild(chatAvatar);
+        messageElement.appendChild(chatMessageDiv);
+
+    }else{
+        //상대
+        messageElement.classList.add('chat-right');
+        messageElement.appendChild(chatMessageDiv);
+        messageElement.appendChild(chatAvatar);
+    }
     messageArea.appendChild(messageElement);
     var chatContent = document.querySelector('.chat-content');
     chatContent.scrollTop = chatContent.scrollHeight;
+
 }
 
 function sendMessage() {
