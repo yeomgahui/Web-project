@@ -30,16 +30,6 @@
                                 </div>
                             </div>
                             <ul class="users">
-                                <!--<li class="person" data-chat="person1">
-                                    <div class="user">
-                                        <img src="https://www.bootdey.com/img/Content/avatar/avatar3.png" alt="Retail Admin">
-                                        <span class="status busy"></span>
-                                    </div>
-                                    <p class="name-time">
-                                        <span class="name">Steve Bangalter</span>
-                                        <span class="time">15/02/2019</span>
-                                    </p>
-                                </li>-->
                                 <li class="person" th:each="chatRoom : ${chatRoom}"  th:attr="data-value=${chatRoom.roomId}" th:onclick="enterRoom([[${chatRoom.roomId}]]);">
                                     <input type="hidden" th:id="'room'+${chatRoom.roomId}" value="0">
                                     <span style="font-size:10pt">Order No</span><br>
@@ -67,37 +57,11 @@
                             <div class="chat-container">
                                 <div class="chat-content">
                                     <ul class="chat-box chatContainerScroll" id="messageArea">
-                                        <!--<div th:each="history : ${history}" >
-                                            <li class ="chat=left">
-                                                <div class="chat-avatar">
-                                                    <div class="chat-name" th:text="${history.sender}"></div>
-                                                </div>
-                                                <div class="chat-text" th:text="${history.message}"></div>
-                                            </li>
-                                        </div>-->
-                                        <!--<li class="chat-left">
-                                            <div class="chat-avatar">
-                                                <img src="https://www.bootdey.com/img/Content/avatar/avatar3.png" alt="Retail Admin">
-                                                <div class="chat-name">Russell</div>
-                                            </div>
-                                            <div class="chat-text">Hello, I'm Russell.
-                                                <br>How can I help you today?</div>
-                                            <div class="chat-hour">08:55 <span class="fa fa-check-circle"></span></div>
-                                        </li>
-                                        <li class="chat-right">
-                                            <div class="chat-hour">08:56 <span class="fa fa-check-circle"></span></div>
-                                            <div class="chat-text">Hi, Russell
-                                                <br> I need more information about Developer Plan.</div>
-                                            <div class="chat-avatar">
-                                                <img src="https://www.bootdey.com/img/Content/avatar/avatar3.png" alt="Retail Admin">
-                                                <div class="chat-name">Sam</div>
-                                            </div>
-                                        </li>-->
 
                                     </ul>
                                 </div>
                                 <div class="form-group mt-3 mb-0" id="inputDiv">
-                                    <input type="text" class="form-control" id="message" placeholder="Type your message here" style="width:80%; display: inline-block">
+                                    <input type="textarea" class="form-control" id="message" placeholder="Type your message here" style="width:80%; display: inline-block">
                                     <input type="button" id="sendBtn" value="보내기" class="btn btn-primary" th:onclick="sendMessage()"/>
                                 </div>
                             </div>
