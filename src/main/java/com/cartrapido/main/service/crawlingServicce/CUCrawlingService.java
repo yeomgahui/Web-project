@@ -59,6 +59,8 @@ public class CUCrawlingService {
     //@PostConstruct
     public void getCUDatas() {
 
+        //productRepository.deleteAll();
+
         System.out.println(store);
 
         //System Property SetUp
@@ -80,11 +82,11 @@ public class CUCrawlingService {
         driver = new ChromeDriver(options);
         iceCreamCrawling();
 
-//        driver = new ChromeDriver(options);
-//        foodCrawling();
-//
-//        driver = new ChromeDriver(options);
-//        drinkCrawling();
+        driver = new ChromeDriver(options);
+        foodCrawling();
+
+        driver = new ChromeDriver(options);
+        drinkCrawling();
     }
 
     public void convenienceFoodCrawling() {
@@ -134,6 +136,7 @@ public class CUCrawlingService {
                         .store(store)
                         .category("ConvenienceFood")
                         .image(image)
+                        .wishPoint(0)
                         .build();
                 productRepository.save(productDTO.toEntity()).getProductId();
                 //cuProductList.add(productDTO);
@@ -192,6 +195,7 @@ public class CUCrawlingService {
                         .store(store)
                         .category("FastFood")
                         .image(image)
+                        .wishPoint(0)
                         .build();
 
                 productRepository.save(productDTO.toEntity()).getProductId();
@@ -253,6 +257,7 @@ public class CUCrawlingService {
                         .store(store)
                         .category("Snack")
                         .image(image)
+                        .wishPoint(0)
                         .build();
 
                 productRepository.save(productDTO.toEntity()).getProductId();
@@ -270,8 +275,8 @@ public class CUCrawlingService {
         try {
             //get page (= 브라우저에서 url을 주소창에 넣은 후 request 한 것과 같다)
             driver.get("http://cu.bgfretail.com/product/product.do?category=product&depth2=4&depth3=4");
-            element = driver.findElement(By.id("setD"));
-            element.click();
+//            element = driver.findElement(By.id("setD"));
+//            element.click();
 
             Thread.sleep(3000);
 
@@ -314,6 +319,7 @@ public class CUCrawlingService {
                         .store(store)
                         .category("IceCream")
                         .image(image)
+                        .wishPoint(0)
                         .build();
 
                 productRepository.save(productDTO.toEntity()).getProductId();
@@ -331,8 +337,8 @@ public class CUCrawlingService {
         try {
             //get page (= 브라우저에서 url을 주소창에 넣은 후 request 한 것과 같다)
             driver.get("http://cu.bgfretail.com/product/product.do?category=product&depth2=4&depth3=5");
-            element = driver.findElement(By.id("setB"));
-            element.click();
+//            element = driver.findElement(By.id("setB"));
+//            element.click();
 
             Thread.sleep(10000);
 
@@ -375,6 +381,7 @@ public class CUCrawlingService {
                         .store(store)
                         .category("Food")
                         .image(image)
+                        .wishPoint(0)
                         .build();
 
                 productRepository.save(productDTO.toEntity()).getProductId();
@@ -392,8 +399,8 @@ public class CUCrawlingService {
         try {
             //get page (= 브라우저에서 url을 주소창에 넣은 후 request 한 것과 같다)
             driver.get("http://cu.bgfretail.com/product/product.do?category=product&depth2=4&depth3=6");
-            element = driver.findElement(By.id("setC"));
-            element.click();
+//            element = driver.findElement(By.id("setC"));
+//            element.click();
 
             Thread.sleep(10000);
 
@@ -436,6 +443,7 @@ public class CUCrawlingService {
                         .store(store)
                         .category("Drink")
                         .image(image)
+                        .wishPoint(0)
                         .build();
 
                 productRepository.save(productDTO.toEntity()).getProductId();

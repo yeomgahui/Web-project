@@ -119,15 +119,6 @@ public class EmartCrawlingService {
 
                         //Productcontent 가져오기
                         String productcontent = "";
-                        //if (itemId.equals("0000010006566")) {
-
-//                                   String array_contentUrl = "http://emart.ssg.com/item/itemView.ssg?itemId=" + itemId;
-//                                   System.out.println(array_contentUrl);
-//
-//                                    Document doc1 = Jsoup.connect(array_contentUrl).get();
-//
-//                                    productcontent = doc1.select("table[summary='상품 필수정보 보여주는 표']").html();
-                        //}
 
                         ProductDTO productDTO = ProductDTO.builder()
                                 .itemId(itemId)
@@ -138,6 +129,7 @@ public class EmartCrawlingService {
                                 .store(store)
                                 .category(array_category[j])
                                 .image(image)
+                                .wishPoint(0)
                                 .build();
 
                         productRepository.save(productDTO.toEntity()).getProductId();

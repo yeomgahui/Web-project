@@ -111,10 +111,6 @@ public class LottemartCrawlingService {
                     String itemId = href.substring(34, 49);
 
                     String productcontent = "";
-//                            Document doc1 = Jsoup.connect(href).get();
-//                            System.out.println(doc1);
-//                            Elements productcontent = doc1.select("div.properties");
-//                            System.out.println(productcontent);
 
                     ProductDTO productDTO = ProductDTO.builder()
                             .itemId(itemId)
@@ -125,6 +121,7 @@ public class LottemartCrawlingService {
                             .store(store)
                             .category(array_category[j])
                             .image(image)
+                            .wishPoint(0)
                             .build();
 
                     productRepository.save(productDTO.toEntity()).getProductId();
