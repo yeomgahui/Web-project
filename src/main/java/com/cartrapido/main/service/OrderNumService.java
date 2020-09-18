@@ -78,7 +78,7 @@ public class OrderNumService {
             OrderNumDTO orderNumDTO = new OrderNumDTO(
                     orderNum.getOrderNum(), orderNum.getUserEmail(), orderNum.getShopper(),
                     orderNum.getDeliveryCost(), orderNum.getProductTot(),
-                    orderNum.getPay(), orderNum.getCreatedDate()
+                    orderNum.getPay(), orderNum.getCreatedDate(), orderNum.getLatitude(),orderNum.getLongitude()
             );
             orderNumDTOList.add(orderNumDTO);
         }

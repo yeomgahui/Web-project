@@ -74,6 +74,19 @@ public class OrderNumDTO {
         this.createdDate = createdDate;
     }
 
+    public OrderNumDTO(Long orderNum, String userEmail, String shopper,
+                       int deliveryCost, int productTot, int pay, LocalDate createdDate,double latitude, double longitude){
+        this.orderNum = orderNum;
+        this.userEmail = userEmail;
+        this.shopper = shopper ;
+        this.deliveryCost = deliveryCost;
+        this.productTot = productTot;
+        this.pay = pay;
+        this.createdDate = createdDate;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
 
 
 

@@ -146,41 +146,48 @@ public class ShopperController {
 
     }
 
-    @PostMapping("/currentLocation")
-    @ResponseBody
-    public String currentLocation(@RequestBody HashMap hash,HttpSession session){
-
-        System.out.println("dto : "+ hash);
-
-        session.setAttribute("latlng", hash);
-
-        return "/currentLocation";
 
 
-
-    }
 
     @RequestMapping(value = "clientLatlng")
     @ResponseBody
-    public List<OrderNumDTO>  ajax() {
+    public List<OrderSheetDTO> clientLatlng() {
 
-        List<OrderNumDTO> orderNumDTOList = orderNumService.shopperGetPaidOrder("true");
+        List<OrderNumDTO> orderNumDTOList = orderNumService.shopperGetPaidOrder(1);
         System.out.println(orderNumDTOList);
-        List<OrderNumDTO> orderNumDTOListReturn = new ArrayList<>();
+        List<OrderSheetDTO> orderSheetListReturn = new ArrayList<>();
+
+
         for(int i = 0 ; i<orderNumDTOList.size();i++){
-            if(orderNumDTOList.get(i).getShopper()==null){
-                orderNumDTOListReturn.add(orderNumDTOList.get(i));
-                System.out.println(orderNumDTOListReturn);
+            List<OrderSheetDTO> orderSheetList =
+                    orderSheetService.getOrderSheetList(orderNumDTOList.get(i).getOrderNum());
+
+            System.out.println("size : "+orderSheetList.size());
+            for(int j = 0 ; j < orderSheetList.size();j++){
+                orderSheetListReturn.add(orderSheetList.get(j));
+
             }
 
-        }
+       }
 
 
 
-
-
-        return orderNumDTOListReturn;
+        return orderSheetListReturn;
     }
+
+
+
+    @PostMapping("/allDistance")
+    @ResponseBody
+    public void allDistance(@RequestBody List<Map> allDistance){
+        System.out.println("marketLatlng : "+ allDistance.get(0));
+
+
+
+    }
+
+
+
 
 
 }

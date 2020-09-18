@@ -21,6 +21,9 @@ public class OrderSheetDTO {
     private double latitude;
     private double longitude;
 
+    //거리
+    private double distance;
+
     //기본 외 받아야할 product 정보를
     private String productName;
     private int productPrice;
@@ -37,6 +40,7 @@ public class OrderSheetDTO {
                 .store(store)
                 .latitude(latitude)
                 .longitude(longitude)
+                .distance(distance)
                 .build();
         return orderSheet;
 
@@ -45,7 +49,7 @@ public class OrderSheetDTO {
     @Builder //테이블에 값을 넣을때 쓰는 빌더
     public OrderSheetDTO(Long orderNum, String userEmail, Long productId, int amount,
                         String productName,int productPrice,String store,String image,
-                         double latitude, double longitude){
+                         double latitude, double longitude,double distance){
         this.orderNum=orderNum;
         this.productId = productId;
         this.amount = amount;
@@ -55,6 +59,7 @@ public class OrderSheetDTO {
         this.image=image;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.distance = distance;
     }
 
     //테이블 외 값으로 shopper에게 보여줄 값들.

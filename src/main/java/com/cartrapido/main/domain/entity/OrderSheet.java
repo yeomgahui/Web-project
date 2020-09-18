@@ -32,19 +32,25 @@ public class OrderSheet {
 
     @Column
     private double latitude;
+
     @Column
     private double longitude;
+
+    @Column(columnDefinition = "double default 0")
+    private double distance;
+
 
 
     @Builder
     public OrderSheet(Long orderNum, Long productId, int amount, String store,
-                      double latitude, double longitude ) {
+                      double latitude, double longitude, double distance ) {
         this.orderNum = orderNum;
         this.productId = productId;
         this.amount = amount;
         this.store = store;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.distance = distance;
     }
 
 
