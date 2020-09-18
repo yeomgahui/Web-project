@@ -135,6 +135,7 @@ public class HomeplusCrawlingService {
                             .store(store)
                             .category(array_category[j])
                             .image(image)
+                            .wishPoint(0)
                             .build();
 
                     productRepository.save(productDTO.toEntity()).getProductId();

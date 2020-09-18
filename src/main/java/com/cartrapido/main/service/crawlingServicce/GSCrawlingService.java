@@ -119,6 +119,7 @@ public class GSCrawlingService {
                         .store(store)
                         .category("LunchBox")
                         .image(image)
+                        .wishPoint(0)
                         .build();
 
                 productRepository.save(productDTO.toEntity()).getProductId();
@@ -180,6 +181,7 @@ public class GSCrawlingService {
                         .store(store)
                         .category("Gimbap")
                         .image(image)
+                        .wishPoint(0)
                         .build();
 
                 productRepository.save(productDTO.toEntity()).getProductId();
@@ -241,6 +243,7 @@ public class GSCrawlingService {
                         .store(store)
                         .category("Sandwich&Hamburger")
                         .image(image)
+                        .wishPoint(0)
                         .build();
 
                 productRepository.save(productDTO.toEntity()).getProductId();
@@ -302,6 +305,7 @@ public class GSCrawlingService {
                         .store(store)
                         .category("ConvenienceFood")
                         .image(image)
+                        .wishPoint(0)
                         .build();
 
                 productRepository.save(productDTO.toEntity()).getProductId();
@@ -364,6 +368,7 @@ public class GSCrawlingService {
                         .store(store)
                         .category("Drink")
                         .image(image)
+                        .wishPoint(0)
                         .build();
 
                 productRepository.save(productDTO.toEntity()).getProductId();
@@ -425,6 +430,7 @@ public class GSCrawlingService {
                         .store(store)
                         .category("MilkProducts")
                         .image(image)
+                        .wishPoint(0)
                         .build();
 
                 productRepository.save(productDTO.toEntity()).getProductId();
@@ -486,6 +492,7 @@ public class GSCrawlingService {
                         .store(store)
                         .category("Snack")
                         .image(image)
+                        .wishPoint(0)
                         .build();
 
                 productRepository.save(productDTO.toEntity()).getProductId();
@@ -547,6 +554,7 @@ public class GSCrawlingService {
                         .store(store)
                         .category("InstantFood&Noodles")
                         .image(image)
+                        .wishPoint(0)
                         .build();
 
                 productRepository.save(productDTO.toEntity()).getProductId();

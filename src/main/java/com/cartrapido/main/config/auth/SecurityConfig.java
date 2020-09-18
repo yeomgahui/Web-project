@@ -50,6 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/adminTest/**","/","/user/loginPage","/login","/logout","/user/signUpPage","/user/signUp", "/css/**","/user/verifyemail", "/images/**","/h2-console/**","/mail", "/js/**","/user/loginFail",  "/profile").permitAll()
                 .antMatchers("/api/v1/**","/clientMain").hasRole(Role.USER.name())
                 .antMatchers("/shopperMain").hasRole(Role.SHOPPER.name())
+                .antMatchers("/admin/**").hasRole(Role.ADMIN.name())
                 .anyRequest().authenticated()
                 .and()
                 .logout()

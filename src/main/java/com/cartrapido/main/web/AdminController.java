@@ -49,13 +49,6 @@ public class AdminController {
     @Autowired
     private QnAService qnaService;
 
-    //어드민 페이지 테스트
-    @GetMapping("/admin")
-    public String dispAdmin(Model model){
-        // /admin/blackList.html 붙이기
-        model.addAttribute("template","/admin/adminMain.html");
-        return "/admin/adminSidebar.html";
-    }
     //회원관리
     @GetMapping("/admin/blackList")
     public String blackList(Model model){
@@ -127,7 +120,7 @@ public class AdminController {
     public @ResponseBody ModelAndView findMember(@PathVariable int page, @RequestParam(name="user") String user, @RequestParam(name="searchOption") String searchOption){
 
         //회원 조회
-       Page<Member> memberList=  memberService.getMemberList(PageRequest.of(page-1,2),user,searchOption);
+       Page<Member> memberList=  memberService.getMemberList(PageRequest.of(page-1,10),user,searchOption);
 
        List<MemberListDTO> searchMembers = memberList.stream().map(MemberListDTO::new).collect(Collectors.toList());
        ModelAndView mv = new ModelAndView("jsonView");

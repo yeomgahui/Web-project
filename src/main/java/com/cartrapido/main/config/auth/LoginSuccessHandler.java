@@ -30,6 +30,8 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
             response.sendRedirect("/clientMain");
         }else if(roles.contains("ROLE_SHOPPER")){
             response.sendRedirect("/shopperMain");
+        }else if(roles.contains("ROLE_ADMIN")){
+            response.sendRedirect("/admin/dashboard");
         }
     }
 }
