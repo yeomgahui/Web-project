@@ -247,12 +247,14 @@
 
                     var loc = {
 
+                        locMarket: minKey,
                         market : marketNameMatch.get(market),
                         lat : hashMap2.get(minKey).latitude,
                         lng : hashMap2.get(minKey).longitude
                     }
 
                     locs.push({
+                        locMarket : loc.locMarket,
                         market : loc.market,
                         lat : loc.lat,
                         lng : loc.lng

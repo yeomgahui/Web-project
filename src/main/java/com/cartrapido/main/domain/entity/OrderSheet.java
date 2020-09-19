@@ -31,6 +31,9 @@ public class OrderSheet {
     private String store;
 
     @Column
+    private String storeName;
+
+    @Column
     private double latitude;
 
     @Column
@@ -42,13 +45,14 @@ public class OrderSheet {
 
 
     @Builder
-    public OrderSheet(Long orderId, Long orderNum, Long productId, int amount, String store,
+    public OrderSheet(Long orderId, Long orderNum, Long productId, int amount, String store, String storeName,
                       double latitude, double longitude, double distance ) {
         this.orderId = orderId;
         this.orderNum = orderNum;
         this.productId = productId;
         this.amount = amount;
         this.store = store;
+        this.storeName= storeName;
         this.latitude = latitude;
         this.longitude = longitude;
         this.distance = distance;

@@ -16,6 +16,7 @@ public class OrderSheetDTO {
     private Long productId;
     private int amount;
     private String store;
+    private String storeName;
 
     //위도 경도
     private double latitude;
@@ -38,6 +39,7 @@ public class OrderSheetDTO {
                 .productId(productId)
                 .amount(amount)
                 .store(store)
+                .storeName(storeName)
                 .latitude(latitude)
                 .longitude(longitude)
                 .distance(distance)
@@ -49,7 +51,7 @@ public class OrderSheetDTO {
 
     @Builder //테이블에 값을 넣을때 쓰는 빌더
     public OrderSheetDTO(Long orderId,Long orderNum, String userEmail, Long productId, int amount,
-                        String productName,int productPrice,String store,String image,
+                        String productName,int productPrice,String store,String storeName,String image,
                          double latitude, double longitude,double distance){
         this.orderId=orderId;
         this.orderNum=orderNum;
@@ -58,6 +60,7 @@ public class OrderSheetDTO {
         this.productName=productName;
         this.productPrice=productPrice;
         this.store=store;
+        this.storeName=storeName;
         this.image=image;
         this.latitude = latitude;
         this.longitude = longitude;

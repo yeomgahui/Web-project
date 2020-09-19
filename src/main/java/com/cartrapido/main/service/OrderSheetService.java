@@ -33,6 +33,7 @@ public class OrderSheetService {
                     System.out.println(data.get("market"));
                     orderSheet.setLatitude((Double) data.get("lat"));
                     orderSheet.setLongitude((Double) data.get("lng"));
+                    orderSheet.setStoreName((String) data.get("locMarket"));
                     orderSheetRepository.save(orderSheet);
                 }
             }
@@ -86,6 +87,7 @@ public class OrderSheetService {
                         .latitude(orderSheet.getLatitude())
                         .longitude(orderSheet.getLongitude())
                         .distance(orderSheet.getDistance())
+                        .storeName(orderSheet.getStoreName())
                         .build();
                 Product product = productRepository.findAllByProductId(orderSheet.getProductId());
                 orderSheetDTO.setOtherInfo(

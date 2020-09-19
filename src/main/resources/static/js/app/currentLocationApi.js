@@ -77,30 +77,10 @@ function onError(error) {
 
 
 navigator.geolocation.getCurrentPosition(onSuccess, onError);
-//
-//
-// var loc = {
-//
-//     market : marketNameMatch.get(market),
-//     lat : hashMap2.get(minKey).latitude,
-//     lng : hashMap2.get(minKey).longitude
-// }
-//
-// locs.push({
-//     market : loc.market,
-//     lat : loc.lat,
-//     lng : loc.lng
-// });
-
 
 function clientLatlng(data) {
 
-    // console.log("start" +JSON.stringify(start));
-    //
-    //
-    //
-    //
-    // console.log("1 : " + data[0].latitude);
+
 
     for (var i = 0; i < data.length; i++) {
 
