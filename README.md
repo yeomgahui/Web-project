@@ -1,4 +1,5 @@
 # Web-project
 instacart-like web application build up
 
-application-oauth.properties은 보안상 ignored
+application-oauth.properties,
+application.properties 은 보안상 ignored
