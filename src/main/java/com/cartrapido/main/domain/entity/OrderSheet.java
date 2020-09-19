@@ -42,8 +42,9 @@ public class OrderSheet {
 
 
     @Builder
-    public OrderSheet(Long orderNum, Long productId, int amount, String store,
+    public OrderSheet(Long orderId, Long orderNum, Long productId, int amount, String store,
                       double latitude, double longitude, double distance ) {
+        this.orderId = orderId;
         this.orderNum = orderNum;
         this.productId = productId;
         this.amount = amount;

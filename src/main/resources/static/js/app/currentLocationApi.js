@@ -5,8 +5,8 @@ var distance;
 
 
 var onSuccess = function(position) {
-    alert('Latitude: '          + position.coords.latitude          + '\n' +
-        'Longitude: '         + position.coords.longitude         );
+    // alert('Latitude: '          + position.coords.latitude          + '\n' +
+    //     'Longitude: '         + position.coords.longitude         );
 
 
     start = {
@@ -113,6 +113,7 @@ function clientLatlng(data) {
         distance = computeDistance(start, des);
 
         allDistance.push({
+            orderId: data[i].orderId,
             orderNum: data[i].orderNum,
             distance: distance.toFixed(1)
         })
@@ -137,6 +138,8 @@ function clientLatlng(data) {
 
 
 function distancetoCotroll(allDistance) {
+
+    console.log(JSON.stringify(allDistance));
 
     $.ajax({
         url: "/allDistance",

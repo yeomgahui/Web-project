@@ -14,6 +14,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "orderNum")
 public class OrderNum extends TimeEntity{
+    private double distance;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,7 +55,7 @@ public class OrderNum extends TimeEntity{
     @Builder
     public OrderNum(Long orderNum, String userEmail, String shopper ,
                      int deliveryCost, int productTot ,int pay, String address, String detailAddress,String agree,
-                    double latitude, double longitude){
+                    double latitude, double longitude, double distance){
         this.orderNum = orderNum;
         this.userEmail = userEmail;
         this.shopper = shopper ;
@@ -66,6 +67,7 @@ public class OrderNum extends TimeEntity{
         this.agree = agree;
         this.latitude=latitude;
         this.longitude=longitude;
+        this.distance=distance;
     }
 
 

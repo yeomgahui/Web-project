@@ -16,10 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @AllArgsConstructor
@@ -60,19 +57,50 @@ public class ShopperController {
 
     @GetMapping("/orderSheetList")
     public String orderSheetList(Model model) {
-
-        List<OrderNumDTO> orderNumDTOList = orderNumService.shopperGetPaidOrder(1);
+        List<Double> distanceList = new ArrayList<>();
         List<OrderNumDTO> orderNumDTOListReturn = new ArrayList<>();
-        for(int i = 0 ; i<orderNumDTOList.size();i++){
+        List<OrderNumDTO> orderNumDTOList = orderNumService.shopperGetPaidOrder(1);
+
+        for(int i = 0 ; i<orderNumDTOList.size();i++){//중복값의 거리 중 최솟값 계산해서 orderNumDTOList에 넣어주기
+            List<OrderSheetDTO> orderSheetList = orderSheetService.getOrderSheetList(orderNumDTOList.get(i).getOrderNum());
+            for(int j = 0 ; j<orderSheetList.size();j++){
+
+                distanceList.add(orderSheetList.get(j).getDistance());
+                Collections.sort(distanceList);
+
+//                System.out.println("min값 : " + distanceList.get(0));//최솟값 확인
+
+            }
+            orderNumDTOList.get(i).setDistance(distanceList.get(0));//계산한 최솟값 setter로 넣어줌
             if(orderNumDTOList.get(i).getShopper()==null){
                 orderNumDTOListReturn.add(orderNumDTOList.get(i));
             }
+
         }
+        orderNumDTOListReturn.sort(Comparator.comparing(OrderNumDTO::getDistance));
+
+        for(int j = 0 ; j<orderNumDTOListReturn.size();j++){
+
+            System.out.println("sort 값 : " + orderNumDTOListReturn.get(j).getOrderNum());//최솟값 확인
+
+
+
+        }
+
+
+
+
+
+
+
+
         if(orderNumDTOList.size()!=0){
             model.addAttribute("orderNumList", orderNumDTOListReturn);
         }
         return "/shopperWebBody/shopperList/orderSheetList";
     }
+
+
 
 
 
@@ -162,7 +190,7 @@ public class ShopperController {
             List<OrderSheetDTO> orderSheetList =
                     orderSheetService.getOrderSheetList(orderNumDTOList.get(i).getOrderNum());
 
-            System.out.println("size : "+orderSheetList.size());
+
             for(int j = 0 ; j < orderSheetList.size();j++){
                 orderSheetListReturn.add(orderSheetList.get(j));
 
@@ -179,12 +207,28 @@ public class ShopperController {
 
     @PostMapping("/allDistance")
     @ResponseBody
-    public void allDistance(@RequestBody List<Map> allDistance){
-        System.out.println("marketLatlng : "+ allDistance.get(0));
+    public void allDistance(@RequestBody List<Map> allDistance) {
+        Long orderId;
+        Double distance;
+
+        for (int i = 0; i < allDistance.size(); i++) {
 
 
+            orderId = Long.valueOf(String.valueOf(allDistance.get(i).get("orderId")));
+            distance = Double.valueOf(String.valueOf(allDistance.get(i).get("distance")));
 
+
+            orderSheetService.saveDistance(orderId, distance);
+
+        }
     }
+
+
+
+
+
+
+
 
 
 

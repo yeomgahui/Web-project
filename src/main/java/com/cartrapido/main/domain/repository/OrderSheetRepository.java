@@ -7,5 +7,7 @@ import java.util.List;
 
 public interface OrderSheetRepository extends JpaRepository<OrderSheet,Long> {
     List<OrderSheet> findAllByOrderNum(Long orderNum);
+    List<OrderSheet> findAllByOrderId(Long orderId);
+
     int countAllByStore(String store);
 }

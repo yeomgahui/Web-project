@@ -39,19 +39,29 @@ public class OrderSheetService {
         }
     }
 
-//    public void updatedistance(Long orderNum, HttpSession session) {
-//        List<OrderSheet> orderSheetList = orderSheetRepository.findAllByOrderNum(orderNum);
-//        ArrayList<Map> latlng = (ArrayList) session.getAttribute("market");
+    public void saveDistance(Long orderId, Double distance){
+
+        List<OrderSheet> orderSheetList = orderSheetRepository.findAllByOrderId(orderId);
+        for(OrderSheet orderSheet:orderSheetList){
+
+            orderSheet.setDistance(distance);
+
+            orderSheetRepository.save(orderSheet);
+
+        }
+
+    }
+//    public void saveMinDistance(Long orderNum, Double distance){
+//
+//        List<OrderSheet> orderSheetList = orderSheetRepository.findAllByOrderId(order);
 //        for(OrderSheet orderSheet:orderSheetList){
-//            for(Map data:latlng){
-//                if(orderSheet.getStore().equals(data.get("market"))){
-//                    System.out.println(data.get("market"));
-//                    orderSheet.setLatitude((Double) data.get("lat"));
-//                    orderSheet.setLongitude((Double) data.get("lng"));
-//                    orderSheetRepository.save(orderSheet);
-//                }
-//            }
+//
+//            orderSheet.setDistance(distance);
+//
+//            orderSheetRepository.save(orderSheet);
+//
 //        }
+//
 //    }
 
 
@@ -69,6 +79,7 @@ public class OrderSheetService {
 
             for(OrderSheet orderSheet : orderSheetList){
                 OrderSheetDTO orderSheetDTO = OrderSheetDTO.builder()
+                        .orderId(orderSheet.getOrderId())
                         .orderNum(orderNum)
                         .productId(orderSheet.getProductId())
                         .amount(orderSheet.getAmount())
