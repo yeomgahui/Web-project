@@ -66,13 +66,14 @@ public class ShopperController {
             for(int j = 0 ; j<orderSheetList.size();j++){
 
                 distanceList.add(orderSheetList.get(j).getDistance());
-                Collections.sort(distanceList);
-
-//                System.out.println("min값 : " + distanceList.get(0));//최솟값 확인
 
             }
+
+            Collections.sort(distanceList);
             orderNumDTOList.get(i).setDistance(distanceList.get(0));//계산한 최솟값 setter로 넣어줌
-            if(orderNumDTOList.get(i).getShopper()==null){
+            distanceList.clear();//이전 값 지워주기
+
+            if(orderNumDTOList.get(i).getShopper()==null){//쇼퍼와 매칭전이면,
                 orderNumDTOListReturn.add(orderNumDTOList.get(i));
             }
 
@@ -80,18 +81,8 @@ public class ShopperController {
         orderNumDTOListReturn.sort(Comparator.comparing(OrderNumDTO::getDistance));
 
         for(int j = 0 ; j<orderNumDTOListReturn.size();j++){
-
             System.out.println("sort 값 : " + orderNumDTOListReturn.get(j).getOrderNum());//최솟값 확인
-
-
-
         }
-
-
-
-
-
-
 
 
         if(orderNumDTOList.size()!=0){
