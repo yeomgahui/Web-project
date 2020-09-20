@@ -230,9 +230,12 @@ public class ClientController {
     ) {
         SessionUser user = (SessionUser) session.getAttribute("user");
         String userEmail = user.getEmail();
+        String userAdress = user.getAddress();
+        System.out.println("USER_ADDRESS"+userAdress);
         System.out.println("pushOrder---------------------"+userEmail);
         OrderNumDTO orderNumDTO = OrderNumDTO.builder()
                 .userEmail(userEmail)
+                .address(userAdress)
                 .shopper(null)
                 .deliveryCost(deliveryCost)
                 .productTot(productTot)
