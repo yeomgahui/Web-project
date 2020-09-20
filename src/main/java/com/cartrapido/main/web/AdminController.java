@@ -68,13 +68,14 @@ public class AdminController {
     }
 
     //회원 정지 시키기
-    @PostMapping("/adminTest/blackMember")
+    @PostMapping("/admin/blackMember")
     public @ResponseBody void blackMember(@RequestParam(name="id") Long id, @RequestParam(name="shopper") String shopper){
+        System.out.println("BliackMember진입"+id +" "+ shopper);
+
         //회원 로그인 못하게 막기
         memberService.enableSet(shopper,false);
         //리스트에서 삭제
         blackListService.delete(id);
-
     }
     //차트
     @GetMapping("/admin/dashboard")

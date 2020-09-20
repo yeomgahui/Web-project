@@ -66,7 +66,6 @@ $("#userInfo").on("click",".cancleBtn",function () {
         data: "user="+$(this).data('email')
     }).done(function () {
 
-        alert($("#userInfo").index())
         $selectedBtn.hide();
 
     }).fail(function (error) {

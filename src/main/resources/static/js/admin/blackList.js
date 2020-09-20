@@ -19,6 +19,7 @@ $('.blackBtn').on("click",function () {
 });
 
 $('#cofirmBtn').click(function () {
+
     $.ajax({
         method: 'POST',
         url: '/admin/blackMember',
@@ -26,7 +27,6 @@ $('#cofirmBtn').click(function () {
     }).done(function () {
         window.location.href="/admin/blackList"
         $("#checkModal").modal("hide");
-
     }).fail(function (error) {
         alert(JSON.stringify(error));
     });
