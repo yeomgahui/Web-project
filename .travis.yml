@@ -13,7 +13,7 @@ before_install:
 
 
 
-# travis CI 서버의 Home!
+# travis CI 서버의 Home
 cache:
   directories:
     - '$HOME/.m2/repository'
