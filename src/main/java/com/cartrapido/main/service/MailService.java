@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 @Configuration
 public class MailService {
 
+
     @Autowired private JavaMailSender mailSender;
     private static final String FROM_ADDRESS = "ykh4933@gmail.com";
 
