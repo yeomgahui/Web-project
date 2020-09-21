@@ -2,6 +2,7 @@ package com.cartrapido.main.service;
 
 import com.cartrapido.main.web.dto.MailSendDTO;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class MailService {
 
-    private JavaMailSender mailSender;
+    @Autowired private JavaMailSender mailSender;
     private static final String FROM_ADDRESS = "ykh4933@gmail.com";
 
     public void mailSend(String email,String tempPwd) {
