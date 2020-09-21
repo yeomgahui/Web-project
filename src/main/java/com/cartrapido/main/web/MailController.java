@@ -26,10 +26,10 @@ public class MailController {
     @PostMapping("/mail")
     public @ResponseBody String execMail(@RequestParam(name="email") String email) {
         String tempPwd = memberService.verifyEmail(email);
-        if(tempPwd != null){
-            mailService.mailSend(email,tempPwd);
-            return "입력하신 이메일로 임시 비밀번호를 보냈습니다. 이메일함을 확인해주세요.";
-        }
+//        if(tempPwd != null){
+//            mailService.mailSend(email,tempPwd);
+//            return "입력하신 이메일로 임시 비밀번호를 보냈습니다. 이메일함을 확인해주세요.";
+//        }
         return "없는 아이디 입니다. 회원가입을 먼저 해주세요.";
     }
 
