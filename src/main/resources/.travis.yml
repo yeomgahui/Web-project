@@ -1,0 +1,74 @@
+language: java
+jdk:
+  - openjdk8
+
+branches:
+  only:
+    - master
+
+
+
+before_install:
+  - chmod +x gradlew
+
+
+
+# travis CI 서버의 Home!
+cache:
+  directories:
+    - '$HOME/.m2/repository'
+    - '$HOME/.gradle'
+
+
+
+script: "./gradlew clean build"
+
+
+before_deploy:
+  - mkdir -p before-deploy # zip에 포함시킬 파일들을 담을 디렉토리 생성
+  - cp scripts/*.sh before-deploy/
+  - cp appspec.yml before-deploy/
+  - cp build/libs/*.jar before-deploy/
+  - cd before-deploy && zip -r before-deploy * #before-deploy로 이동 후 전체 압축
+
+
+  - cd ../ && mkdir -p deploy #상위 디렉토리로 이동 후 deploy 디렉토리 생성
+  - mv before-deploy/before-deploy.zip deploy/boot-project-webservice.zip #deploy로 zip파일 이동
+
+deploy:
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY # travis repo setting에 설정된 값
+
+    secret_access_key: $AWS_SECRET_KEY # in travis repo setting
+
+    bucket: boot-project-build
+    region: ap-northeast-2
+    skip_cleanup: true
+
+    acl: private # zip file 접근을 private로,
+    local_dir: deploy # before_deploy에서 생성한 디렉토리
+    wait-until-deployed: true
+
+  - provider: codedeploy
+    access_key_id: $AWS_ACCESS_KEY # travis repo setting에 설정된 값
+
+    secret_access_key: $AWS_SECRET_KEY # travis repo setting에 설정된 값
+    bucket: boot-project-build
+    key: boot-project-webservice.zip #빌드 파일을 압축해서 전달!
+    bundle_type: zip
+    application: boot-project
+    deployment_group: boot-project-webservice-group
+    region: ap-northeast-2
+    wait-until-deployed: true
+
+
+
+# CI 실행 완료 시 메일로 알람
+notifications:
+  email:
+    recipients:
+      - anruddms8124@gmail.com
+
+
+
+
