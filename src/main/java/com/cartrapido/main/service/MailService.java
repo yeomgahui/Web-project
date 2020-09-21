@@ -8,13 +8,13 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+//test01
 @Service
 @AllArgsConstructor
-@Configuration
 public class MailService {
 
 
-    @Autowired private JavaMailSender mailSender;
+    private JavaMailSender mailSender;
     private static final String FROM_ADDRESS = "ykh4933@gmail.com";
 
     public void mailSend(String email,String tempPwd) {
