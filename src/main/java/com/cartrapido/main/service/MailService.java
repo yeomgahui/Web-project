@@ -2,6 +2,7 @@ package com.cartrapido.main.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
+@Configuration
 public class MailService {
 
     @Autowired private JavaMailSender mailSender;
