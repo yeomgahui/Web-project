@@ -4,17 +4,21 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 //test01
 @Service
 @AllArgsConstructor
 public class MailService {
-    @Bean
+
+
+
     public JavaMailSenderImpl mailSender() {
         JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
 
@@ -25,9 +29,9 @@ public class MailService {
         return javaMailSender;
     }
 
-
     private JavaMailSender mailSender;
     private static final String FROM_ADDRESS = "ykh4933@gmail.com";
+
 
 
 
@@ -41,7 +45,8 @@ public class MailService {
         message.setText("임시 비밀번호는 :"+tempPwd+" 입니다.");
 
         try {
-            mailSender.send(message);
+            mailSender().send(message);
+
         }catch (MailException e){
             e.printStackTrace();
         }
