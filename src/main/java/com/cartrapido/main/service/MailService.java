@@ -17,6 +17,9 @@ public class MailService {
     private JavaMailSender mailSender;
     private static final String FROM_ADDRESS = "ykh4933@gmail.com";
 
+
+
+
     public void mailSend(String email,String tempPwd) {
         System.out.println("mainSend 진입");
         SimpleMailMessage message = new SimpleMailMessage();
