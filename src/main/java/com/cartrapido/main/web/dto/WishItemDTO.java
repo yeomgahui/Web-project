@@ -22,6 +22,9 @@ public class WishItemDTO {
     private int productPrice;
     private String image;
     private String productContent;
+    private int wishPoint;
+    private String store;
+    private String category;
 
     public WishItem toEntity(){
         WishItem wishItem = WishItem.builder()
@@ -42,11 +45,15 @@ public class WishItemDTO {
     }
 
     //테이블 외 값으로 shopper에게 보여줄 값들.
-    public void setOtherInfo(String productName, int productPrice, String productContent, String image){
+    public void setOtherInfo(String productName, int productPrice, String productContent, String image,
+                             int wishPoint, String store, String category){
         this.productName = productName;
         this.productPrice = productPrice;
         this.productContent = productContent;
         this.image = image;
+        this.wishPoint = wishPoint;
+        this.store = store;
+        this.category = category;
     }
 
 
