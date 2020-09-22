@@ -22,9 +22,9 @@ public class MailService {
     private static final String FROM_ADDRESS = "ykh4933@gmail.com";
 
 
-    @Autowired
-    public void setMailSender(JavaMailSender mailSender) {
-        this.mailSender = mailSender;
+    @Bean
+    public JavaMailSender javaMailSender() {
+        return new JavaMailSender;
     }
 
 
