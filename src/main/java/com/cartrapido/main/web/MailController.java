@@ -5,18 +5,21 @@ import com.cartrapido.main.service.MemberService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
+
 @AllArgsConstructor
 @Controller
 public class MailController {
 
 
-
+    @Resource(name = "MailService")
     private final MailService mailService;
     private final MemberService memberService;
 
