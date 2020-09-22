@@ -243,8 +243,8 @@
             $('#addCart').click(function () {
                 $.ajax({
                     url: "/clientMart/putInCart",
-                    data: {productId:modalProductId,
-                            amount: $('.pro-qty input').val()},
+                    data: {productId:$(this).data('id'),
+                        amount: $('.pro-qty input').val()},
                     type: "POST"
                 }).done(function(json) {
                     Swal.fire({

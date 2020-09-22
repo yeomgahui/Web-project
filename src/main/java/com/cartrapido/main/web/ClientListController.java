@@ -105,7 +105,8 @@ public class ClientListController {
             ProductDTO productDTO = productService.getProductInfo(wishDTO.getProductId());
             wishDTO.setOtherInfo(
                     productDTO.getProductName(),productDTO.getProductPrice(),
-                    productDTO.getProductContent(),productDTO.getImage()
+                    productDTO.getProductContent(),productDTO.getImage(),
+                    productDTO.getWishPoint(),productDTO.getStore(),productDTO.getCategory()
             );
         }
         if(wishItemDTOList.size()==0){
