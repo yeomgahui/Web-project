@@ -17,7 +17,7 @@ import javax.mail.internet.MimeMessage;
 import java.io.InputStream;
 
 //test01
-@Service("MailService")
+@Service
 @AllArgsConstructor
 public class MailService {
 

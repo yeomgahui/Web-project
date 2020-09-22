@@ -19,7 +19,6 @@ import javax.annotation.Resource;
 public class MailController {
 
 
-    @Resource(name = "MailService")
     private final MailService mailService;
     private final MemberService memberService;
 

@@ -55,7 +55,7 @@ public class Application{
 
     public static void main(String[] args) {
         //Test
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(Application.class, "--debug");
     }
 
 
