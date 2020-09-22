@@ -15,25 +15,25 @@ import org.springframework.stereotype.Service;
 //test01
 @Service
 @AllArgsConstructor
+@Configuration
 public class MailService {
 
-
-    @Autowired private JavaMailSender mailSender;
+    private JavaMailSender mailSender;
     private static final String FROM_ADDRESS = "ykh4933@gmail.com";
 
-//    @Bean public SimpleMailMessage mailSend() {
-//        SimpleMailMessage javaMailSender = new SimpleMailMessage();
-//    javaMailSender.setProtocol("smtp");
-//    javaMailSender.setHost("127.0.0.1");
-//    javaMailSender.setPort(25);
-//    return javaMailSender; }
-//
+
+    @Autowired
+    public void setMailSender(JavaMailSender mailSender) {
+        this.mailSender = mailSender;
+    }
 
 
 
 
 
-    public SimpleMailMessage mailSend(String email,String tempPwd) {
+
+
+    public void mailSend(String email,String tempPwd) {
 //        JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
         System.out.println("mainSend 진입");
         SimpleMailMessage message = new SimpleMailMessage();
@@ -43,12 +43,12 @@ public class MailService {
         message.setText("임시 비밀번호는 :"+tempPwd+" 입니다.");
 
         try {
-            mailSender.send(message);
+             mailSender.send(message);
 
         }catch (MailException e){
             e.printStackTrace();
         }
 
-        return message;
+
     }
 }
