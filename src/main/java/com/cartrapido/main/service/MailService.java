@@ -21,6 +21,7 @@ import java.io.InputStream;
 @AllArgsConstructor
 public class MailService {
 
+    @Autowired
     private JavaMailSender mailSender;
     private static final String FROM_ADDRESS = "ykh4933@gmail.com";
 
