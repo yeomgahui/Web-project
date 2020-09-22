@@ -26,7 +26,7 @@ public class IndexController {
 
 
     //메인 페이지, zipcode입력 페이지
-    @GetMapping("/")
+    @GetMapping("/firstPage")
     public String index(Model model){
         return "/firstPage";
     }
