@@ -32,6 +32,8 @@ public class MailService {
 
 
 
+
+
     public void mailSend(String email,String tempPwd) {
 //        JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
         System.out.println("mainSend 진입");
