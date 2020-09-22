@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @AllArgsConstructor
 @Controller
-
 public class MailController {
 
 
