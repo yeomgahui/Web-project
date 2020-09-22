@@ -104,7 +104,9 @@
                 html +='<td><h5>'+items.name+'</h5></td>';
                 html +='<td><h5>'+items.createdDate+'</h5></td>';
                 html +='<td><a class="answerBtn" href="/admin/qnaAnswer?seq='+items.seq+'">';
-                html +=     '<div class="site-btn" style="cursor: pointer;">답변'+'</div></a></td>';
+                if( items.lev == 0) {
+                    html += '<div class="site-btn" style="cursor: pointer;">답변' + '</div></a></td>';
+                }
                 html +='</tr>';
 
                 $('#qnaList').append(html);
