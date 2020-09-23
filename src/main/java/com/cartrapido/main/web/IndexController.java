@@ -1,11 +1,9 @@
 package com.cartrapido.main.web;
 
-import com.cartrapido.main.chat.dto.ChatRoomListResponsDto;
 import com.cartrapido.main.chat.service.ChatRoomService;
 import com.cartrapido.main.config.auth.dto.SessionUser;
 import com.cartrapido.main.service.MemberService;
 import lombok.RequiredArgsConstructor;
-import net.minidev.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
@@ -28,7 +25,7 @@ public class IndexController {
     //메인 페이지, zipcode입력 페이지 / ->firstPage 로 수정
     @GetMapping("/")
     public String index(Model model){
-        return "/firstPage.mustache";
+        return "/firstPage.html";
     }
 
     //로그인 페이지
@@ -86,7 +83,7 @@ public class IndexController {
 
     @GetMapping("/user/denied")
     public String userDenied(){
-        return "/errorPage";
+        return "errorPage.html";
     }
 
     //회원탈퇴 처리

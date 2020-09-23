@@ -33,7 +33,7 @@ public class ShopperController {
 
     @GetMapping("/shopperWeb")
     public String shopperWeb() {
-        return "/shopperWebBody/firstPage.mustache";
+        return "/shopperWebBody/firstPage.html";
     }
 
 
