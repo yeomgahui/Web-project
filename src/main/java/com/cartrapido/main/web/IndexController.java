@@ -26,18 +26,18 @@ public class IndexController {
     //메인 페이지, zipcode입력 페이지 / ->firstPage 로 수정
     @GetMapping("/")
     public String index(Model model){
-        return "firstPage.html";
+        return "/firstPage.html";
     }
 
     //로그인 페이지
     @GetMapping("/user/loginPage")
     public String loginPage(){
-        return "loginPage.html";
+        return "/loginPage.html";
     }
 
     @PostMapping("/user/loginPage")
     public String loginPage2(){
-        return "loginPage.html";
+        return "/loginPage.html";
     }
 
     //회원가입 페이지
@@ -45,7 +45,7 @@ public class IndexController {
     public String signUpPage(@RequestParam String address, Model model,HttpSession session){
         model.addAttribute("address",address);
         session.setAttribute("address",address);
-        return "signUpPage.html";
+        return "/signUpPage.html";
     }
 
 
