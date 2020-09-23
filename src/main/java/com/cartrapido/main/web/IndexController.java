@@ -19,6 +19,7 @@ public class IndexController {
     private final HttpSession httpSession;
     private final ChatRoomService chatRoomService;
     private final MemberService memberService;
+    //tomcat error fix
 
 
 
