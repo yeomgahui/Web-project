@@ -3,12 +3,12 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 >
-    <header th:replace="shopperWeb/header :: headerFragment"></header>
+    <header th:replace="/shopperWeb/header :: headerFragment"></header>
 
     <body>
     <div class="container-lg mt-5">
         <div class="row">
-            <th:block th:include="shopperWeb/sidebar.html" ></th:block>
+            <th:block th:include="/shopperWeb/sidebar.html" ></th:block>
 
             <div class="col-lg-9" id="col-lg-9" >
 

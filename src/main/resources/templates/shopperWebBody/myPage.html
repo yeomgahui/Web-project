@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 >
-<header th:replace="shopperWeb/header :: headerFragment"></header>
+<header th:replace="/shopperWeb/header :: headerFragment"></header>
 <style>
     .myPageForm{
         width: 500px;
@@ -20,7 +20,7 @@
 <body>
 <div class="container-lg mt-5">
     <div class="row">
-        <th:block th:include="shopperWeb/sidebar.html" ></th:block>
+        <th:block th:include="/shopperWeb/sidebar.html" ></th:block>
 
         <div class="col-lg-8 col-md-7 order-md-1 order-1">
 
