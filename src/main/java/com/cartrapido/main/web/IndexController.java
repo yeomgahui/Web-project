@@ -26,7 +26,7 @@ public class IndexController {
     //메인 페이지, zipcode입력 페이지 / ->firstPage 로 수정
     @GetMapping("/")
     public String index(Model model){
-        return "firstPage.html";
+        return "/firstPage.html";
     }
 
     //로그인 페이지
